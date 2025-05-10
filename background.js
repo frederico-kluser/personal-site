@@ -23,9 +23,15 @@ const config = {
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
   ],
   speed: 30, // Update interval in milliseconds
-  density: 0.03, // Reduced probability to account for larger characters
+  // Adjust density based on device type - reduced by 30% for desktop
+  get density() {
+    return isMobile() ? 0.03 : 0.021; // 0.03 reduced by 30% = 0.021 for desktop
+  },
   dropLength: 80, // Number of characters in each drop (set to at least 80vh)
-  maxDrops: 70, // Reduced maximum drops due to larger character size
+  // Adjust maximum drops based on device type
+  get maxDrops() {
+    return isMobile() ? 70 : 49; // 70 reduced by 30% = 49 for desktop
+  },
 
   // Adjust drop speed based on device type
   get dropSpeed() {
@@ -110,8 +116,9 @@ class MatrixRain {
     const columnWidth = config.fontSize * 0.8; // Increased spacing for larger characters
     const columns = Math.floor(this.canvas.width / columnWidth);
 
-    // Start with drops that cover more of the screen
-    for (let i = 0; i < Math.min(columns, 30); i++) { // Reduced initial drops for larger characters
+    // Start with drops that cover more of the screen - reduced for desktop
+    const initialDrops = isMobile() ? 30 : 21; // 30 reduced by 30% = 21 for desktop
+    for (let i = 0; i < Math.min(columns, initialDrops); i++) {
       this.createNewDrop();
     }
   }
@@ -119,15 +126,20 @@ class MatrixRain {
   // Create a new drop at a random position
   createNewDrop() {
     if (this.drops.length >= config.maxDrops) return;
-    
+
     const columnWidth = config.fontSize * 0.8; // Increased spacing for larger characters
     const x = Math.floor(Math.random() * (this.canvas.width / columnWidth)) * columnWidth;
-    
+
+    // Randomize drop length slightly to create more natural effect
+    const dropLength = isMobile() ?
+      config.dropLength :
+      Math.floor(config.dropLength * (0.8 + Math.random() * 0.4)); // 80% to 120% of original length
+
     this.drops.push({
       x,
       y: Math.random() * -100 - 50, // Start above the viewport
       speed: (Math.random() * 0.5 + 0.5) * config.fontSize * config.dropSpeed, // Dynamic speed calculation
-      chars: Array(config.dropLength).fill().map(() => ({
+      chars: Array(dropLength).fill().map(() => ({
         value: this.getRandomChar(),
         isChanging: Math.random() < 0.3
       }))
