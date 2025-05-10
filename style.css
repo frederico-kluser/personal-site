@@ -92,7 +92,8 @@ main {
 }
 
 .sidebar, article {
-    background: var(--eerie-black2);
+    background: hsla(240, 1%, 17%, .75);
+    backdrop-filter: blur(10px);
     border: 1px solid var(--jet);
     border-radius: 20px;
     box-shadow: var(--shadow1);
@@ -208,7 +209,8 @@ article { display: none; }
         content: '';
         position: absolute;
         inset: 1px;
-        background: var(--bg-gradient-jet);
+        background: hsla(240, 1%, 17%, .75);
+        backdrop-filter: blur(10px);
         border-radius: inherit;
         z-index: -1;
     }
@@ -248,7 +250,8 @@ article { display: none; }
 
 .info-content .title {
     color: var(--white1);
-    background: var(--onyx);
+    background: hsla(240, 1%, 17%, .75);
+    backdrop-filter: blur(10px);
     font-size: var(--fs8);
     font-weight: var(--fw300);
     width: max-content;
@@ -421,7 +424,8 @@ article { display: none; }
         content: '';
         position: absolute;
         inset: 1px;
-        background: var(--bg-gradient-jet);
+        background: hsla(240, 1%, 17%, .75);
+        backdrop-filter: blur(10px);
         border-radius: inherit;
         z-index: -1;
     }
@@ -536,7 +540,8 @@ article { display: none; }
     }
 
 .testimonials-modal {
-    background: var(--eerie-black2);
+    background: hsla(240, 1%, 17%, .75);
+    backdrop-filter: blur(10px);
     position: relative;
     padding: 15px;
     margin: 15px 12px;
@@ -732,7 +737,8 @@ article { display: none; }
 }
 
 .filter-select {
-    background: var(--eerie-black2);
+    background: hsla(240, 1%, 17%, .75);
+    backdrop-filter: blur(10px);
     color: var(--light-gray);
     display: flex;
     justify-content: space-between;
@@ -748,7 +754,8 @@ article { display: none; }
     .filter-select.active .select-icon { transform: rotate(0.5turn); }
 
 .select-list {
-    background: var(--eerie-black2);
+    background: hsla(240, 1%, 17%, .75);
+    backdrop-filter: blur(10px);
     position: absolute;
     top: calc(100% + 6px);
     width: 100%;
@@ -897,7 +904,8 @@ article { display: none; }
         position: absolute;
         inset: 1px;
         border-radius: inherit;
-        background: var(--eerie-black1);
+        background: hsla(240, 1%, 17%, .75);
+        backdrop-filter: blur(10px);
         z-index: -1;
     }
 
@@ -988,6 +996,8 @@ article { display: none; }
 
 .form-input {
     color: var(--white2);
+    background: hsla(240, 1%, 17%, .45);
+    backdrop-filter: blur(10px);
     font-size: var(--fs6);
     font-weight: var(--fw400);
     padding: 13px 20px;
