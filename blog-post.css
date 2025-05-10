@@ -1,12 +1,23 @@
 /* Blog Post Page Styles */
+.blog-main {
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+.blog-full-width {
+    width: 100% !important;
+    min-width: 100% !important;
+}
+
 .blog-post {
     display: block;
     animation: fade .5s ease backwards;
+    padding-top: 40px;
 }
 
 .blog-post .article-title {
-    margin-bottom: 15px;
-    margin-top: 15px;
+    margin-bottom: 20px;
+    margin-top: 30px;
 }
 
 .blog-meta {
@@ -49,18 +60,20 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 30px;
+    padding: 20px;
 }
 
 .blog-content {
     color: var(--light-gray);
-    font-size: var(--fs6);
+    font-size: var(--fs4);
     font-weight: var(--fw300);
-    line-height: 1.6;
+    line-height: 1.8;
 }
 
 .blog-content p {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: justify;
+    padding: 0 10px;
 }
 
 .blog-content h3 {
@@ -71,20 +84,24 @@
 .blog-content blockquote {
     background: var(--eerie-black1);
     border-left: 4px solid var(--orange-yellow-crayola);
-    padding: 15px 20px;
-    margin: 30px 0;
+    padding: 20px 30px;
+    margin: 40px 20px;
     font-style: italic;
     border-radius: 0 8px 8px 0;
+    font-size: var(--fs3);
+    line-height: 1.6;
+    color: var(--white1);
 }
 
 .blog-list {
-    padding-left: 20px;
-    margin: 20px 0;
+    padding-left: 50px;
+    margin: 30px 0;
 }
 
 .blog-list li {
     list-style: disc;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    padding-left: 10px;
 }
 
 /* Blog Sidebar */
@@ -183,22 +200,41 @@
 /* Media Queries */
 @media (min-width: 768px) {
     .blog-content-wrapper {
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 3fr 1fr;
         gap: 40px;
+        padding: 30px;
+    }
+
+    .blog-content p {
+        padding: 0 20px;
     }
 }
 
 @media (min-width: 1024px) {
+    .blog-post {
+        padding: 60px 40px 40px;
+    }
+
     .blog-post .article-title {
         font-size: var(--fs1);
         font-weight: var(--fw600);
+        margin-bottom: 30px;
     }
 
     .blog-banner {
-        height: 400px;
+        height: 500px;
+        margin-bottom: 40px;
     }
 
     .blog-banner img {
         height: 100%;
+    }
+
+    .blog-content-wrapper {
+        padding: 40px;
+    }
+
+    .blog-content p {
+        padding: 0 30px;
     }
 }

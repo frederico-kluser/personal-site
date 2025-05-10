@@ -8,16 +8,16 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
 sidebarBtn.addEventListener("click", function() { elementToggleFunc(sidebar); });
 
-// Back to top functionality
+// Navigation and scroll functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Add smooth scroll behavior to all links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // Handle navigation for links within the page
+    document.querySelectorAll('a[href^="#"]:not([href*="index.html"])').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 targetElement.scrollIntoView({
@@ -27,4 +27,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Add scroll reveal effect for content
+    window.addEventListener('scroll', function() {
+        const scrollPosition = window.scrollY;
+        const blogContent = document.querySelector('.blog-content');
+
+        if (scrollPosition > 100) {
+            blogContent.style.opacity = '1';
+        }
+    });
+
+    // Initialize blog content with subtle fade-in
+    const blogContent = document.querySelector('.blog-content');
+    if (blogContent) {
+        blogContent.style.opacity = '1';
+        blogContent.style.transition = 'opacity 0.5s ease-in';
+    }
 });
