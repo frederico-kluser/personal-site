@@ -2,7 +2,7 @@
 
 // Configuration
 const config = {
-  fontSize: 14,
+  fontSize: 28, // Doubled the original size
   color: '#03A062', // Matrix green
   backgroundColor: 'rgba(0, 0, 0, 0)', // Fully transparent background
   characters: [
@@ -14,10 +14,10 @@ const config = {
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
   ],
   speed: 30, // Update interval in milliseconds
-  density: 0.05, // Probability of starting a new column
-  dropLength: 10, // Number of characters in each drop
-  maxDrops: 100, // Maximum number of drops active at once
-  dropSpeed: 0.7 // Base speed multiplier
+  density: 0.03, // Reduced probability to account for larger characters
+  dropLength: 80, // Number of characters in each drop (set to at least 80vh)
+  maxDrops: 70, // Reduced maximum drops due to larger character size
+  dropSpeed: 0.35 // Base speed multiplier (reduced by half)
 };
 
 // Define MatrixRain class
@@ -83,8 +83,13 @@ class MatrixRain {
   // Initialize the drops array
   initDrops() {
     this.drops = [];
-    // Start with a few drops
-    for (let i = 0; i < 20; i++) {
+
+    // Calculate how many columns can fit based on screen width
+    const columnWidth = config.fontSize * 0.8; // Increased spacing for larger characters
+    const columns = Math.floor(this.canvas.width / columnWidth);
+
+    // Start with drops that cover more of the screen
+    for (let i = 0; i < Math.min(columns, 30); i++) { // Reduced initial drops for larger characters
       this.createNewDrop();
     }
   }
@@ -93,14 +98,14 @@ class MatrixRain {
   createNewDrop() {
     if (this.drops.length >= config.maxDrops) return;
     
-    const columnWidth = config.fontSize * 0.65;
+    const columnWidth = config.fontSize * 0.8; // Increased spacing for larger characters
     const x = Math.floor(Math.random() * (this.canvas.width / columnWidth)) * columnWidth;
     
     this.drops.push({
       x,
       y: Math.random() * -100 - 50, // Start above the viewport
       speed: (Math.random() * 0.5 + 0.5) * config.fontSize * config.dropSpeed,
-      chars: Array(Math.floor(Math.random() * config.dropLength) + 5).fill().map(() => ({
+      chars: Array(config.dropLength).fill().map(() => ({
         value: this.getRandomChar(),
         isChanging: Math.random() < 0.3
       }))
@@ -172,8 +177,9 @@ class MatrixRain {
           this.ctx.fillStyle = '#FFFFFF'; // White for head character
         } else {
           // Calculate brightness based on position in the drop
-          const brightness = 1 - (j / drop.chars.length);
-          const alpha = Math.max(0.1, brightness);
+          // to maintain visible trail for at least 80vh
+          const brightness = 1 - (j / (drop.chars.length * 0.7)); // Slower fade-out
+          const alpha = Math.max(0.15, brightness); // Higher minimum opacity
           this.ctx.fillStyle = `rgba(3, 160, 98, ${alpha})`; // Matrix green with variable alpha
         }
         
