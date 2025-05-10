@@ -1,23 +1,36 @@
 // Matrix Rain Background Effect
 
+// Check if the device is mobile
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+         (window.innerWidth <= 768);
+};
+
 // Configuration
 const config = {
-  fontSize: 28, // Doubled the original size
+  // Adjust font size based on device type
+  get fontSize() {
+    return isMobile() ? 14 : 28; // Half size on mobile, doubled size on desktop
+  },
   color: '#03A062', // Matrix green
   backgroundColor: 'rgba(0, 0, 0, 0)', // Fully transparent background
   characters: [
-    '｢', '｣', '､', 'ｦ', 'ｧ', 'ｨ', 'ｩ', 'ｪ', 'ｫ', 'ｬ', 'ｭ', 'ｮ', 'ｯ', 'ｰ', 'ｱ', 'ｲ', 'ｳ', 
-    'ｴ', 'ｵ', 'ｶ', 'ｷ', 'ｸ', 'ｹ', 'ｺ', 'ｻ', 'ｼ', 'ｽ', 'ｾ', 'ｿ', 'ﾀ', 'ﾁ', 'ﾂ', 'ﾃ', 'ﾄ', 
-    'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ', 'ﾊ', 'ﾋ', 'ﾌ', 'ﾍ', 'ﾎ', 'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ', 'ﾔ', 'ﾕ', 
-    'ﾖ', 'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ', 'ﾜ', 'ﾝ', '0', '1', '2', '3', '4', '5', '6', '7', '8', 
-    '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
+    '｢', '｣', '､', 'ｦ', 'ｧ', 'ｨ', 'ｩ', 'ｪ', 'ｫ', 'ｬ', 'ｭ', 'ｮ', 'ｯ', 'ｰ', 'ｱ', 'ｲ', 'ｳ',
+    'ｴ', 'ｵ', 'ｶ', 'ｷ', 'ｸ', 'ｹ', 'ｺ', 'ｻ', 'ｼ', 'ｽ', 'ｾ', 'ｿ', 'ﾀ', 'ﾁ', 'ﾂ', 'ﾃ', 'ﾄ',
+    'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ', 'ﾊ', 'ﾋ', 'ﾌ', 'ﾍ', 'ﾎ', 'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ', 'ﾔ', 'ﾕ',
+    'ﾖ', 'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ', 'ﾜ', 'ﾝ', '0', '1', '2', '3', '4', '5', '6', '7', '8',
+    '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
   ],
   speed: 30, // Update interval in milliseconds
   density: 0.03, // Reduced probability to account for larger characters
   dropLength: 80, // Number of characters in each drop (set to at least 80vh)
   maxDrops: 70, // Reduced maximum drops due to larger character size
-  dropSpeed: 0.35 // Base speed multiplier (reduced by half)
+
+  // Adjust drop speed based on device type
+  get dropSpeed() {
+    return isMobile() ? 0.20 : 0.35; // Slower on mobile (0.20), faster on desktop (0.35)
+  }
 };
 
 // Define MatrixRain class
@@ -46,20 +59,29 @@ class MatrixRain {
 
     // Get drawing context
     this.ctx = this.canvas.getContext('2d');
-    
+
     // Resize handler
-    window.addEventListener('resize', this.resize.bind(this));
+    window.addEventListener('resize', this.handleResize.bind(this));
     this.resize();
 
     // Initialize drops
     this.initDrops();
-    
+
     // Start animation loop
     this.lastUpdateTime = performance.now();
     this.animate();
-    
+
     this.initialized = true;
     return this;
+  }
+
+  // Debounced resize handler to check for device type changes
+  handleResize() {
+    // Resize the canvas
+    this.resize();
+
+    // Re-initialize drops to apply new device-specific settings
+    this.initDrops();
   }
 
   // Handle canvas resizing
@@ -104,7 +126,7 @@ class MatrixRain {
     this.drops.push({
       x,
       y: Math.random() * -100 - 50, // Start above the viewport
-      speed: (Math.random() * 0.5 + 0.5) * config.fontSize * config.dropSpeed,
+      speed: (Math.random() * 0.5 + 0.5) * config.fontSize * config.dropSpeed, // Dynamic speed calculation
       chars: Array(config.dropLength).fill().map(() => ({
         value: this.getRandomChar(),
         isChanging: Math.random() < 0.3
