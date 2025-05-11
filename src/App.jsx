@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import About from './components/About';
@@ -93,30 +94,36 @@ function App() {
         <div className="main-content">
           <Navbar activePage={activePage} onPageChange={handlePageChange} />
 
-          <Routes>
-            <Route path="/" element={<About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />} />
-            <Route path="/about" element={<About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />} />
-            <Route path="/resume" element={<Resume isActive={activePage === 'resume'} />} />
-            <Route path="/portfolio" element={
-              <Portfolio
-                isActive={activePage === 'portfolio'}
-                openProjectModal={openProjectModal}
-              />
-            } />
-            <Route path="/blog" element={<Blog isActive={activePage === 'blog'} />} />
-            <Route path="/contact" element={<Contact isActive={activePage === 'contact'} />} />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />} />
+              <Route path="/about" element={<About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />} />
+              <Route path="/resume" element={<Resume isActive={activePage === 'resume'} />} />
+              <Route path="/portfolio" element={
+                <Portfolio
+                  isActive={activePage === 'portfolio'}
+                  openProjectModal={openProjectModal}
+                />
+              } />
+              <Route path="/blog" element={<Blog isActive={activePage === 'blog'} />} />
+              <Route path="/contact" element={<Contact isActive={activePage === 'contact'} />} />
+            </Routes>
+          </AnimatePresence>
         </div>
       </main>
 
-      <Modal
-        isOpen={modalState.isOpen}
-        onClose={closeModal}
-        className={modalState.type === 'testimonial' ? 'testimonial-modal' : ''}
-      >
-        {modalState.type === 'project' && <ProjectModalContent project={modalState.data} />}
-        {modalState.type === 'testimonial' && <TestimonialModalContent testimonial={modalState.data} />}
-      </Modal>
+      <AnimatePresence>
+        {modalState.isOpen && (
+          <Modal
+            isOpen={modalState.isOpen}
+            onClose={closeModal}
+            className={modalState.type === 'testimonial' ? 'testimonial-modal' : ''}
+          >
+            {modalState.type === 'project' && <ProjectModalContent project={modalState.data} />}
+            {modalState.type === 'testimonial' && <TestimonialModalContent testimonial={modalState.data} />}
+          </Modal>
+        )}
+      </AnimatePresence>
     </DataProvider>
   );
 }
