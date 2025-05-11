@@ -1,0 +1,91 @@
+/* Correções para o sidebar */
+
+/* Sempre mostrar o conteúdo do sidebar */
+.sidebar {
+  max-height: none !important; /* Sobrescrever o max-height limitado */
+}
+
+.sidebar-info-more {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Melhorias de estilo para os elementos do sidebar */
+.avatar-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar-box:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 0 15px rgba(3, 160, 98, 0.3);
+}
+
+.avatar-box img {
+  transition: filter 0.3s ease;
+}
+
+.avatar-box:hover img {
+  filter: brightness(1.1);
+}
+
+.name {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.name:hover {
+  color: var(--matrix-green);
+  transform: translateX(3px);
+}
+
+.title {
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.title:hover {
+  transform: scale(1.05);
+  background: var(--matrix-green);
+  color: var(--eerie-black1);
+}
+
+/* Social icons interactions */
+.social-link {
+  transition: all 0.3s ease;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.social-link:hover {
+  background-color: rgba(3, 160, 98, 0.2);
+  color: var(--matrix-green) !important;
+  transform: scale(1.2);
+}
+
+/* Contact items interactions */
+.contact-item {
+  transition: transform 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateX(5px);
+}
+
+.contact-item:hover .icon-box {
+  transform: scale(1.1) rotate(10deg);
+  color: var(--matrix-green-light);
+}
+
+.contact-item:hover .contact-title {
+  color: var(--matrix-green);
+}
+
+.contact-item:hover .contact-link {
+  color: var(--matrix-green-light);
+}
+
+.icon-box {
+  transition: transform 0.3s ease, color 0.3s ease;
+}

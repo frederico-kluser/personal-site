@@ -118,6 +118,7 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
+/* Estilos para a caixa do autor */
 .author-box {
   animation: fadeIn 0.5s ease forwards;
   animation-delay: 0.6s;
@@ -128,16 +129,72 @@
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.2);
   margin-bottom: 2em;
+  position: relative;
+  overflow: hidden;
+}
+
+.author-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(3, 160, 98, 0) 0%, rgba(3, 160, 98, 1) 50%, rgba(3, 160, 98, 0) 100%);
+  transform: translateX(-100%);
+  transition: transform 1s ease;
+}
+
+.author-box:hover::before {
+  transform: translateX(100%);
+}
+
+.author-box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(3, 160, 98, 0.1) 0%, rgba(3, 160, 98, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+
+.author-box:hover::after {
+  opacity: 1;
 }
 
 .author-box:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .author-avatar {
   margin-bottom: 1em;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.author-avatar::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  transition: border-color 0.3s ease, transform 0.5s ease;
+  z-index: -1;
+}
+
+.author-avatar:hover::before {
+  border-color: var(--matrix-green);
+  transform: scale(1.1) rotate(10deg);
 }
 
 .author-avatar:hover {
@@ -146,28 +203,55 @@
 
 .author-avatar img {
   border-radius: 50%;
-  transition: filter 0.3s ease;
+  transition: all 0.5s ease;
   filter: grayscale(50%);
 }
 
 .author-avatar:hover img {
-  filter: grayscale(0%);
+  filter: grayscale(0%) brightness(1.1);
+  box-shadow: 0 0 15px rgba(3, 160, 98, 0.5);
 }
 
 .author-name {
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin: 0.5em 0;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.author-name::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: var(--matrix-green);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.author-name:hover::after {
+  width: 50%;
+  left: 25%;
 }
 
 .author-name:hover {
   color: var(--matrix-green);
+  transform: translateY(-2px);
 }
 
 .author-title {
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  text-align: center;
+  opacity: 0.8;
 }
 
 .author-title:hover {
   transform: scale(1.05);
+  opacity: 1;
+  color: var(--matrix-green-light);
 }
 
 /* Estilos para posts recentes */

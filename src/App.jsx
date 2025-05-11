@@ -15,6 +15,7 @@ import TestimonialModalContent from './components/TestimonialModalContent';
 import MatrixRain from './components/MatrixRain';
 import { DataProvider } from './context/DataContext';
 import './assets/css/style.css';
+import './assets/css/sidebar-fixes.css';
 
 function App() {
   const [activePage, setActivePage] = useState('about');
