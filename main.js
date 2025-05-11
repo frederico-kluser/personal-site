@@ -307,6 +307,98 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Portfolio Project Modal
+const projectItems = document.querySelectorAll('[data-project-item]');
+const projectModalContainer = document.querySelector('[data-project-modal-container]');
+const projectModalCloseBtn = document.querySelector('[data-project-modal-close-btn]');
+const projectOverlay = document.querySelector('[data-project-overlay]');
+
+const projectModalImg = document.querySelector('[data-project-modal-img]');
+const projectModalTitle = document.querySelector('[data-project-modal-title]');
+const projectModalRole = document.querySelector('[data-project-modal-role]');
+const projectModalText = document.querySelector('[data-project-modal-text]');
+const projectModalTechs = document.querySelector('[data-project-modal-techs]');
+const projectModalMethodologies = document.querySelector('[data-project-modal-methodologies]');
+const projectModalTools = document.querySelector('[data-project-modal-tools]');
+const projectModalDownloads = document.querySelector('[data-project-modal-downloads]');
+
+const projectModalFunc = function () {
+    projectModalContainer.classList.toggle('active');
+    projectOverlay.classList.toggle('active');
+}
+
+// Attach event listeners to project items
+for (let i = 0; i < projectItems.length; i++) {
+    const projectIconBox = projectItems[i].querySelector('.project-item-icon-box');
+
+    projectIconBox.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Get project details
+        const projectImg = projectItems[i].querySelector('.project-img img');
+        const projectTitle = projectItems[i].querySelector('[data-project-title]');
+        const projectDetails = projectItems[i].querySelector('[data-project-details]');
+
+        // Set modal content
+        projectModalImg.src = projectImg.src;
+        projectModalImg.alt = projectImg.alt;
+        projectModalTitle.innerHTML = projectTitle.innerHTML;
+
+        // Role
+        const projectRole = projectDetails.querySelector('.project-details-role');
+        projectModalRole.innerHTML = `<h4 class="h4">Role:</h4><p>${projectRole.innerHTML}</p>`;
+
+        // Description
+        const projectText = projectDetails.querySelector('.project-details-text');
+        projectModalText.innerHTML = `<h4 class="h4">Description:</h4><p>${projectText.innerHTML}</p>`;
+
+        // Technologies
+        const projectTechs = projectDetails.querySelector('.project-tech-stack');
+        if (projectTechs) {
+            projectModalTechs.innerHTML = `<h4 class="h4">Technologies:</h4><p>${projectTechs.querySelector('p').innerHTML}</p>`;
+            projectModalTechs.style.display = 'block';
+        } else {
+            projectModalTechs.style.display = 'none';
+        }
+
+        // Methodologies
+        const projectMethodologies = projectDetails.querySelector('.project-methodology');
+        if (projectMethodologies) {
+            projectModalMethodologies.innerHTML = `<h4 class="h4">Methodologies:</h4><p>${projectMethodologies.querySelector('p').innerHTML}</p>`;
+            projectModalMethodologies.style.display = 'block';
+        } else {
+            projectModalMethodologies.style.display = 'none';
+        }
+
+        // Tools
+        const projectTools = projectDetails.querySelector('.project-tools');
+        if (projectTools) {
+            projectModalTools.innerHTML = `<h4 class="h4">Tools:</h4><p>${projectTools.querySelector('p').innerHTML}</p>`;
+            projectModalTools.style.display = 'block';
+        } else {
+            projectModalTools.style.display = 'none';
+        }
+
+        // Downloads
+        const projectDownloads = projectDetails.querySelector('.project-downloads');
+        if (projectDownloads) {
+            projectModalDownloads.innerHTML = `<h4 class="h4">Downloads:</h4><p>${projectDownloads.querySelector('p').innerHTML}</p>`;
+            projectModalDownloads.style.display = 'block';
+        } else {
+            projectModalDownloads.style.display = 'none';
+        }
+
+        // Show modal
+        projectModalFunc();
+    });
+}
+
+// Close button for project modal
+if (projectModalCloseBtn && projectOverlay) {
+    projectModalCloseBtn.addEventListener('click', projectModalFunc);
+    projectOverlay.addEventListener('click', projectModalFunc);
+}
+
 // Enabling Page Navigation
 
 const navigationLinks = document.querySelectorAll('[data-nav-link]');
@@ -314,7 +406,7 @@ const pages = document.querySelectorAll('[data-page]');
 
 for(let i = 0; i < navigationLinks.length; i++) {
     navigationLinks[i].addEventListener('click', function() {
-        
+
         for(let i = 0; i < pages.length; i++) {
             if(this.innerHTML.toLowerCase() == pages[i].dataset.page) {
                 pages[i].classList.add('active');
