@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import MatrixRain from './MatrixRain';
 import '../assets/css/blog-post.css';
 
 function BlogPost() {
@@ -8,7 +9,16 @@ function BlogPost() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [recentPosts, setRecentPosts] = useState([]);
+  const [recentPosts, setRecentPosts] = useState([
+    {
+      id: 'ux-design-trends-2024',
+      title: 'UX Design Trends to Watch in 2024'
+    },
+    {
+      id: 'design-conferences-2024',
+      title: 'Must-Attend Design Conferences in 2024'
+    }
+  ]);
 
   useEffect(() => {
     // In a real application, we would fetch this from an API
@@ -24,26 +34,9 @@ function BlogPost() {
         
         const data = await response.json();
         setPost(data);
-        
-        // Load recent posts (in a real app, this would be a separate API call)
-        // For this demo, we'll just hardcode a few posts
-        setRecentPosts([
-          {
-            id: 'design-conferences-2024',
-            title: 'Design conferences in 2024'
-          },
-          {
-            id: 'ux-design-trends-2024',
-            title: 'UX Design Trends to Watch in 2024'
-          },
-          {
-            id: 'design-digest-80',
-            title: 'Design digest #80'
-          }
-        ]);
-        
         setLoading(false);
       } catch (err) {
+        console.error('Error loading blog post:', err);
         setError(err.message);
         setLoading(false);
       }
@@ -53,81 +46,150 @@ function BlogPost() {
   }, [id]);
 
   if (loading) {
-    return <div className="blog-post-loading">Loading blog post...</div>;
+    return (
+      <>
+        <MatrixRain />
+        <main className="blog-main">
+          <div className="main-content blog-full-width">
+            <nav className="navbar">
+              <ul className="navbar-list">
+                <li className="navbar-item"><Link to="/" className="navbar-link">About</Link></li>
+                <li className="navbar-item"><Link to="/resume" className="navbar-link">Resume</Link></li>
+                <li className="navbar-item"><Link to="/portfolio" className="navbar-link">Portfolio</Link></li>
+                <li className="navbar-item"><Link to="/blog" className="navbar-link active">Blog</Link></li>
+                <li className="navbar-item"><Link to="/contact" className="navbar-link">Contact</Link></li>
+              </ul>
+            </nav>
+            <div className="blog-post-loading">Loading blog post...</div>
+          </div>
+        </main>
+      </>
+    );
   }
 
   if (error) {
-    return <div className="blog-post-error">Error: {error}</div>;
+    return (
+      <>
+        <MatrixRain />
+        <main className="blog-main">
+          <div className="main-content blog-full-width">
+            <nav className="navbar">
+              <ul className="navbar-list">
+                <li className="navbar-item"><Link to="/" className="navbar-link">About</Link></li>
+                <li className="navbar-item"><Link to="/resume" className="navbar-link">Resume</Link></li>
+                <li className="navbar-item"><Link to="/portfolio" className="navbar-link">Portfolio</Link></li>
+                <li className="navbar-item"><Link to="/blog" className="navbar-link active">Blog</Link></li>
+                <li className="navbar-item"><Link to="/contact" className="navbar-link">Contact</Link></li>
+              </ul>
+            </nav>
+            <div className="blog-post-error">Error: {error}</div>
+          </div>
+        </main>
+      </>
+    );
   }
 
   if (!post) {
-    return <div className="blog-post-not-found">Blog post not found</div>;
+    return (
+      <>
+        <MatrixRain />
+        <main className="blog-main">
+          <div className="main-content blog-full-width">
+            <nav className="navbar">
+              <ul className="navbar-list">
+                <li className="navbar-item"><Link to="/" className="navbar-link">About</Link></li>
+                <li className="navbar-item"><Link to="/resume" className="navbar-link">Resume</Link></li>
+                <li className="navbar-item"><Link to="/portfolio" className="navbar-link">Portfolio</Link></li>
+                <li className="navbar-item"><Link to="/blog" className="navbar-link active">Blog</Link></li>
+                <li className="navbar-item"><Link to="/contact" className="navbar-link">Contact</Link></li>
+              </ul>
+            </nav>
+            <div className="blog-post-not-found">Blog post not found</div>
+          </div>
+        </main>
+      </>
+    );
   }
 
   return (
-    <main className="blog-main">
-      <article className="blog-post">
-        <header>
-          <h2 className="h2 article-title">{post.title}</h2>
-          
-          <div className="blog-meta">
-            <p className="blog-category">{post.category}</p>
-            <span className="dot"></span>
-            <time dateTime={post.createdAt}>
-              {new Date(post.createdAt).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </time>
-          </div>
-        </header>
+    <>
+      <MatrixRain />
+      <main className="blog-main">
+        <div className="main-content blog-full-width">
+          <nav className="navbar">
+            <ul className="navbar-list">
+              <li className="navbar-item"><Link to="/" className="navbar-link">About</Link></li>
+              <li className="navbar-item"><Link to="/resume" className="navbar-link">Resume</Link></li>
+              <li className="navbar-item"><Link to="/portfolio" className="navbar-link">Portfolio</Link></li>
+              <li className="navbar-item"><Link to="/blog" className="navbar-link active">Blog</Link></li>
+              <li className="navbar-item"><Link to="/contact" className="navbar-link">Contact</Link></li>
+            </ul>
+          </nav>
 
-        <div className="blog-banner">
-          <img src={post.coverImage.url} alt={post.coverImage.alt} />
+          <article className="blog-post active">
+            <header>
+              <h2 className="h2 article-title">{post.title}</h2>
+              
+              <div className="blog-meta">
+                <p className="blog-category">{post.category}</p>
+                <span className="dot"></span>
+                <time dateTime={post.createdAt}>
+                  {new Date(post.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+              </div>
+            </header>
+
+            <figure className="blog-banner">
+              <img src={post.coverImage.url} alt={post.coverImage.alt} loading="lazy" />
+            </figure>
+
+            <div className="blog-content-wrapper">
+              <div className="blog-content">
+                <ReactMarkdown>{post.content}</ReactMarkdown>
+              </div>
+
+              <div className="blog-sidebar">
+                <div className="author-box">
+                  <figure className="author-avatar">
+                    <img src="https://i.postimg.cc/YCsNJBN2/avatar-white.webp" alt="Fred K." width="80" />
+                  </figure>
+                  <h3 className="h3 author-name">Fred K.</h3>
+                  <p className="author-title">UX Designer & Researcher</p>
+                </div>
+
+                <div className="recent-posts">
+                  <h3 className="h3">Recent Posts</h3>
+                  <ul className="recent-posts-list">
+                    {recentPosts.map(recentPost => (
+                      <li className="recent-post-item" key={recentPost.id}>
+                        <Link to={`/blog/${recentPost.id}`}>
+                          {recentPost.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="tags">
+                  <h3 className="h3">Tags</h3>
+                  <ul className="tags-list">
+                    {post.tags.map((tag, index) => (
+                      <li key={index}>
+                        <a href="#" className="tag-link">{tag}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
-
-        <div className="blog-content-wrapper">
-          <div className="blog-content">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
-          </div>
-
-          <div className="blog-sidebar">
-            <div className="author-box">
-              <figure className="author-avatar">
-                <img src="https://i.postimg.cc/JzBWVhW4/my-avatar.png" alt="Fred K." width="80" />
-              </figure>
-              <h4 className="h4 author-name">Fred K.</h4>
-              <p className="author-title">UX Designer & Developer</p>
-            </div>
-
-            <div className="recent-posts">
-              <h3 className="h3">Recent Posts</h3>
-              <ul className="recent-posts-list">
-                {recentPosts.map(recentPost => (
-                  <li className="recent-post-item" key={recentPost.id}>
-                    <Link to={`/blog/${recentPost.id}`}>
-                      {recentPost.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="tags">
-              <h3 className="h3">Tags</h3>
-              <ul className="tags-list">
-                {post.tags.map((tag, index) => (
-                  <li key={index}>
-                    <a href="#" className="tag-link">{tag}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </article>
-    </main>
+      </main>
+    </>
   );
 }
 
