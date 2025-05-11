@@ -564,19 +564,25 @@ article { display: none; }
     position: absolute;
     top: 15px;
     right: 15px;
-    background: var(--matrix-green);
+    background: var(--bg-gradient-matrix2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--matrix-green);
     border-radius: 8px;
     width: 32px;
     height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--white2);
+    color: var(--matrix-green);
     font-size: 18px;
-    opacity: .9;
+    opacity: 1;
+    box-shadow: var(--shadow2);
 }
 
-    .modal-close-btn:hover, .modal-close-btn:focus { opacity: 1; }
+    .modal-close-btn:hover, .modal-close-btn:focus {
+        background: var(--bg-gradient-matrix1);
+        color: var(--white2);
+    }
     .modal-close-btn ion-icon { --ionicon-stroke-width: 50px; }
 
 .modal-avatar-box {
