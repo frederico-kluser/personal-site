@@ -183,7 +183,8 @@ function ContactItem({ icon, title, link, text, isAddress = false, delay }) {
         transition: { type: 'spring', stiffness: 300, damping: 20 }
       }}
     >
-      <motion.div
+      <motion.a
+        href={link}
         className="icon-box"
         whileHover={{
           rotate: 10,
@@ -191,9 +192,10 @@ function ContactItem({ icon, title, link, text, isAddress = false, delay }) {
           color: 'var(--matrix-green)',
           transition: { type: 'spring', stiffness: 400, damping: 10 }
         }}
+        style={{ textDecoration: 'none' }}
       >
         <ion-icon name={icon}></ion-icon>
-      </motion.div>
+      </motion.a>
 
       <div className="contact-info">
         <motion.p

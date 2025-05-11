@@ -76,6 +76,7 @@
 .contact-item:hover .icon-box {
   transform: scale(1.1) rotate(10deg);
   color: var(--matrix-green-light);
+  box-shadow: 0 0 10px rgba(3, 160, 98, 0.3);
 }
 
 .contact-item:hover .contact-title {
@@ -87,5 +88,24 @@
 }
 
 .icon-box {
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none; /* Remove a linha sob o texto */
+  cursor: pointer; /* Indicar que é clicável */
+}
+
+/* Adicionar um efeito de pulsação aos ícones para indicar que são clicáveis */
+a.icon-box:hover {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(3, 160, 98, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(3, 160, 98, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(3, 160, 98, 0);
+  }
 }
