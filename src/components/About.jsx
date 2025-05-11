@@ -147,6 +147,8 @@ function About({ isActive }) {
                       src={testimonial.avatar}
                       alt={testimonial.name}
                       width="60"
+                      height="60"
+                      style={{ objectFit: "cover" }}
                     />
                   </figure>
 

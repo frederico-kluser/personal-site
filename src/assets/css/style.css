@@ -203,6 +203,7 @@ article { display: none; }
     box-shadow: var(--shadow2);
     cursor: pointer;
     z-index: 1;
+    overflow: visible;
 }
 
     .content-card::before {
@@ -466,6 +467,7 @@ article { display: none; }
     transition: var(--transition1);
     margin: 0 auto;
     max-width: 95%;
+    padding-top: 35px !important;
 }
 
 .testimonial-card:hover {
@@ -481,6 +483,8 @@ article { display: none; }
     background: var(--bg-gradient-onyx);
     border-radius: 14px;
     box-shadow: var(--shadow1);
+    z-index: 5;
+    overflow: visible;
 }
 
 .testimonials-text {
