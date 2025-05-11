@@ -1018,6 +1018,28 @@ article { display: none; }
         filter: grayscale(1) invert(1);
     }
 
+    .digital-nomad-badge {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--eerie-black1);
+        color: var(--matrix-green);
+        padding: 8px 15px;
+        border-radius: 20px;
+        border: 1px solid var(--matrix-green);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 5;
+        font-size: var(--fs7);
+        box-shadow: var(--shadow1);
+    }
+
+    .digital-nomad-badge ion-icon {
+        font-size: 18px;
+    }
+
 .contact-form { margin-bottom: 10px; }
 
 .form-title { margin-bottom: 20px; }
