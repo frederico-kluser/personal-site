@@ -24,6 +24,11 @@ const modalText = document.querySelector('[data-modal-text]');
 const testimonialsModalFunc = function () {
     modalContainer.classList.toggle('active');
     overlay.classList.toggle('active');
+
+    // Force scroll to top when opening modal on mobile
+    if (modalContainer.classList.contains('active')) {
+        window.scrollTo(0, 0);
+    }
 }
 
 // Add drag-to-scroll functionality to testimonials list
@@ -325,6 +330,11 @@ const projectModalDownloads = document.querySelector('[data-project-modal-downlo
 const projectModalFunc = function () {
     projectModalContainer.classList.toggle('active');
     projectOverlay.classList.toggle('active');
+
+    // Force scroll to top when opening modal on mobile
+    if (projectModalContainer.classList.contains('active')) {
+        window.scrollTo(0, 0);
+    }
 }
 
 // Attach event listeners to project items
