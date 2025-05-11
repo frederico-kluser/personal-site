@@ -5,804 +5,673 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brazil RoadTrip - Fred K.</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blog-post.css">
     <link rel="shortcut icon" href="https://i.postimg.cc/9fqYVvxh/logo.png" type="image/x-icon">
 </head>
 <body>
+    <canvas id="matrixCanvas"></canvas>
+    
     <main>
-        <aside class="sidebar " data-sidebar>
+        <!-- SIDEBAR -->
+        <aside class="sidebar" data-sidebar>
             <div class="sidebar-info">
                 <figure class="avatar-box">
-                    <img src="https://i.postimg.cc/JzBWVhW4/my-avatar.png" alt="avatar" width="80">
+                    <img src="https://i.postimg.cc/YCsNJBN2/avatar-white.webp" alt="Fred K." width="80">
                 </figure>
-
                 <div class="info-content">
                     <h1 class="name" title="Fred K.">Fred K.</h1>
-                    <p class="title">MCP | LLM | React Developer</p>
+                    <p class="title">UX Designer & Researcher</p>
                 </div>
-
                 <button class="info-more-btn" data-sidebar-btn>
                     <span>Show Contacts</span>
                     <ion-icon name="chevron-down"></ion-icon>
                 </button>
             </div>
-
             <div class="sidebar-info-more">
                 <div class="separator"></div>
-
                 <ul class="contacts-list">
                     <li class="contact-item">
                         <div class="icon-box">
                             <ion-icon name="mail-outline"></ion-icon>
                         </div>
-
                         <div class="contact-info">
                             <p class="contact-title">Email</p>
-
                             <a href="mailto:fkluser@icloud.com" class="contact-link">fkluser@icloud.com</a>
                         </div>
                     </li>
-
-                    <li class="contact-item">
-                        <div class="icon-box">
-                            <ion-icon name="phone-portrait-outline"></ion-icon>
-                        </div>
-
-                        <div class="contact-info">
-                            <p class="contact-title">Phone</p>
-
-                            <a href="tel:+5513992032756" class="contact-link">+55 13 99203-2756</a>
-                        </div>
-                    </li>
-
-                    <li class="contact-item">
-                        <div class="icon-box">
-                            <ion-icon name="logo-linkedin"></ion-icon>
-                        </div>
-
-                        <div class="contact-info">
-                            <p class="contact-title">LinkedIn</p>
-
-                            <a href="https://www.linkedin.com/in/fredericokluser" class="contact-link">fredericokluser</a>
-                        </div>
-                    </li>
-
                     <li class="contact-item">
                         <div class="icon-box">
                             <ion-icon name="location-outline"></ion-icon>
                         </div>
-
                         <div class="contact-info">
                             <p class="contact-title">Location</p>
-
-                            <address><a href="#" class="contact-link">Digital Nomad</a></address>
+                            <address>São Paulo, Brazil</address>
                         </div>
                     </li>
                 </ul>
-
                 <div class="separator"></div>
-
                 <ul class="social-list">
-                    <li class="social-item"><a href="https://github.com/frederico-kluser?tab=repositories" class="social-link" target="_blank"><ion-icon name="logo-github"></ion-icon></a></li>
-                    <li class="social-item"><a href="https://x.com/fredericokluser" class="social-link" target="_blank"><ion-icon name="logo-twitter"></ion-icon></a></li>
-                    <li class="social-item"><a href="https://www.instagram.com/kluserhuu/" class="social-link" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></li>
+                    <li class="social-item">
+                        <a href="https://www.linkedin.com/in/fredericok/" class="social-link">
+                            <ion-icon name="logo-linkedin"></ion-icon>
+                        </a>
+                    </li>
+                    <li class="social-item">
+                        <a href="https://www.behance.net/fredericok" class="social-link">
+                            <ion-icon name="logo-behance"></ion-icon>
+                        </a>
+                    </li>
+                    <li class="social-item">
+                        <a href="https://medium.com/@fredericok" class="social-link">
+                            <ion-icon name="logo-medium"></ion-icon>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </aside>
 
+        <!-- NAVBAR -->
         <div class="main-content">
             <nav class="navbar">
                 <ul class="navbar-list">
-                    <li class="navbar-item"><button class="navbar-link active" data-nav-link>About</button></li>
-                    <li class="navbar-item"><button class="navbar-link" data-nav-link>Resume</button></li>
-                    <li class="navbar-item"><button class="navbar-link" data-nav-link>Portfolio</button></li>
-                    <li class="navbar-item"><button class="navbar-link" data-nav-link>Blog</button></li>
-                    <li class="navbar-item"><button class="navbar-link" data-nav-link>Contact</button></li>
+                    <li class="navbar-item">
+                        <button class="navbar-link active" data-nav-link>About</button>
+                    </li>
+                    <li class="navbar-item">
+                        <button class="navbar-link" data-nav-link>Resume</button>
+                    </li>
+                    <li class="navbar-item">
+                        <button class="navbar-link" data-nav-link>Portfolio</button>
+                    </li>
+                    <li class="navbar-item">
+                        <button class="navbar-link" data-nav-link>Blog</button>
+                    </li>
+                    <li class="navbar-item">
+                        <button class="navbar-link" data-nav-link>Contact</button>
+                    </li>
                 </ul>
             </nav>
 
+            <!-- ABOUT PAGE -->
             <article class="about active" data-page="about">
                 <header>
-                    <h2 class="h2 article-title">About me</h2>
+                    <h2 class="h2 article-title">About Me</h2>
                 </header>
-
+                
                 <section class="about-text">
-                    <p>Como Desenvolvedor de IA no Grupo Fleury, crio e mantenho ferramentas de software de alta qualidade que utilizam inteligência artificial para aprimorar os serviços e operações da empresa. Trabalho com uma equipe de profissionais talentosos no desenvolvimento de chatbots, sistemas de análise de dados e interfaces amigáveis que atendem às necessidades e expectativas de clientes internos e externos.</p>
-                    <p>Tenho uma sólida formação em engenharia de software, com graduação incompleta em Ciência da Computação pela Universidade do Oeste de Santa Catarina e várias certificações da Microsoft. Tenho experiência no desenvolvimento de aplicações web e mobile para diversos domínios, como e-commerce, marketing e educação, utilizando tecnologias como Javascript, CSS, Git, Ionic, React, React Native, NodeJs, Express e MongoDB. Sou proficiente em HTML5, Angular e MySQL, e possuo um entendimento sólido de estruturas de dados, algoritmos, padrões de design, concorrência, multitarefa, escalabilidade e arquitetura corporativa. Sou apaixonado por criar soluções e métodos inovadores que resolvam problemas e melhorem a qualidade e o desempenho dos produtos de software. Também sou fluente em português, inglês e espanhol.</p>
+                    <p>
+                        I'm Frederico Klusener, an award-winning UX designer with a passion for solving users' real problems through my human-centered approach to design. With 15+ years in the field, I've designed and launched successful digital products, led design teams, and mentored rising design talent.
+                    </p>
+                    <p>
+                        My design philosophy centers on understanding human behavior, and I consistently bridge the gap between user needs and business goals, ensuring my solutions are practical, cost-effective, and elegant. I've recently developed a growing interest in emerging technologies, particularly the integration of AI in digital products to enhance productivity and user experiences.
+                    </p>
                 </section>
 
+                <!-- SERVICE -->
                 <section class="service">
                     <h3 class="h3 service-title">What I'm doing</h3>
-
                     <ul class="service-list">
                         <li class="service-item">
                             <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/4389jZkP/icon-design.png" alt="icon" width="40">
+                                <img src="https://i.postimg.cc/QxQnVVp4/icon-design.png" alt="UX Design icon" width="40">
                             </div>
-
                             <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Web Design</h4>
-                                <p class="service-item-text">The most modern and high-quality design made at a professional level.</p>
+                                <h4 class="h4 service-item-title">UX Design</h4>
+                                <p class="service-item-text">
+                                    Creating user-centered experiences that delight customers and drive business value through research, design, and validation.
+                                </p>
                             </div>
                         </li>
-
                         <li class="service-item">
                             <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/ZqgqrqzG/icon-dev.png" alt="icon" width="40">
+                                <img src="https://i.postimg.cc/mgJbRXjN/icon-app.png" alt="Mobile App Development icon" width="40">
                             </div>
-
                             <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Web development</h4>
-                                <p class="service-item-text">High-quality development of sites at the professional level.</p>
+                                <h4 class="h4 service-item-title">Mobile Apps</h4>
+                                <p class="service-item-text">
+                                    Designing apps that deliver seamless mobile experiences through platform-aware design patterns and best practices.
+                                </p>
                             </div>
                         </li>
-
                         <li class="service-item">
                             <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/xjLdzYxZ/icon-app.png" alt="icon" width="40">
+                                <img src="https://i.postimg.cc/YCKRDxMP/icon-web.png" alt="Web Development icon" width="40">
                             </div>
-
                             <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Mobile apps</h4>
-                                <p class="service-item-text">Professional development of applications for iOS and Android.</p>
+                                <h4 class="h4 service-item-title">Web Development</h4>
+                                <p class="service-item-text">
+                                    Bridging the gap between design and implementation with my front-end development skills to ensure pixel-perfect execution.
+                                </p>
                             </div>
                         </li>
-
                         <li class="service-item">
                             <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/0NL8zHpx/icon-photo.png" alt="icon" width="40">
+                                <img src="https://i.postimg.cc/3NnrV3Lm/icon-photo.png" alt="Photography icon" width="40">
                             </div>
-
                             <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Photography</h4>
-                                <p class="service-item-text">I make high-quality photos of any category at a professional level.</p>
+                                <h4 class="h4 service-item-title">Design Systems</h4>
+                                <p class="service-item-text">
+                                    Building cohesive design systems that save time and ensure consistency across products, platforms, and teams.
+                                </p>
                             </div>
                         </li>
                     </ul>
                 </section>
 
+                <!-- TESTIMONIALS -->
                 <section class="testimonials">
                     <h3 class="h3 testimonials-title">Testimonials</h3>
-
+                    
                     <ul class="testimonials-list has-scrollbar">
-                        <li class="testimonials-item">
-                            <div class="content-card" data-testimonials-item>
+                        <li class="testimonials-item" data-testimonials-item>
+                            <div class="content-card">
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/7YvK4Sfp/avatar-1.png" alt="Camila Rodrigues" width="60" data-testimonials-avatar>
                                 </figure>
-
-                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel Lewis</h4>
-
+                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Camila Rodrigues</h4>
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>Richard was hired to create a corporate identity. It's modern, clean and with a beautiful design that got a lot of praises from colleagues and visitors. We were very pleased with the work done. He has a lot of experience and is very concerned about the needs of client.</p>
+                                    <p>
+                                        Working with Fred was transformative for our project. His ability to understand complex business requirements and translate them into intuitive user experiences is unparalleled. What sets him apart is his commitment to true user-centered design, not just following trends.
+                                    </p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="testimonials-item">
-                            <div class="content-card" data-testimonials-item>
+                        <li class="testimonials-item" data-testimonials-item>
+                            <div class="content-card">
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/DwY0yHtx/avatar-2.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/NjHvTdKp/avatar-2.png" alt="Daniel Fernandes" width="60" data-testimonials-avatar>
                                 </figure>
-
-                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica Miller</h4>
-
+                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel Fernandes</h4>
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>Working with Richard has been an absolute pleasure. I was impressed with his attention to detail, his web design skills and his professional approach to our timelines and processes.</p>
+                                    <p>
+                                        Fred joined our team during a critical product redesign, and his impact was immediate. Not only did he deliver exceptional UX work, but he elevated our entire design process. His ability to balance creativity with practical business constraints made him an invaluable asset.
+                                    </p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="testimonials-item">
-                            <div class="content-card" data-testimonials-item>
+                        <li class="testimonials-item" data-testimonials-item>
+                            <div class="content-card">
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/fRFWhX9F/avatar-3.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/7YBPdYhJ/avatar-3.png" alt="Ana Costa" width="60" data-testimonials-avatar>
                                 </figure>
-
-                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily Evans</h4>
-
+                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Ana Costa</h4>
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>I couldn't be happier with the website that Richard created for us. His attention to detail and creativity is unmatched. Our clients frequently compliment the design, and it has significantly improved our brand image.</p>
+                                    <p>
+                                        As a product manager, I've worked with many designers, but Fred stands out for his holistic approach. He doesn't just create beautiful interfaces; he creates experiences that align perfectly with our product strategy and business goals. His data-informed design decisions have directly contributed to our improved conversion rates.
+                                    </p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="testimonials-item">
-                            <div class="content-card" data-testimonials-item>
+                        <li class="testimonials-item" data-testimonials-item>
+                            <div class="content-card">
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/zXv1Xv81/avatar-4.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/PrxHVtGV/avatar-4.png" alt="Lucas Oliveira" width="60" data-testimonials-avatar>
                                 </figure>
-
-                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry Williams</h4>
-
+                                <h4 class="h4 testimonials-item-title" data-testimonials-title>Lucas Oliveira</h4>
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>I was overwhelmed with the thought of redesigning my online store, but Richard made the process seamless. The site is not only visually appealing but also optimized for conversions. I've seen a 50% increase in traffic since the launch!</p>
+                                    <p>
+                                        Fred mentored me early in my UX career, and I couldn't have asked for a better guide. His deep knowledge of design principles combined with practical industry experience provided invaluable lessons. What impressed me most was his ability to communicate complex design concepts in accessible ways, always encouraging growth and exploration.
+                                    </p>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </section>
 
-                <div class="modal-container " data-modal-container>
-                    <div class="overlay " data-overlay></div>
-
-                    <section class="testimonials-modal">
-                        <button class="modal-close-btn" data-modal-close-btn><ion-icon name="close-outline"></ion-icon></button>
-
-                        <div class="modal-img-wrapper">
-                            <figure class="modal-avatar-box">
-                                <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="Daniel Lewis" width="80" data-modal-img>
-                            </figure>
-
-                            <img src="https://i.postimg.cc/mZ00RwX7/icon-quote.png" alt="quote icon">
-                        </div>
-
-                        <div class="modal-content">
-                            <h4 class="h3 modal-title" data-modal-title>Daniel Lewis</h4>
-                            <time datetime="2023-06-14">14 June, 2023</time>
-
-                            <div class="modal-text" data-modal-text>
-                                <p>Richard was hired to create a corporate identity. It's modern, clean and with a beautiful design that got a lot of praises from colleagues and visitors. We were very pleased with the work done. He has a lot of experience and is very concerned about the needs of client.</p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
+                <!-- CLIENTS -->
                 <section class="clients">
                     <h3 class="h3 clients-title">Clients</h3>
-
-                    <div class="clients-list-container">
-                        <ul class="clients-list has-scrollbar">
-                            <li class="clients-item">
-                                <a href="#"><img src="https://i.postimg.cc/YqfKyG66/logo-1-color.png" alt="logo"></a>
-                            </li>
-
-                            <li class="clients-item">
-                                <a href="#"><img src="https://i.postimg.cc/fWm6JtgG/logo-2-color.png" alt="logo"></a>
-                            </li>
-
-                            <li class="clients-item">
-                                <a href="#"><img src="https://i.postimg.cc/Bb07xpwd/logo-3-color.png" alt="logo"></a>
-                            </li>
-
-                            <li class="clients-item">
-                                <a href="#"><img src="https://i.postimg.cc/hv1yMmkh/logo-4-color.png" alt="logo"></a>
-                            </li>
-
-                            <li class="clients-item">
-                                <a href="#"><img src="https://i.postimg.cc/ry1P86Dc/logo-5-color.png" alt="logo"></a>
-                            </li>
-
-                            <li class="clients-item">
-                                <a href="#"><img src="https://i.postimg.cc/SsWDN8NV/logo-6-color.png" alt="logo"></a>
-                            </li>
-                        </ul>
-                    </div>
                 </section>
-
             </article>
-            
-            <article class="resume " data-page="resume">
+
+            <!-- RESUME PAGE -->
+            <article class="resume" data-page="resume">
                 <header>
                     <h2 class="h2 article-title">Resume</h2>
                 </header>
 
                 <section class="timeline">
                     <div class="title-wrapper">
-                        <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
-
-                        <h3 class="h3">Experience</h3>
+                        <div class="icon-box">
+                            <ion-icon name="book-outline"></ion-icon>
+                        </div>
+                        <h3 class="h3">Education</h3>
                     </div>
-
                     <ol class="timeline-list">
                         <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">Grupo Fleury</h4>
-                            <span>Janeiro 2023 - Presente (2 anos 5 meses)</span>
-                            <p class="timeline-text">Artificial Intelligence Developer - Criação de ferramentas com IA, manutenção de código, desenvolvimento de chat bots e implementação de servidores MCP.</p>
+                            <h4 class="h4 timeline-item-title">ESPM - Escola Superior de Propaganda e Marketing</h4>
+                            <span>2002 — 2006</span>
+                            <p class="timeline-text">
+                                Bachelor's degree in Advertising with specialization in Digital Media, where I developed a strong foundation in marketing, consumer psychology, and early web design principles.
+                            </p>
                         </li>
-
                         <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">huu</h4>
-                            <span>Janeiro 2015 - Presente (10 anos 5 meses)</span>
-                            <p class="timeline-text">Founder - Definição de arquitetura, controle de estado, estilização, envio para lojas, design de assets e construção de layout.</p>
+                            <h4 class="h4 timeline-item-title">IED - Istituto Europeo di Design</h4>
+                            <span>2008 — 2010</span>
+                            <p class="timeline-text">
+                                Post-graduate program in Digital Experience Design, focused on interaction design, usability, and early user-centered design methodologies.
+                            </p>
                         </li>
-
                         <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">Peloton Interactive</h4>
-                            <span>Março 2022 - Outubro 2022 (8 meses)</span>
-                            <p class="timeline-text">Tech Lead - Manutenção de código, controle de estado, correção de código semântico e compressão de assets.</p>
-                        </li>
-
-                        <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">Abril</h4>
-                            <span>Julho 2020 - Julho 2021 (1 ano 1 mês)</span>
-                            <p class="timeline-text">Desenvolvedor Front-end - Manutenção de código legado, criação de animação, atuação nos sites: Veja, Guia 4 Rodas, Capricho, Super Interessante. Criação do site: GoRead.</p>
-                        </li>
-
-                        <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">Claro Brasil</h4>
-                            <span>Janeiro 2020 - Agosto 2020 (8 meses)</span>
-                            <p class="timeline-text">Desenvolvedor Mobile - Manutenção de código legado, controle de estado e estilização.</p>
+                            <h4 class="h4 timeline-item-title">Nielsen Norman Group</h4>
+                            <span>2016</span>
+                            <p class="timeline-text">
+                                UX Certification program, comprehensive training in user research, information architecture, interaction design, and usability evaluation methods from the industry's leading UX research organization.
+                            </p>
                         </li>
                     </ol>
                 </section>
 
                 <section class="timeline">
                     <div class="title-wrapper">
-                        <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
-
-                        <h3 class="h3">Education</h3>
+                        <div class="icon-box">
+                            <ion-icon name="briefcase-outline"></ion-icon>
+                        </div>
+                        <h3 class="h3">Experience</h3>
                     </div>
-
                     <ol class="timeline-list">
                         <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">Universidade do Oeste de Santa Catarina</h4>
-                            <span>2015 (Incompleto)</span>
-                            <p class="timeline-text">Ciência da Computação - Durante o curso, estudei fundamentos de programação, arquitetura de computadores, sistemas operacionais, bancos de dados, engenharia de software, resolução de problemas e habilidades de comunicação e colaboração.</p>
+                            <h4 class="h4 timeline-item-title">Senior UX Designer at Peloton Interactive</h4>
+                            <span>2020 — 2023</span>
+                            <p class="timeline-text">
+                                Led UX design for Peloton's digital subscription products, designing features that increased user engagement by 35%. Established the design system that improved design consistency and development efficiency.
+                            </p>
                         </li>
-
                         <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">Certificações</h4>
-                            <span>Diversas</span>
-                            <p class="timeline-text">JavaScript: Best Practices for Functions and Classes, Learn React Course, Learning TensorFlow with JavaScript, React: Working with APIs, Advanced CSS3 Course - Responsive Web Project.</p>
+                            <h4 class="h4 timeline-item-title">UX Lead at Claro Brazil</h4>
+                            <span>2016 — 2020</span>
+                            <p class="timeline-text">
+                                Directed UX strategy for Claro's customer-facing digital products, including the award-winning Minha Claro app. Managed a team of 5 designers and facilitated cross-functional collaboration between design, product, and engineering.
+                            </p>
                         </li>
-
                         <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">Premiações</h4>
-                            <span>Reconhecimento</span>
-                            <p class="timeline-text">Expositor na VII Feira estadual de Ciencias e Tecnologia da Educacao Basica.</p>
+                            <h4 class="h4 timeline-item-title">Interactive Designer at Livelo</h4>
+                            <span>2012 — 2016</span>
+                            <p class="timeline-text">
+                                Designed user interfaces for Brazil's largest loyalty program platform. Conducted extensive user research and usability testing that informed the redesign of key user journeys, resulting in a 28% increase in redemption rates.
+                            </p>
+                        </li>
+                        <li class="timeline-item">
+                            <h4 class="h4 timeline-item-title">Web Designer at Pão de Açúcar</h4>
+                            <span>2008 — 2012</span>
+                            <p class="timeline-text">
+                                Created digital experiences for one of Brazil's largest retail groups, focusing on e-commerce interfaces and promotional campaigns. Implemented A/B testing practices that optimized conversion funnels.
+                            </p>
                         </li>
                     </ol>
                 </section>
 
                 <section class="skill">
-                    <h3 class="h3 skills-title">My Skills</h3>
-
+                    <h3 class="h3 skills-title">My skills</h3>
                     <ul class="skills-list content-card">
                         <li class="skills-item">
                             <div class="title-wrapper">
-                                <h5 class="h5">LLM</h5>
+                                <h5 class="h5">User Research & Testing</h5>
                                 <data value="90">90%</data>
                             </div>
-
                             <div class="skills-progress-bg">
                                 <div class="skills-progress-fill" style="width: 90%;"></div>
                             </div>
                         </li>
-
                         <li class="skills-item">
                             <div class="title-wrapper">
-                                <h5 class="h5">React & React Native</h5>
+                                <h5 class="h5">Interaction Design</h5>
                                 <data value="85">85%</data>
                             </div>
-
                             <div class="skills-progress-bg">
                                 <div class="skills-progress-fill" style="width: 85%;"></div>
                             </div>
                         </li>
-
                         <li class="skills-item">
                             <div class="title-wrapper">
-                                <h5 class="h5">Chrome Extensions</h5>
+                                <h5 class="h5">Figma & Design Tools</h5>
+                                <data value="95">95%</data>
+                            </div>
+                            <div class="skills-progress-bg">
+                                <div class="skills-progress-fill" style="width: 95%;"></div>
+                            </div>
+                        </li>
+                        <li class="skills-item">
+                            <div class="title-wrapper">
+                                <h5 class="h5">Design Systems</h5>
                                 <data value="80">80%</data>
                             </div>
-
                             <div class="skills-progress-bg">
                                 <div class="skills-progress-fill" style="width: 80%;"></div>
                             </div>
                         </li>
-
                         <li class="skills-item">
                             <div class="title-wrapper">
-                                <h5 class="h5">Start-up Leadership</h5>
-                                <data value="75">75%</data>
+                                <h5 class="h5">Prototyping</h5>
+                                <data value="90">90%</data>
                             </div>
-
                             <div class="skills-progress-bg">
-                                <div class="skills-progress-fill" style="width: 75%;"></div>
+                                <div class="skills-progress-fill" style="width: 90%;"></div>
+                            </div>
+                        </li>
+                        <li class="skills-item">
+                            <div class="title-wrapper">
+                                <h5 class="h5">Front-end Development</h5>
+                                <data value="70">70%</data>
+                            </div>
+                            <div class="skills-progress-bg">
+                                <div class="skills-progress-fill" style="width: 70%;"></div>
                             </div>
                         </li>
                     </ul>
                 </section>
             </article>
 
-            <article class="portfolio " data-page="portfolio">
+            <!-- PORTFOLIO PAGE -->
+            <article class="portfolio" data-page="portfolio">
                 <header>
                     <h2 class="h2 article-title">Portfolio</h2>
                 </header>
 
                 <section class="projects">
+                    <ul class="filter-list">
+                        <li class="filter-item">
+                            <button class="active" data-filter-btn>All</button>
+                        </li>
+                        <li class="filter-item">
+                            <button data-filter-btn>Mobile Apps</button>
+                        </li>
+                        <li class="filter-item">
+                            <button data-filter-btn>Web Design</button>
+                        </li>
+                        <li class="filter-item">
+                            <button data-filter-btn>Design Systems</button>
+                        </li>
+                    </ul>
+
+                    <div class="filter-select-box">
+                        <button class="filter-select" data-select>
+                            <div class="select-value" data-selecct-value>Select category</div>
+                            <div class="select-icon">
+                                <ion-icon name="chevron-down"></ion-icon>
+                            </div>
+                        </button>
+                        <ul class="select-list">
+                            <li class="select-item">
+                                <button data-select-item>All</button>
+                            </li>
+                            <li class="select-item">
+                                <button data-select-item>Mobile Apps</button>
+                            </li>
+                            <li class="select-item">
+                                <button data-select-item>Web Design</button>
+                            </li>
+                            <li class="select-item">
+                                <button data-select-item>Design Systems</button>
+                            </li>
+                        </ul>
+                    </div>
+
                     <ul class="project-list">
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
+                        <li class="project-item active" data-filter-item data-category="web design" data-project-item>
+                            <a href="#">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box">
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
-
-                                    <img src="images/portfolio/portfolio-08.jpeg" alt="Peloton" loading="lazy">
+                                    <img src="./images/portfolio/portfolio-01.jpeg" alt="Peloton Home Screen" loading="lazy">
                                 </figure>
-
-                                <h3 class="project-title" data-project-title>Peloton</h3>
-                                <p class="project-category">React, TypeScript, Jest</p>
+                                <h3 class="project-title" data-project-title>Peloton Home Screen Redesign</h3>
+                                <p class="project-category">Web Design</p>
                             </a>
-
                             <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">Squad Leader for SEO, Senior Software Engineer</h4>
-                                <p class="project-details-text">Led SEO efforts, developed code generating millions in user acquisition</p>
+                                <div class="project-details-role">UX Designer & Researcher</div>
+                                <div class="project-details-text">
+                                    Redesigned Peloton's home screen experience to enhance content discovery and user engagement. The project involved extensive user research, iterative design, and A/B testing that led to a 24% increase in workout completion rates.
+                                </div>
                                 <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>React, TypeScript, JavaScript, Jest, Redux.js, HTML5, CSS</p>
+                                    <p>React, Next.js, GraphQL, Node.js, AWS</p>
                                 </div>
                                 <div class="project-methodology">
-                                    <h5 class="h5">Methodologies:</h5>
-                                    <p>Scrum, Kanban, Agile</p>
+                                    <p>Double Diamond, User-Centered Design, Design Thinking</p>
                                 </div>
                                 <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>GitHub, Git</p>
+                                    <p>Figma, Miro, Maze, UserTesting</p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
+                        <li class="project-item active" data-filter-item data-category="mobile apps" data-project-item>
+                            <a href="#">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box">
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
-
-                                    <img src="images/portfolio/portfolio-01.jpeg" alt="Editora Abril" loading="lazy">
+                                    <img src="./images/portfolio/portfolio-02.jpeg" alt="Minha Claro App" loading="lazy">
                                 </figure>
-
-                                <h3 class="project-title" data-project-title>Editora Abril</h3>
-                                <p class="project-category">JavaScript, PHP, CSS</p>
+                                <h3 class="project-title" data-project-title>Minha Claro App</h3>
+                                <p class="project-category">Mobile Apps</p>
                             </a>
-
                             <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">UI Specialist, Senior Software Engineer</h4>
-                                <p class="project-details-text">Created front-end architecture standards for major Brazilian magazines including Veja, Claudia, Superinteressante, Capricho, Elastica and Guia do Estudante</p>
+                                <div class="project-details-role">UX Lead</div>
+                                <div class="project-details-text">
+                                    Led the complete redesign of Claro's customer service app, serving over 50 million users in Brazil. The app was recognized as the best telecom service app in Latin America, with a 4.5-star rating and a 35% reduction in customer service calls.
+                                </div>
                                 <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>JavaScript, PHP, HTML5, CSS</p>
+                                    <p>React Native, Redux, Native Modules</p>
                                 </div>
                                 <div class="project-methodology">
-                                    <h5 class="h5">Methodologies:</h5>
-                                    <p>Scrum, Kanban, Agile</p>
+                                    <p>Agile/Scrum, Jobs-to-be-Done, Atomic Design</p>
                                 </div>
                                 <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>GitHub, Git</p>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
-                                <figure class="project-img">
-                                    <div class="project-item-icon-box">
-                                        <ion-icon name="eye-outline"></ion-icon>
-                                    </div>
-
-                                    <img src="images/portfolio/portfolio-04.jpeg" alt="Minha Claro Móvel" loading="lazy">
-                                </figure>
-
-                                <h3 class="project-title" data-project-title>Minha Claro Móvel</h3>
-                                <p class="project-category">React Native, TypeScript</p>
-                            </a>
-
-                            <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">Senior Software Engineer, Tech Lead</h4>
-                                <p class="project-details-text">Led the development of new mobile application with over 50 million downloads</p>
-                                <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>React Native, TypeScript, JavaScript, Jest, Redux.js</p>
-                                </div>
-                                <div class="project-methodology">
-                                    <h5 class="h5">Methodologies:</h5>
-                                    <p>Scrum, Kanban, Agile</p>
-                                </div>
-                                <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>GitHub, Git</p>
+                                    <p>Sketch, InVision, Zeplin, Firebase Analytics</p>
                                 </div>
                                 <div class="project-downloads">
-                                    <h5 class="h5">Downloads:</h5>
-                                    <p>50+ million</p>
+                                    <p><a href="https://play.google.com/store/apps/details?id=com.claromovel.cliente&hl=en_US" target="_blank">Android App</a> | <a href="https://apps.apple.com/br/app/minha-claro-móvel/id1003765450" target="_blank">iOS App</a></p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
+                        <li class="project-item active" data-filter-item data-category="design systems" data-project-item>
+                            <a href="#">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box">
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
-
-                                    <img src="images/portfolio/portfolio-07.jpeg" alt="Pão de Açúcar" loading="lazy">
+                                    <img src="./images/portfolio/portfolio-03.jpeg" alt="Livelo Design System" loading="lazy">
                                 </figure>
-
-                                <h3 class="project-title" data-project-title>Pão de Açúcar</h3>
-                                <p class="project-category">React, TypeScript, Redux</p>
+                                <h3 class="project-title" data-project-title>Livelo Design System</h3>
+                                <p class="project-category">Design Systems</p>
                             </a>
-
                             <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">Senior Software Engineer, Senior React Developer</h4>
-                                <p class="project-details-text">Maintained e-commerce sites for largest Latin American retail group</p>
+                                <div class="project-details-role">Design System Lead</div>
+                                <div class="project-details-text">
+                                    Created and implemented Livelo's first comprehensive design system, unifying the customer experience across web and mobile platforms. The system reduced design inconsistencies by 90% and decreased development time for new features by 40%.
+                                </div>
                                 <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>React, TypeScript, JavaScript, Jest, Redux.js</p>
+                                    <p>Storybook, TypeScript, Styled Components</p>
                                 </div>
                                 <div class="project-methodology">
-                                    <h5 class="h5">Methodologies:</h5>
-                                    <p>Scrum, Kanban, Agile</p>
+                                    <p>Atomic Design, Component-Driven Development</p>
                                 </div>
                                 <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>GitHub, Git</p>
+                                    <p>Figma, GitHub, Chromatic, Notion</p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
+                        <li class="project-item active" data-filter-item data-category="web design" data-project-item>
+                            <a href="#">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box">
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
-
-                                    <img src="images/portfolio/portfolio-03.jpeg" alt="Ben Visa Vale" loading="lazy">
+                                    <img src="./images/portfolio/portfolio-04.jpeg" alt="Pão de Açúcar E-commerce" loading="lazy">
                                 </figure>
-
-                                <h3 class="project-title" data-project-title>Ben Visa Vale</h3>
-                                <p class="project-category">React, React Native</p>
+                                <h3 class="project-title" data-project-title>Pão de Açúcar E-commerce</h3>
+                                <p class="project-category">Web Design</p>
                             </a>
-
                             <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">Senior Software Engineer, Task Force Member</h4>
-                                <p class="project-details-text">Worked to finalize Banco Santander application with over 500,000 downloads</p>
+                                <div class="project-details-role">Web Designer</div>
+                                <div class="project-details-text">
+                                    Redesigned the checkout experience for one of Brazil's largest supermarket chains, resulting in a 18% increase in conversion rate and a 23% decrease in cart abandonment.
+                                </div>
                                 <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>React, React Native, TypeScript, JavaScript, Jest, Redux.js, HTML5</p>
+                                    <p>JavaScript, jQuery, SASS, PHP</p>
                                 </div>
                                 <div class="project-methodology">
-                                    <h5 class="h5">Methodologies:</h5>
-                                    <p>Scrum, Kanban, Agile</p>
+                                    <p>Lean UX, A/B Testing</p>
                                 </div>
                                 <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>GitHub, Git</p>
-                                </div>
-                                <div class="project-downloads">
-                                    <h5 class="h5">Downloads:</h5>
-                                    <p>500,000+</p>
+                                    <p>Photoshop, Illustrator, Balsamiq, Google Analytics</p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
+                        <li class="project-item active" data-filter-item data-category="mobile apps" data-project-item>
+                            <a href="#">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box">
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
-
-                                    <img src="images/portfolio/portfolio-05.jpeg" alt="Livelo" loading="lazy">
+                                    <img src="./images/portfolio/portfolio-05.jpeg" alt="Abril Digital Magazine" loading="lazy">
                                 </figure>
-
-                                <h3 class="project-title" data-project-title>Livelo</h3>
-                                <p class="project-category">React Native</p>
+                                <h3 class="project-title" data-project-title>Abril Digital Magazines</h3>
+                                <p class="project-category">Mobile Apps</p>
                             </a>
-
                             <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">Technical Leader</h4>
-                                <p class="project-details-text">Converted app from native technology to React Native and streamlined development processes. Over 5 million downloads</p>
+                                <div class="project-details-role">UX Designer</div>
+                                <div class="project-details-text">
+                                    Designed a unified reading experience for Abril's portfolio of digital magazines on iOS and Android. The redesign improved user ratings by 30% and increased subscriber retention by 25%.
+                                </div>
                                 <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>React Native, JavaScript</p>
+                                    <p>Swift, Kotlin, Core Animation</p>
                                 </div>
                                 <div class="project-methodology">
-                                    <h5 class="h5">Methodologies:</h5>
-                                    <p>Scrum</p>
+                                    <p>Usability Testing, Contextual Inquiry</p>
                                 </div>
                                 <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>GitHub</p>
-                                </div>
-                                <div class="project-downloads">
-                                    <h5 class="h5">Downloads:</h5>
-                                    <p>5+ million</p>
+                                    <p>Sketch, Principle, Adobe XD</p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
+                        <li class="project-item active" data-filter-item data-category="web design" data-project-item>
+                            <a href="#">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box">
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
-
-                                    <img src="images/portfolio/portfolio-02.jpeg" alt="Avianca Airlines" loading="lazy">
+                                    <img src="./images/portfolio/portfolio-06.jpeg" alt="Ben Visa Vale" loading="lazy">
                                 </figure>
-
-                                <h3 class="project-title" data-project-title>Avianca Airlines</h3>
-                                <p class="project-category">Ionic, JavaScript, AngularJS</p>
+                                <h3 class="project-title" data-project-title>Ben Visa Vale Portal</h3>
+                                <p class="project-category">Web Design</p>
                             </a>
-
                             <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">Maintenance and Development</h4>
-                                <p class="project-details-text">Maintained production app and created new version with over 1 million downloads</p>
+                                <div class="project-details-role">UX/UI Designer</div>
+                                <div class="project-details-text">
+                                    Redesigned the corporate portal for Ben Visa Vale, a major Brazilian benefits card provider. The new design improved administrator efficiency by 40% and reduced support tickets by 30%.
+                                </div>
                                 <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>Ionic Framework, JavaScript, AngularJS</p>
+                                    <p>Angular, Bootstrap, Node.js</p>
                                 </div>
                                 <div class="project-methodology">
-                                    <h5 class="h5">Methodologies:</h5>
-                                    <p>Agile, Scrum</p>
+                                    <p>Heuristic Evaluation, Card Sorting</p>
                                 </div>
                                 <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>GitHub</p>
-                                </div>
-                                <div class="project-downloads">
-                                    <h5 class="h5">Downloads:</h5>
-                                    <p>1+ million</p>
+                                    <p>Figma, Optimal Workshop, Hotjar</p>
                                 </div>
                             </div>
                         </li>
-
-                        <li class="project-item active" data-project-item>
-                            <a href="#" class="project-link">
+                        <li class="project-item active" data-filter-item data-category="mobile apps" data-project-item>
+                            <a href="#">
                                 <figure class="project-img">
                                     <div class="project-item-icon-box">
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
-
-                                    <img src="images/portfolio/portfolio-06.jpeg" alt="Mundo Gamer" loading="lazy">
+                                    <img src="./images/portfolio/portfolio-07.jpeg" alt="Mundo Gamer App" loading="lazy">
                                 </figure>
-
-                                <h3 class="project-title" data-project-title>Mundo Gamer</h3>
-                                <p class="project-category">JavaScript, PHP, Bootstrap</p>
+                                <h3 class="project-title" data-project-title>Mundo Gamer App</h3>
+                                <p class="project-category">Mobile Apps</p>
                             </a>
-
                             <div class="project-details-container" data-project-details>
-                                <h4 class="h4 project-details-role">Creator</h4>
-                                <p class="project-details-text">Created a reverse engineering tool to capture and catalog databases</p>
+                                <div class="project-details-role">Product Designer</div>
+                                <div class="project-details-text">
+                                    Designed a gaming community app for enthusiasts to discover games, connect with other players, and track their gameplay statistics. The app acquired over 100,000 users in the first three months.
+                                </div>
                                 <div class="project-tech-stack">
-                                    <h5 class="h5">Technologies:</h5>
-                                    <p>JavaScript, PHP, Bootstrap</p>
+                                    <p>Flutter, Firebase, Google Cloud</p>
+                                </div>
+                                <div class="project-methodology">
+                                    <p>Rapid Prototyping, User Feedback Loops</p>
                                 </div>
                                 <div class="project-tools">
-                                    <h5 class="h5">Tools:</h5>
-                                    <p>Git</p>
+                                    <p>Adobe XD, Lottie, Mixpanel</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="project-item active" data-filter-item data-category="design systems" data-project-item>
+                            <a href="#">
+                                <figure class="project-img">
+                                    <div class="project-item-icon-box">
+                                        <ion-icon name="eye-outline"></ion-icon>
+                                    </div>
+                                    <img src="./images/portfolio/portfolio-08.jpeg" alt="Avianca Design System" loading="lazy">
+                                </figure>
+                                <h3 class="project-title" data-project-title>Avianca Design System</h3>
+                                <p class="project-category">Design Systems</p>
+                            </a>
+                            <div class="project-details-container" data-project-details>
+                                <div class="project-details-role">Design System Architect</div>
+                                <div class="project-details-text">
+                                    Created a comprehensive design system for Avianca Airlines that unified the digital experience across web, mobile, and kiosk platforms. The system improved design consistency and reduced development time for new features by 50%.
+                                </div>
+                                <div class="project-tech-stack">
+                                    <p>React, Web Components, CSS Variables</p>
+                                </div>
+                                <div class="project-methodology">
+                                    <p>Design Tokens, Pattern Library</p>
+                                </div>
+                                <div class="project-tools">
+                                    <p>Figma, Storybook, Abstract</p>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </section>
-
-<!-- Modal moved to body level for better positioning -->
             </article>
 
-            <article class="blog " data-page="blog">
+            <!-- BLOG PAGE -->
+            <article class="blog" data-page="blog">
                 <header>
                     <h2 class="h2 article-title">Blog</h2>
                 </header>
 
                 <section class="blog-posts">
                     <ul class="blog-posts-list">
-                        <li class="blog-post-item">
-                            <a href="blog-post.html?id=design-conferences-2024">
-                                    <figure class="blog-banner-box">
-                                        <img src="https://i.postimg.cc/DysCZrWs/blog-1.jpg" alt="Design conferences in 2024" loading="lazy">
-                                    </figure>
-
+                        <li class="blog-posts-item">
+                            <a href="blog-post.html?post=ux-design-trends-2024">
+                                <figure class="blog-banner-box">
+                                    <img src="https://i.postimg.cc/s2mKLQJQ/blog-1.jpg" alt="UX Design Trends for 2024" loading="lazy">
+                                </figure>
                                 <div class="blog-content">
                                     <div class="blog-meta">
                                         <p class="blog-category">Design</p>
                                         <span class="dot"></span>
-                                        <time datetime="2024-02-23">Feb 23, 2024</time>
+                                        <time datetime="2024-03-15">March 15, 2024</time>
                                     </div>
-
-                                    <h3 class="h3 blog-item-title">Design conferences in 2024</h3>
-                                    <p class="blog-text">In 2024, several exciting design conferences are set to take place, offering opportunities for professionals and enthusiasts to connect, learn, and share innovative ideas.</p>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="blog-post-item">
-                            <a href="blog-post.html?id=ux-design-trends-2024">
-                                <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/13FpF7HL/blog-2.jpg" alt="UX Design Trends to Watch in 2024" loading="lazy">
-                                </figure>
-
-
-                                <div class="blog-content">
-                                    <div class="blog-meta">
-                                        <p class="blog-category">UX Design</p>
-                                        <span class="dot"></span>
-                                        <time datetime="2024-03-15">Mar 15, 2024</time>
-                                    </div>
-
                                     <h3 class="h3 blog-item-title">UX Design Trends to Watch in 2024</h3>
-                                    <p class="blog-text">As technology continues to evolve, so do the principles and practices of UX design. Here are the key trends shaping the industry in 2024.</p>
+                                    <p class="blog-text">
+                                        Explore the emerging UX design trends that will shape digital experiences in 2024, from AI-assisted design to immersive interfaces and ethical considerations.
+                                    </p>
                                 </div>
                             </a>
                         </li>
-
-                        <li class="blog-post-item">
-                            <a href="blog-post.html">
+                        <li class="blog-posts-item">
+                            <a href="blog-post.html?post=design-conferences-2024">
                                 <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/W1T71QcL/blog-3.jpg" alt="Design digest #80" loading="lazy">
+                                    <img src="https://i.postimg.cc/zvj7DXjC/blog-2.jpg" alt="Top Design Conferences" loading="lazy">
                                 </figure>
-
                                 <div class="blog-content">
                                     <div class="blog-meta">
-                                        <p class="blog-category">Design</p>
+                                        <p class="blog-category">Events</p>
                                         <span class="dot"></span>
-                                        <time datetime="2023-12-20">Dec 20, 2023</time>
+                                        <time datetime="2024-02-20">February 20, 2024</time>
                                     </div>
-
-                                    <h3 class="h3 blog-item-title">Design digest #80</h3>
-                                    <p class="blog-text">Hello, my friends. In this Design Digest, I'll show you a curated collection of the latest trends, insights, and innovations in the design world. This edition highlights key themes and discussions that are shaping the future of design.</p>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="blog-post-item">
-                            <a href="blog-post.html">
-                                <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/2S0n8yxh/blog-4.jpg" alt="2023 UI interactions" loading="lazy">
-                                </figure>
-
-                                <div class="blog-content">
-                                    <div class="blog-meta">
-                                        <p class="blog-category">Design</p>
-                                        <span class="dot"></span>
-                                        <time datetime="2023-11-29">Nov 29, 2023</time>
-                                    </div>
-
-                                    <h3 class="h3 blog-item-title">2023 UI interactions</h3>
-                                    <p class="blog-text">As we move into 2024, 2023 was marked by the rapidly evolution of the landscape of UI interactions, driven by advancements in technology and user expectations. Dive with me in this text to see the main areas changed in this year.</p>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="blog-post-item">
-                            <a href="blog-post.html">
-                                <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/YCCmVkw9/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
-                                </figure>
-
-                                <div class="blog-content">
-                                    <div class="blog-meta">
-                                        <p class="blog-category">Design</p>
-                                        <span class="dot"></span>
-                                        <time datetime="2023-11-12">Nov 12, 2023</time>
-                                    </div>
-
-                                    <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-                                    <p class="blog-text">In the realm of design, spacing is often an overlooked yet crucial element that can significantly impact the overall aesthetic and functionality of a composition. This post will emphasize the importance of white space, margins, and padding in creating visually appealing and effective designs.</p>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="blog-post-item">
-                            <a href="blog-post.html">
-                                <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/zBCBvP16/blog-6.jpg" alt="Design digest #79" loading="lazy">
-                                </figure>
-
-                                <div class="blog-content">
-                                    <div class="blog-meta">
-                                        <p class="blog-category">Design</p>
-                                        <span class="dot"></span>
-                                        <time datetime="2023-10-20">Oct 20, 2023</time>
-                                    </div>
-
-                                    <h3 class="h3 blog-item-title">Design digest #79</h3>
-                                    <p class="blog-text">Hi, my friends. In this Design Digest I'll focus in the tools and resources that we use daily in our projects. Also, I'll include examples of software recommendations, online courses, and design communities that foster collaboration and learning.</p>
+                                    <h3 class="h3 blog-item-title">Must-Attend Design Conferences in 2024</h3>
+                                    <p class="blog-text">
+                                        A curated list of the most valuable design conferences happening globally in 2024, featuring insights on speakers, topics, and networking opportunities.
+                                    </p>
                                 </div>
                             </a>
                         </li>
@@ -810,33 +679,30 @@
                 </section>
             </article>
 
-            <article class="contact " data-page="contact">
+            <!-- CONTACT PAGE -->
+            <article class="contact" data-page="contact">
                 <header>
                     <h2 class="h2 article-title">Contact</h2>
                 </header>
 
-                <section class="mapbox" data-mapbox>
+                <section class="mapbox">
                     <figure>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30971078.57173514!2d-43.17207635!3d-15.7934039!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c59c7ebcc28cf%3A0x295a1506f2293e63!2sBrazil!5e0!3m2!1sen!2sbr!4v1649961504399!5m2!1sen!2sbr"
-                        width="400" height="300" loading="lazy" title="Digital Nomad - Working from anywhere"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.0671838094956!2d-46.65936548519846!3d-23.56384068468321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c7f481fd9f%3A0x9982bfde4df54830!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%20Brazil!5e0!3m2!1sen!2sus!4v1637267392181!5m2!1sen!2sus" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </figure>
                     <div class="digital-nomad-badge">
                         <ion-icon name="globe-outline"></ion-icon>
-                        <span>Digital Nomad - Working from anywhere</span>
+                        <span>Available for remote work</span>
                     </div>
                 </section>
 
                 <section class="contact-form">
                     <h3 class="h3 form-title">Contact Form</h3>
-
                     <form action="#" class="form" data-form>
                         <div class="input-wrapper">
                             <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-                            <input type="email" name="email" class="form-input" placeholder="Email Address" required data-form-input>
+                            <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
                         </div>
-
-                        <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input=""></textarea>
-
+                        <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
                         <button class="form-btn" type="submit" disabled data-form-btn>
                             <ion-icon name="paper-plane"></ion-icon>
                             <span>Send Message</span>
@@ -847,37 +713,57 @@
         </div>
     </main>
 
-    <!-- Project Modal - New Implementation (directly in body) -->
+    <!-- Project Modal -->
     <div id="project-modal-root">
         <div class="project-modal-overlay"></div>
         <div class="project-modal-wrapper">
-            <!-- Close button always visible at top right of modal wrapper -->
-            <button class="project-modal-close-btn" id="project-modal-close-btn">
-                <ion-icon name="close-outline"></ion-icon>
-            </button>
             <div class="project-modal">
+                <button id="project-modal-close-btn" class="project-modal-close-btn">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
                 <div class="project-modal-img-wrapper">
-                    <figure class="project-modal-img">
-                        <img src="" alt="" id="project-modal-img">
-                    </figure>
+                    <div class="project-modal-img">
+                        <img id="project-modal-img" src="" alt="">
+                    </div>
                 </div>
-
-                <div class="project-modal-content">
-                    <h3 class="h3 project-modal-title" id="project-modal-title"></h3>
-                    <div class="project-modal-role" id="project-modal-role"></div>
-                    <div class="project-modal-text" id="project-modal-text"></div>
-                    <div class="project-modal-techs" id="project-modal-techs"></div>
-                    <div class="project-modal-methodologies" id="project-modal-methodologies"></div>
-                    <div class="project-modal-tools" id="project-modal-tools"></div>
-                    <div class="project-modal-downloads" id="project-modal-downloads"></div>
-                </div>
+                <h3 class="h3 project-modal-title" id="project-modal-title"></h3>
+                <div class="project-modal-role" id="project-modal-role"></div>
+                <div class="project-modal-text" id="project-modal-text"></div>
+                <div class="project-modal-techs" id="project-modal-techs"></div>
+                <div class="project-modal-methodologies" id="project-modal-methodologies"></div>
+                <div class="project-modal-tools" id="project-modal-tools"></div>
+                <div class="project-modal-downloads" id="project-modal-downloads"></div>
             </div>
         </div>
     </div>
 
-    <script src="main.js"></script>
-    <script src="background.js"></script>
+    <!-- Testimonials Modal -->
+    <div class="modal-container" data-modal-container>
+        <div class="overlay" data-overlay></div>
+        <section class="testimonials-modal">
+            <button class="modal-close-btn" data-modal-close-btn>
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="modal-img-wrapper">
+                <figure class="modal-avatar-box">
+                    <img src="https://i.postimg.cc/7YvK4Sfp/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
+                </figure>
+                <img src="https://i.postimg.cc/6psXt3ZH/icon-quote.svg" alt="quote icon">
+            </div>
+            <div class="modal-content">
+                <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
+                <time datetime="2022-06-14">14 June, 2022</time>
+                <div data-modal-text>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur magnam atque harum cumque eveniet optio ea sequi mollitia repellendus maxime quo nisi blanditiis labore aspernatur laborum dolorum nulla alias consequuntur, ullam neque ipsum! Exercitationem, ipsam?
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
 
+    <script src="background.js"></script>
+    <script src="main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
