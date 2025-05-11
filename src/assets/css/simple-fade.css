@@ -1,0 +1,40 @@
+/* 
+ * Simple Fade Transition
+ * Pure CSS transitions without motion libraries
+ */
+
+.simple-fade {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.simple-fade.visible {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.simple-fade.hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Prevent any animations that might cause flashing */
+.simple-fade * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Only allow opacity transitions */
+.simple-fade.visible, 
+.simple-fade.hidden {
+  transition: opacity 0.3s ease-in-out !important;
+}

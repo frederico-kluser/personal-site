@@ -13,7 +13,7 @@ import Modal from './components/Modal';
 import ProjectModalContent from './components/ProjectModalContent';
 import TestimonialModalContent from './components/TestimonialModalContent';
 import MatrixRain from './components/MatrixRain';
-import FadeTransition from './components/FadeTransition';
+import SimpleFade from './components/SimpleFade';
 import { DataProvider } from './context/DataContext';
 import './assets/css/style.css';
 import './assets/css/sidebar-fixes.css';
@@ -21,11 +21,10 @@ import './assets/css/animated-components.css';
 import './assets/css/page-transitions.css';
 import './assets/css/transition-fixes.css';
 import './assets/css/layout-fixes.css';
+import './assets/css/simple-fade.css';
 
 function App() {
   const [activePage, setActivePage] = useState('about');
-  const [nextPage, setNextPage] = useState(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [modalState, setModalState] = useState({
     isOpen: false,
     type: null, // 'project' or 'testimonial'
@@ -33,50 +32,28 @@ function App() {
   });
   const location = useLocation();
 
-  // Update active page based on URL path
+  // Update active page based on URL path - simplified for direct transition
   useEffect(() => {
     const path = location.pathname;
-    let newPage;
 
     if (path === '/' || path === '/about') {
-      newPage = 'about';
+      setActivePage('about');
     } else if (path.startsWith('/blog/')) {
-      newPage = 'blog';
+      setActivePage('blog');
     } else if (path.startsWith('/resume')) {
-      newPage = 'resume';
+      setActivePage('resume');
     } else if (path.startsWith('/portfolio')) {
-      newPage = 'portfolio';
+      setActivePage('portfolio');
     } else if (path.startsWith('/contact')) {
-      newPage = 'contact';
+      setActivePage('contact');
     } else if (path.startsWith('/blog')) {
-      newPage = 'blog';
+      setActivePage('blog');
     }
-
-    // Set next page first, then trigger transition
-    if (newPage !== activePage) {
-      setNextPage(newPage);
-      setIsTransitioning(true);
-
-      // Small delay before changing the active page to ensure smooth transition
-      const timer = setTimeout(() => {
-        setActivePage(newPage);
-        setIsTransitioning(false);
-      }, 300); // Match this with your CSS transition time
-
-      return () => clearTimeout(timer);
-    }
-  }, [location, activePage]);
+  }, [location]);
 
   const handlePageChange = (page) => {
     if (page !== activePage) {
-      setNextPage(page);
-      setIsTransitioning(true);
-
-      // Small delay to ensure smooth transition
-      setTimeout(() => {
-        setActivePage(page);
-        setIsTransitioning(false);
-      }, 300);
+      setActivePage(page);
     }
   };
 
@@ -127,52 +104,44 @@ function App() {
           <Navbar activePage={activePage} onPageChange={handlePageChange} />
 
           {/* Container principal para páginas com largura fixa e altura dinâmica */}
-          <motion.div
-            className="pages-container"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 1 }}
-            transition={{ duration: 0 }}
-            layoutId="main-container"
-          >
-            <AnimatePresence mode="sync" initial={false}>
-              <Routes location={location} key={location.pathname}>
+          <div className="pages-container">
+            {/* Remover AnimatePresence e key causadores de renderização dupla */}
+            <Routes>
                 <Route path="/" element={
-                  <FadeTransition isVisible={!isTransitioning || activePage === 'about'}>
+                  <SimpleFade isVisible={activePage === 'about'}>
                     <About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />
-                  </FadeTransition>
+                  </SimpleFade>
                 } />
                 <Route path="/about" element={
-                  <FadeTransition isVisible={!isTransitioning || activePage === 'about'}>
+                  <SimpleFade isVisible={activePage === 'about'}>
                     <About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />
-                  </FadeTransition>
+                  </SimpleFade>
                 } />
                 <Route path="/resume" element={
-                  <FadeTransition isVisible={!isTransitioning || activePage === 'resume'}>
+                  <SimpleFade isVisible={activePage === 'resume'}>
                     <Resume isActive={activePage === 'resume'} />
-                  </FadeTransition>
+                  </SimpleFade>
                 } />
                 <Route path="/portfolio" element={
-                  <FadeTransition isVisible={!isTransitioning || activePage === 'portfolio'}>
+                  <SimpleFade isVisible={activePage === 'portfolio'}>
                     <Portfolio
                       isActive={activePage === 'portfolio'}
                       openProjectModal={openProjectModal}
                     />
-                  </FadeTransition>
+                  </SimpleFade>
                 } />
                 <Route path="/blog" element={
-                  <FadeTransition isVisible={!isTransitioning || activePage === 'blog'}>
+                  <SimpleFade isVisible={activePage === 'blog'}>
                     <Blog isActive={activePage === 'blog'} />
-                  </FadeTransition>
+                  </SimpleFade>
                 } />
                 <Route path="/contact" element={
-                  <FadeTransition isVisible={!isTransitioning || activePage === 'contact'}>
+                  <SimpleFade isVisible={activePage === 'contact'}>
                     <Contact isActive={activePage === 'contact'} />
-                  </FadeTransition>
+                  </SimpleFade>
                 } />
               </Routes>
-            </AnimatePresence>
-          </motion.div>
+          </div>
         </div>
       </main>
 
