@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,92 +11,40 @@ import 'swiper/css/navigation';
 // Import required modules
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 
+// Import data store
+import { DataContext } from '../context/DataContext';
+
 function About({ isActive, openTestimonialModal }) {
-  const [testimonials, setTestimonials] = useState([
-    {
-      id: 1,
-      name: 'Daniel Lewis',
-      avatar: 'https://i.postimg.cc/zGDHfn3G/avatar-1.png',
-      text: "Richard was hired to create a corporate identity. It's modern, clean and with a beautiful design that got a lot of praises from colleagues and visitors. We were very pleased with the work done. He has a lot of experience and is very concerned about the needs of client."
-    },
-    {
-      id: 2,
-      name: 'Jessica Miller',
-      avatar: 'https://i.postimg.cc/DwY0yHtx/avatar-2.png',
-      text: "Working with Richard has been an absolute pleasure. I was impressed with his attention to detail, his web design skills and his professional approach to our timelines and processes."
-    },
-    {
-      id: 3,
-      name: 'Emily Evans',
-      avatar: 'https://i.postimg.cc/fRFWhX9F/avatar-3.png',
-      text: "I couldn't be happier with the website that Richard created for us. His attention to detail and creativity is unmatched. Our clients frequently compliment the design, and it has significantly improved our brand image."
-    },
-    {
-      id: 4,
-      name: 'Henry Williams',
-      avatar: 'https://i.postimg.cc/zXv1Xv81/avatar-4.png',
-      text: "I was overwhelmed with the thought of redesigning my online store, but Richard made the process seamless. The site is not only visually appealing but also optimized for conversions. I've seen a 50% increase in traffic since the launch!"
-    }
-  ]);
+  const { about, testimonials, services, clients } = useContext(DataContext);
 
   return (
     <article className={`about ${isActive ? 'active' : ''}`} data-page="about">
       <header>
-        <h2 className="h2 article-title">About me</h2>
+        <h2 className="h2 article-title">{about.title}</h2>
       </header>
 
       <section className="about-text">
-        <p>Como Desenvolvedor de IA no Grupo Fleury, crio e mantenho ferramentas de software de alta qualidade que utilizam inteligência artificial para aprimorar os serviços e operações da empresa. Trabalho com uma equipe de profissionais talentosos no desenvolvimento de chatbots, sistemas de análise de dados e interfaces amigáveis que atendem às necessidades e expectativas de clientes internos e externos.</p>
-        <p>Tenho uma sólida formação em engenharia de software, com graduação incompleta em Ciência da Computação pela Universidade do Oeste de Santa Catarina e várias certificações da Microsoft. Tenho experiência no desenvolvimento de aplicações web e mobile para diversos domínios, como e-commerce, marketing e educação, utilizando tecnologias como Javascript, CSS, Git, Ionic, React, React Native, NodeJs, Express e MongoDB. Sou proficiente em HTML5, Angular e MySQL, e possuo um entendimento sólido de estruturas de dados, algoritmos, padrões de design, concorrência, multitarefa, escalabilidade e arquitetura corporativa. Sou apaixonado por criar soluções e métodos inovadores que resolvam problemas e melhorem a qualidade e o desempenho dos produtos de software. Também sou fluente em português, inglês e espanhol.</p>
+        {about.description.map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
+        ))}
       </section>
 
       <section className="service">
-        <h3 className="h3 service-title">What I'm doing</h3>
+        <h3 className="h3 service-title">{services.title}</h3>
 
         <ul className="service-list">
-          <li className="service-item">
-            <div className="service-icon-box">
-              <img src="https://i.postimg.cc/4389jZkP/icon-design.png" alt="icon" width="40" />
-            </div>
+          {services.items.map(service => (
+            <li className="service-item" key={service.id}>
+              <div className="service-icon-box">
+                <img src={service.icon} alt="icon" width="40" />
+              </div>
 
-            <div className="service-content-box">
-              <h4 className="h4 service-item-title">Web Design</h4>
-              <p className="service-item-text">The most modern and high-quality design made at a professional level.</p>
-            </div>
-          </li>
-
-          <li className="service-item">
-            <div className="service-icon-box">
-              <img src="https://i.postimg.cc/ZqgqrqzG/icon-dev.png" alt="icon" width="40" />
-            </div>
-
-            <div className="service-content-box">
-              <h4 className="h4 service-item-title">Web development</h4>
-              <p className="service-item-text">High-quality development of sites at the professional level.</p>
-            </div>
-          </li>
-
-          <li className="service-item">
-            <div className="service-icon-box">
-              <img src="https://i.postimg.cc/xjLdzYxZ/icon-app.png" alt="icon" width="40" />
-            </div>
-
-            <div className="service-content-box">
-              <h4 className="h4 service-item-title">Mobile apps</h4>
-              <p className="service-item-text">Professional development of applications for iOS and Android.</p>
-            </div>
-          </li>
-
-          <li className="service-item">
-            <div className="service-icon-box">
-              <img src="https://i.postimg.cc/0NL8zHpx/icon-photo.png" alt="icon" width="40" />
-            </div>
-
-            <div className="service-content-box">
-              <h4 className="h4 service-item-title">Photography</h4>
-              <p className="service-item-text">I make high-quality photos of any category at a professional level.</p>
-            </div>
-          </li>
+              <div className="service-content-box">
+                <h4 className="h4 service-item-title">{service.title}</h4>
+                <p className="service-item-text">{service.description}</p>
+              </div>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -184,36 +132,13 @@ function About({ isActive, openTestimonialModal }) {
             }}
             className="clients-swiper"
           >
-            <SwiperSlide>
-              <div className="clients-item">
-                <a href="#"><img src="https://i.postimg.cc/YqfKyG66/logo-1-color.png" alt="logo" /></a>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="clients-item">
-                <a href="#"><img src="https://i.postimg.cc/fWm6JtgG/logo-2-color.png" alt="logo" /></a>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="clients-item">
-                <a href="#"><img src="https://i.postimg.cc/Bb07xpwd/logo-3-color.png" alt="logo" /></a>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="clients-item">
-                <a href="#"><img src="https://i.postimg.cc/hv1yMmkh/logo-4-color.png" alt="logo" /></a>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="clients-item">
-                <a href="#"><img src="https://i.postimg.cc/ry1P86Dc/logo-5-color.png" alt="logo" /></a>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="clients-item">
-                <a href="#"><img src="https://i.postimg.cc/SsWDN8NV/logo-6-color.png" alt="logo" /></a>
-              </div>
-            </SwiperSlide>
+            {clients.map(client => (
+              <SwiperSlide key={client.id}>
+                <div className="clients-item">
+                  <a href={client.url}><img src={client.logo} alt="logo" /></a>
+                </div>
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
       </section>

@@ -12,6 +12,7 @@ import Modal from './components/Modal';
 import ProjectModalContent from './components/ProjectModalContent';
 import TestimonialModalContent from './components/TestimonialModalContent';
 import MatrixRain from './components/MatrixRain';
+import { DataProvider } from './context/DataContext';
 import './assets/css/style.css';
 
 function App() {
@@ -75,17 +76,17 @@ function App() {
 
   if (isBlogPost) {
     return (
-      <>
+      <DataProvider>
         <MatrixRain />
         <Routes>
           <Route path="/blog/:id" element={<BlogPost />} />
         </Routes>
-      </>
+      </DataProvider>
     );
   }
 
   return (
-    <>
+    <DataProvider>
       <MatrixRain />
       <main>
         <Sidebar />
@@ -116,7 +117,7 @@ function App() {
         {modalState.type === 'project' && <ProjectModalContent project={modalState.data} />}
         {modalState.type === 'testimonial' && <TestimonialModalContent testimonial={modalState.data} />}
       </Modal>
-    </>
+    </DataProvider>
   );
 }
 

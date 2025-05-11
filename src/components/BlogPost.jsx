@@ -1,39 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import MatrixRain from './MatrixRain';
+import { DataContext } from '../context/DataContext';
 import '../assets/css/blog-post.css';
 
 function BlogPost() {
   const { id } = useParams();
+  const { blog, siteInfo } = useContext(DataContext);
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [recentPosts, setRecentPosts] = useState([
-    {
-      id: 'ux-design-trends-2024',
-      title: 'UX Design Trends to Watch in 2024'
-    },
-    {
-      id: 'design-conferences-2024',
-      title: 'Must-Attend Design Conferences in 2024'
-    }
-  ]);
 
   useEffect(() => {
-    // In a real application, we would fetch this from an API
-    // For this demo, we'll fetch directly from our JSON files
-    const loadBlogPost = async () => {
+    // Find the post in our centralized data store
+    const findPost = () => {
       try {
         setLoading(true);
-        const response = await fetch(`/posts/${id}.json`);
-        
-        if (!response.ok) {
+        const foundPost = blog.posts.find(post => post.id === id);
+
+        if (!foundPost) {
           throw new Error('Post not found');
         }
-        
-        const data = await response.json();
-        setPost(data);
+
+        setPost(foundPost);
         setLoading(false);
       } catch (err) {
         console.error('Error loading blog post:', err);
@@ -41,9 +31,9 @@ function BlogPost() {
         setLoading(false);
       }
     };
-    
-    loadBlogPost();
-  }, [id]);
+
+    findPost();
+  }, [id, blog.posts]);
 
   if (loading) {
     return (
@@ -155,16 +145,16 @@ function BlogPost() {
               <div className="blog-sidebar">
                 <div className="author-box">
                   <figure className="author-avatar">
-                    <img src="https://i.postimg.cc/YCsNJBN2/avatar-white.webp" alt="Fred K." width="80" />
+                    <img src={siteInfo.owner.avatar} alt={siteInfo.owner.name} width="80" />
                   </figure>
-                  <h3 className="h3 author-name">Fred K.</h3>
-                  <p className="author-title">UX Designer & Researcher</p>
+                  <h3 className="h3 author-name">{siteInfo.owner.name}</h3>
+                  <p className="author-title">{siteInfo.owner.role}</p>
                 </div>
 
                 <div className="recent-posts">
                   <h3 className="h3">Recent Posts</h3>
                   <ul className="recent-posts-list">
-                    {recentPosts.map(recentPost => (
+                    {blog.recentPosts.map(recentPost => (
                       <li className="recent-post-item" key={recentPost.id}>
                         <Link to={`/blog/${recentPost.id}`}>
                           {recentPost.title}

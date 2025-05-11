@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { DataContext } from '../context/DataContext';
 
 function Sidebar() {
+  const { siteInfo } = useContext(DataContext);
   const [isActive, setIsActive] = useState(false);
 
   const toggleSidebar = () => {
@@ -11,12 +13,12 @@ function Sidebar() {
     <aside className={`sidebar ${isActive ? 'active' : ''}`} data-sidebar>
       <div className="sidebar-info">
         <figure className="avatar-box">
-          <img src="https://i.postimg.cc/JzBWVhW4/my-avatar.png" alt="avatar" width="80" />
+          <img src={siteInfo.owner.avatar} alt={siteInfo.owner.name} width="80" />
         </figure>
 
         <div className="info-content">
-          <h1 className="name" title="Fred K.">Fred K.</h1>
-          <p className="title">MCP | LLM | React Developer</p>
+          <h1 className="name" title={siteInfo.owner.name}>{siteInfo.owner.name}</h1>
+          <p className="title">{siteInfo.owner.role}</p>
         </div>
 
         <button className="info-more-btn" data-sidebar-btn onClick={toggleSidebar}>
@@ -36,7 +38,7 @@ function Sidebar() {
 
             <div className="contact-info">
               <p className="contact-title">Email</p>
-              <a href="mailto:fkluser@icloud.com" className="contact-link">fkluser@icloud.com</a>
+              <a href={`mailto:${siteInfo.owner.email}`} className="contact-link">{siteInfo.owner.email}</a>
             </div>
           </li>
 
@@ -47,18 +49,7 @@ function Sidebar() {
 
             <div className="contact-info">
               <p className="contact-title">Phone</p>
-              <a href="tel:+5513992032756" className="contact-link">+55 13 99203-2756</a>
-            </div>
-          </li>
-
-          <li className="contact-item">
-            <div className="icon-box">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </div>
-
-            <div className="contact-info">
-              <p className="contact-title">LinkedIn</p>
-              <a href="https://www.linkedin.com/in/fredericokluser" className="contact-link">fredericokluser</a>
+              <a href={`tel:${siteInfo.owner.phone.replace(/[^0-9+]/g, '')}`} className="contact-link">{siteInfo.owner.phone}</a>
             </div>
           </li>
 
@@ -69,7 +60,7 @@ function Sidebar() {
 
             <div className="contact-info">
               <p className="contact-title">Location</p>
-              <address><a href="#" className="contact-link">Digital Nomad</a></address>
+              <address><a href="#" className="contact-link">{siteInfo.owner.location}</a></address>
             </div>
           </li>
         </ul>
@@ -77,21 +68,41 @@ function Sidebar() {
         <div className="separator"></div>
 
         <ul className="social-list">
-          <li className="social-item">
-            <a href="https://github.com/frederico-kluser?tab=repositories" className="social-link" target="_blank" rel="noreferrer">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
-          <li className="social-item">
-            <a href="https://x.com/fredericokluser" className="social-link" target="_blank" rel="noreferrer">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-          <li className="social-item">
-            <a href="https://www.instagram.com/kluserhuu/" className="social-link" target="_blank" rel="noreferrer">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
+          {siteInfo.social.github && (
+            <li className="social-item">
+              <a href={siteInfo.social.github} className="social-link" target="_blank" rel="noreferrer">
+                <ion-icon name="logo-github"></ion-icon>
+              </a>
+            </li>
+          )}
+          {siteInfo.social.twitter && (
+            <li className="social-item">
+              <a href={siteInfo.social.twitter} className="social-link" target="_blank" rel="noreferrer">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+          )}
+          {siteInfo.social.instagram && (
+            <li className="social-item">
+              <a href={siteInfo.social.instagram} className="social-link" target="_blank" rel="noreferrer">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+          )}
+          {siteInfo.social.linkedin && (
+            <li className="social-item">
+              <a href={siteInfo.social.linkedin} className="social-link" target="_blank" rel="noreferrer">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </a>
+            </li>
+          )}
+          {siteInfo.social.facebook && (
+            <li className="social-item">
+              <a href={siteInfo.social.facebook} className="social-link" target="_blank" rel="noreferrer">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </aside>
