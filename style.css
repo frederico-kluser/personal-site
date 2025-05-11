@@ -800,6 +800,28 @@ article { display: none; }
     display: block;
 }
 
+/* Adjust animation for modal based on screen size */
+#project-modal-root:not(.active) .project-modal {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+}
+
+#project-modal-root.active .project-modal {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    #project-modal-root:not(.active) .project-modal {
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    #project-modal-root.active .project-modal {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
 .project-modal-overlay {
     position: fixed;
     top: 0;
@@ -826,8 +848,15 @@ article { display: none; }
     z-index: 10001;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 20px;
-    padding-bottom: 30px;
+    padding: 20px 20px 30px 20px;
+}
+
+/* Center modal vertically on desktop */
+@media (min-width: 768px) {
+    .project-modal {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .project-modal::-webkit-scrollbar {
@@ -846,9 +875,9 @@ article { display: none; }
 }
 
 .project-modal-close-btn {
-    position: absolute;
+    position: fixed;
     top: 15px;
-    right: 15px;
+    right: calc(50% - (min(600px, calc(100% - 30px)) / 2) + 15px);
     background: var(--bg-gradient-matrix2);
     backdrop-filter: blur(10px);
     border: 1px solid var(--matrix-green);
@@ -864,6 +893,12 @@ article { display: none; }
     box-shadow: var(--shadow2);
     z-index: 10002;
     cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .project-modal-close-btn {
+        right: 15px; /* Simplify on mobile */
+    }
 }
 
 .project-modal-close-btn:hover,
