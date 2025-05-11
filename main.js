@@ -186,66 +186,86 @@ for(let i = 0; i < formInputs.length; i++) {
     })
 }
 
-// Automatic infinite carousel for clients list
+// Automatic infinite carousel for clients list using CSS transforms
 const clientsList = document.querySelector('.clients-list');
 
 if (clientsList) {
-    // Clone all items to create the illusion of an infinite loop
-    const originalItems = clientsList.innerHTML;
-    clientsList.innerHTML = originalItems + originalItems;
+    // Check if clients list is already wrapped, if not add the container
+    let clientsListContainer = clientsList.parentElement;
+    if (!clientsListContainer.classList.contains('clients-list-container')) {
+        const container = document.createElement('div');
+        container.className = 'clients-list-container';
+        clientsList.parentNode.insertBefore(container, clientsList);
+        container.appendChild(clientsList);
+        clientsListContainer = container;
+    }
 
-    let autoScrollInterval;
-    const scrollSpeed = 1; // pixels per frame - keep this low for smooth scrolling
+    // Clone items for infinite effect
+    const originalItems = Array.from(clientsList.children);
+    originalItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        clientsList.appendChild(clone);
+    });
 
-    // Function to create an infinite carousel effect
-    function animateCarousel() {
-        // Increment scroll position
-        clientsList.scrollLeft += scrollSpeed;
+    // Get carousel dimensions
+    let position = 0;
+    let animation = null;
+    const speed = 0.5; // pixels per frame (adjust as needed for speed)
 
-        // When we've scrolled halfway through (to the cloned items),
-        // reset back to the start without animation
-        if (clientsList.scrollLeft >= clientsList.scrollWidth / 2) {
-            // Disable smooth scrolling temporarily for the reset
-            clientsList.style.scrollBehavior = 'auto';
-            clientsList.scrollLeft = 0;
-            // Re-enable smooth scrolling
-            setTimeout(() => {
-                clientsList.style.scrollBehavior = 'smooth';
-            }, 10);
+    // Calculate when to reset the animation
+    const calculateWidth = () => {
+        const itemWidth = originalItems[0].offsetWidth;
+        const itemsCount = originalItems.length;
+        return itemWidth * itemsCount;
+    };
+
+    let resetPoint = calculateWidth();
+
+    // Handle window resize to recalculate dimensions
+    window.addEventListener('resize', () => {
+        resetPoint = calculateWidth();
+    });
+
+    // Animation function using transforms
+    function animate() {
+        position -= speed;
+
+        // Apply transform for smooth animation
+        clientsList.style.transform = `translateX(${position}px)`;
+
+        // When first set of items moves out of view, reset position
+        if (Math.abs(position) >= resetPoint) {
+            position = 0;
         }
+
+        animation = requestAnimationFrame(animate);
     }
 
-    // Start the automatic carousel with requestAnimationFrame for better performance
-    function startCarousel() {
-        animateCarousel();
-        autoScrollInterval = requestAnimationFrame(startCarousel);
-    }
+    // Start the animation
+    animate();
 
-    // Initial start
-    startCarousel();
-
-    // Disable pointer events on clients list
-    clientsList.style.pointerEvents = 'none';
-
-    // Stop animation when the tab/window is not visible to save resources
-    document.addEventListener('visibilitychange', function() {
+    // Pause animation when not visible
+    document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
-            cancelAnimationFrame(autoScrollInterval);
+            cancelAnimationFrame(animation);
         } else {
-            startCarousel();
+            animate();
         }
     });
 
-    // Ensure good performance by reducing animation quality when not in viewport
+    // Performance optimization - pause when not in viewport
     const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
-            startCarousel();
+            if (!animation) {
+                animate();
+            }
         } else {
-            cancelAnimationFrame(autoScrollInterval);
+            cancelAnimationFrame(animation);
+            animation = null;
         }
     }, { threshold: 0.1 });
 
-    observer.observe(clientsList);
+    observer.observe(clientsListContainer);
 }
 
 // Enabling Page Navigation
