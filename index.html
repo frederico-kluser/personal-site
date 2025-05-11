@@ -850,25 +850,27 @@
     <!-- Project Modal - New Implementation (directly in body) -->
     <div id="project-modal-root">
         <div class="project-modal-overlay"></div>
-        <!-- Close button outside the scrollable modal -->
-        <button class="project-modal-close-btn" id="project-modal-close-btn">
-            <ion-icon name="close-outline"></ion-icon>
-        </button>
-        <div class="project-modal">
-            <div class="project-modal-img-wrapper">
-                <figure class="project-modal-img">
-                    <img src="" alt="" id="project-modal-img">
-                </figure>
-            </div>
+        <div class="project-modal-wrapper">
+            <!-- Close button always visible at top right of modal wrapper -->
+            <button class="project-modal-close-btn" id="project-modal-close-btn">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="project-modal">
+                <div class="project-modal-img-wrapper">
+                    <figure class="project-modal-img">
+                        <img src="" alt="" id="project-modal-img">
+                    </figure>
+                </div>
 
-            <div class="project-modal-content">
-                <h3 class="h3 project-modal-title" id="project-modal-title"></h3>
-                <div class="project-modal-role" id="project-modal-role"></div>
-                <div class="project-modal-text" id="project-modal-text"></div>
-                <div class="project-modal-techs" id="project-modal-techs"></div>
-                <div class="project-modal-methodologies" id="project-modal-methodologies"></div>
-                <div class="project-modal-tools" id="project-modal-tools"></div>
-                <div class="project-modal-downloads" id="project-modal-downloads"></div>
+                <div class="project-modal-content">
+                    <h3 class="h3 project-modal-title" id="project-modal-title"></h3>
+                    <div class="project-modal-role" id="project-modal-role"></div>
+                    <div class="project-modal-text" id="project-modal-text"></div>
+                    <div class="project-modal-techs" id="project-modal-techs"></div>
+                    <div class="project-modal-methodologies" id="project-modal-methodologies"></div>
+                    <div class="project-modal-tools" id="project-modal-tools"></div>
+                    <div class="project-modal-downloads" id="project-modal-downloads"></div>
+                </div>
             </div>
         </div>
     </div>

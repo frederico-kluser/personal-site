@@ -801,23 +801,23 @@ article { display: none; }
 }
 
 /* Adjust animation for modal based on screen size */
-#project-modal-root:not(.active) .project-modal {
+#project-modal-root:not(.active) .project-modal-wrapper {
     opacity: 0;
     transform: translateX(-50%) scale(0.9);
 }
 
-#project-modal-root.active .project-modal {
+#project-modal-root.active .project-modal-wrapper {
     opacity: 1;
     transform: translateX(-50%) scale(1);
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 @media (min-width: 768px) {
-    #project-modal-root:not(.active) .project-modal {
+    #project-modal-root:not(.active) .project-modal-wrapper {
         transform: translate(-50%, -50%) scale(0.9);
     }
 
-    #project-modal-root.active .project-modal {
+    #project-modal-root.active .project-modal-wrapper {
         transform: translate(-50%, -50%) scale(1);
     }
 }
@@ -832,7 +832,7 @@ article { display: none; }
     z-index: 10000;
 }
 
-.project-modal {
+.project-modal-wrapper {
     position: fixed;
     top: 15px;
     left: 50%;
@@ -840,12 +840,18 @@ article { display: none; }
     width: calc(100% - 30px);
     max-width: 600px;
     max-height: calc(100vh - 30px);
+    z-index: 10001;
+}
+
+.project-modal {
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 30px);
     background: hsla(240, 1%, 17%, .95);
     backdrop-filter: blur(10px);
     border: 1px solid var(--jet);
     border-radius: 14px;
     box-shadow: var(--shadow5);
-    z-index: 10001;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding: 20px 20px 30px 20px;
@@ -853,7 +859,7 @@ article { display: none; }
 
 /* Center modal vertically on desktop */
 @media (min-width: 768px) {
-    .project-modal {
+    .project-modal-wrapper {
         top: 50%;
         transform: translate(-50%, -50%);
     }
@@ -875,9 +881,9 @@ article { display: none; }
 }
 
 .project-modal-close-btn {
-    position: fixed;
+    position: absolute;
     top: 15px;
-    right: 15px; /* Simple fixed position on mobile */
+    right: 15px;
     background: var(--bg-gradient-matrix2);
     backdrop-filter: blur(10px);
     border: 1px solid var(--matrix-green);
@@ -893,14 +899,6 @@ article { display: none; }
     box-shadow: var(--shadow2);
     z-index: 10002;
     cursor: pointer;
-}
-
-/* Desktop positioning */
-@media (min-width: 768px) {
-    .project-modal-close-btn {
-        top: calc(50% - min(40vh, 300px)); /* Position relative to vertical center */
-        right: calc(50% - 300px - 15px); /* Position to the right of the modal (300px is half of max width) */
-    }
 }
 
 .project-modal-close-btn:hover,
