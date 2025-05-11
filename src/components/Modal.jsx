@@ -25,6 +25,7 @@ function Modal({ isOpen, onClose, className, children }) {
         <motion.div
           className={`project-modal ${className || ''}`}
           variants={scaleTransition}
+          layout
         >
           <motion.button
             className="project-modal-close-btn"

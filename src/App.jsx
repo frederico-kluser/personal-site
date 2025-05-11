@@ -125,7 +125,7 @@ function App() {
         </div>
       </main>
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {modalState.isOpen && (
           <Modal
             isOpen={modalState.isOpen}

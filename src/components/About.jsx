@@ -163,6 +163,7 @@ function About({ isActive, openTestimonialModal }) {
                     boxShadow: '0 10px 20px rgba(0,0,0,0.19)',
                     transition: { type: 'spring', stiffness: 300, damping: 20 }
                   }}
+                  layoutId={`testimonial-card-${testimonial.id}`}
                 >
                   <figure className="testimonials-avatar-box">
                     <motion.img
@@ -173,13 +174,21 @@ function About({ isActive, openTestimonialModal }) {
                       style={{ objectFit: "cover" }}
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.3 }}
+                      layoutId={`testimonial-avatar-${testimonial.id}`}
                     />
                   </figure>
 
-                  <h4 className="h4 testimonials-item-title">{testimonial.name}</h4>
+                  <motion.h4
+                    className="h4 testimonials-item-title"
+                    layoutId={`testimonial-name-${testimonial.id}`}
+                  >
+                    {testimonial.name}
+                  </motion.h4>
 
                   <div className="testimonials-text">
-                    <p>{testimonial.text}</p>
+                    <motion.p layoutId={`testimonial-text-${testimonial.id}`}>
+                      {testimonial.text}
+                    </motion.p>
                   </div>
                 </motion.div>
               </SwiperSlide>
