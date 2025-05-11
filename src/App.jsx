@@ -8,14 +8,19 @@ import Portfolio from './components/Portfolio';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
 import Contact from './components/Contact';
-import ProjectModal from './components/ProjectModal';
+import Modal from './components/Modal';
+import ProjectModalContent from './components/ProjectModalContent';
+import TestimonialModalContent from './components/TestimonialModalContent';
 import MatrixRain from './components/MatrixRain';
 import './assets/css/style.css';
 
 function App() {
   const [activePage, setActivePage] = useState('about');
-  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [projectModalData, setProjectModalData] = useState(null);
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    type: null, // 'project' or 'testimonial'
+    data: null
+  });
   const location = useLocation();
 
   // Update active page based on URL path
@@ -41,13 +46,28 @@ function App() {
     setActivePage(page);
   };
 
-  const openProjectModal = (projectData) => {
-    setProjectModalData(projectData);
-    setIsProjectModalOpen(true);
+  const openModal = (type, data) => {
+    setModalState({
+      isOpen: true,
+      type,
+      data
+    });
   };
 
-  const closeProjectModal = () => {
-    setIsProjectModalOpen(false);
+  const closeModal = () => {
+    setModalState({
+      ...modalState,
+      isOpen: false
+    });
+  };
+
+  // Helper functions to simplify component props
+  const openProjectModal = (projectData) => {
+    openModal('project', projectData);
+  };
+
+  const openTestimonialModal = (testimonialData) => {
+    openModal('testimonial', testimonialData);
   };
 
   // Check if we're on the blog post page
@@ -73,8 +93,8 @@ function App() {
           <Navbar activePage={activePage} onPageChange={handlePageChange} />
 
           <Routes>
-            <Route path="/" element={<About isActive={activePage === 'about'} />} />
-            <Route path="/about" element={<About isActive={activePage === 'about'} />} />
+            <Route path="/" element={<About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />} />
+            <Route path="/about" element={<About isActive={activePage === 'about'} openTestimonialModal={openTestimonialModal} />} />
             <Route path="/resume" element={<Resume isActive={activePage === 'resume'} />} />
             <Route path="/portfolio" element={
               <Portfolio
@@ -88,11 +108,14 @@ function App() {
         </div>
       </main>
 
-      <ProjectModal
-        isOpen={isProjectModalOpen}
-        onClose={closeProjectModal}
-        project={projectModalData}
-      />
+      <Modal
+        isOpen={modalState.isOpen}
+        onClose={closeModal}
+        className={modalState.type === 'testimonial' ? 'testimonial-modal' : ''}
+      >
+        {modalState.type === 'project' && <ProjectModalContent project={modalState.data} />}
+        {modalState.type === 'testimonial' && <TestimonialModalContent testimonial={modalState.data} />}
+      </Modal>
     </>
   );
 }

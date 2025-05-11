@@ -833,6 +833,7 @@ article { display: none; }
 }
 
 /* Project Modal Styling - New Implementation */
+#modal-root,
 #project-modal-root {
     position: fixed;
     top: 0;
@@ -843,16 +844,19 @@ article { display: none; }
     display: none;
 }
 
+#modal-root.active,
 #project-modal-root.active {
     display: block;
 }
 
 /* Adjust animation for modal based on screen size */
+#modal-root:not(.active) .project-modal-wrapper,
 #project-modal-root:not(.active) .project-modal-wrapper {
     opacity: 0;
     transform: translateX(-50%) scale(0.9);
 }
 
+#modal-root.active .project-modal-wrapper,
 #project-modal-root.active .project-modal-wrapper {
     opacity: 1;
     transform: translateX(-50%) scale(1);
@@ -860,10 +864,12 @@ article { display: none; }
 }
 
 @media (min-width: 768px) {
+    #modal-root:not(.active) .project-modal-wrapper,
     #project-modal-root:not(.active) .project-modal-wrapper {
         transform: translate(-50%, -50%) scale(0.9);
     }
 
+    #modal-root.active .project-modal-wrapper,
     #project-modal-root.active .project-modal-wrapper {
         transform: translate(-50%, -50%) scale(1);
     }
