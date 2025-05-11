@@ -1,8 +1,8 @@
 {
   "name": "personal-site",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
+  "description": "Personal portfolio website for Fred K. built with React",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -12,10 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/frederico-kluser/personal-site.git"
   },
-  "keywords": [],
+  "keywords": ["portfolio", "react", "vite", "ux-design"],
   "author": "Frederico Guilherme Kluser de Oliveira",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/frederico-kluser/personal-site/issues"
   },

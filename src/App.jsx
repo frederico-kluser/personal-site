@@ -10,6 +10,7 @@ import BlogPost from './components/BlogPost';
 import Contact from './components/Contact';
 import ProjectModal from './components/ProjectModal';
 import MatrixRain from './components/MatrixRain';
+import './assets/css/style.css';
 
 function App() {
   const [activePage, setActivePage] = useState('about');
@@ -20,7 +21,7 @@ function App() {
   // Update active page based on URL path
   useEffect(() => {
     const path = location.pathname;
-    
+
     if (path === '/' || path === '/about') {
       setActivePage('about');
     } else if (path.startsWith('/blog/')) {
@@ -70,15 +71,15 @@ function App() {
         <Sidebar />
         <div className="main-content">
           <Navbar activePage={activePage} onPageChange={handlePageChange} />
-          
+
           <Routes>
             <Route path="/" element={<About isActive={activePage === 'about'} />} />
             <Route path="/about" element={<About isActive={activePage === 'about'} />} />
             <Route path="/resume" element={<Resume isActive={activePage === 'resume'} />} />
             <Route path="/portfolio" element={
-              <Portfolio 
-                isActive={activePage === 'portfolio'} 
-                openProjectModal={openProjectModal} 
+              <Portfolio
+                isActive={activePage === 'portfolio'}
+                openProjectModal={openProjectModal}
               />
             } />
             <Route path="/blog" element={<Blog isActive={activePage === 'blog'} />} />
@@ -87,8 +88,8 @@ function App() {
         </div>
       </main>
 
-      <ProjectModal 
-        isOpen={isProjectModalOpen} 
+      <ProjectModal
+        isOpen={isProjectModalOpen}
         onClose={closeProjectModal}
         project={projectModalData}
       />
