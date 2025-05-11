@@ -116,7 +116,7 @@ function BlogPost() {
       <MatrixRain />
       <main className="blog-main">
         <div className="main-content blog-full-width">
-          <nav className="navbar">
+          <nav className="blog-navbar">
             <ul className="navbar-list">
               <li className="navbar-item"><Link to="/" className="navbar-link">About</Link></li>
               <li className="navbar-item"><Link to="/resume" className="navbar-link">Resume</Link></li>

@@ -41,12 +41,12 @@ function Blog({ isActive }) {
         <ul className="blog-posts-list">
           {blogPosts.map(post => (
             <li className="blog-posts-item" key={post.id}>
-              <Link to={`/blog/${post.id}`}>
+              <Link to={`/blog/${post.id}`} className="content-card blog-card">
                 <figure className="blog-banner-box">
-                  <img 
-                    src={post.image} 
-                    alt={post.title} 
-                    loading="lazy" 
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    loading="lazy"
                   />
                 </figure>
 
@@ -59,6 +59,11 @@ function Blog({ isActive }) {
 
                   <h3 className="h3 blog-item-title">{post.title}</h3>
                   <p className="blog-text">{post.summary}</p>
+
+                  <div className="blog-read-more">
+                    <span>Read More</span>
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                  </div>
                 </div>
               </Link>
             </li>

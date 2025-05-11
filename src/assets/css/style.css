@@ -448,29 +448,29 @@ article { display: none; }
 .testimonials { margin-bottom: 30px; }
 .testimonials-title { margin-bottom: 20px; }
 
-.testimonials-list {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 15px;
-    margin: 0 -15px;
-    padding: 25px 15px;
-    padding-bottom: 35px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: inline mandatory;
-    cursor: grab;
-    user-select: none;
+/* Swiper Styles for Testimonials */
+.testimonials-swiper-container {
+    padding: 25px 0;
+    width: 100%;
+    overflow: hidden;
 }
 
-.testimonials-list.grabbing {
-    cursor: grabbing;
+.testimonials-swiper {
+    padding-bottom: 40px; /* Space for pagination */
+    overflow: hidden;
 }
 
-.testimonials-item {
-    min-width: 100%;
-    scroll-snap-align: center;
+.testimonial-card {
+    height: 100%;
+    cursor: pointer;
+    transition: var(--transition1);
+    margin: 0 auto;
+    max-width: 95%;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow3);
 }
 
 .testimonials-avatar-box {
@@ -495,184 +495,223 @@ article { display: none; }
     overflow: hidden;
 }
 
-/*MODAL CONTAINER*/
-
-.modal-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 20;
-    pointer-events: none;
-    visibility: hidden;
+/* Swiper Pagination and Navigation Customization */
+.testimonials-swiper .swiper-pagination {
+    position: relative;
+    bottom: 0;
+    padding-top: 15px;
 }
 
-    .modal-container::-webkit-scrollbar { display: none; }
-
-    .modal-container.active {
-        pointer-events: all;
-        visibility: visible;
-    }
-
-        .modal-container.active .testimonials-modal {
-            transform: translateX(-50%) scale(1);
-            opacity: 1;
-        }
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: hsl(0, 0%, 5%);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    z-index: 20; /* Higher z-index to ensure it's above everything except the modal */
-    transition: var(--transition1);
+.testimonials-swiper .swiper-pagination-bullet {
+    background: var(--jet);
+    opacity: 0.6;
+    width: 8px;
+    height: 8px;
+    margin: 0 5px;
 }
 
-    .overlay.active {
-        opacity: .8;
-        visibility: visible;
-        pointer-events: all;
-    }
-
-.testimonials-modal {
-    background: hsla(240, 1%, 17%, .95);
-    backdrop-filter: blur(10px);
-    position: fixed;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%) scale(1.2);
-    padding: 15px;
-    padding-bottom: 30px; /* Extra padding to ensure content isn't hidden */
-    width: calc(100% - 30px);
-    max-width: 450px;
-    max-height: calc(100vh - 30px);
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid var(--jet);
-    border-radius: 14px;
-    box-shadow: var(--shadow5);
-    opacity: 0;
-    transition: var(--transition1);
-    z-index: 21; /* Higher than the container */
-}
-
-.modal-close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: var(--bg-gradient-matrix2);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--matrix-green);
-    border-radius: 8px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--matrix-green);
-    font-size: 18px;
+.testimonials-swiper .swiper-pagination-bullet-active {
+    background: var(--matrix-green);
     opacity: 1;
-    box-shadow: var(--shadow2);
-    z-index: 22; /* Make sure it's above the modal */
+    width: 10px;
+    height: 10px;
 }
 
-    .modal-close-btn:hover, .modal-close-btn:focus {
-        background: var(--bg-gradient-matrix1);
-        color: var(--white2);
-    }
-    .modal-close-btn ion-icon { --ionicon-stroke-width: 50px; }
+.testimonials-swiper .swiper-button-next,
+.testimonials-swiper .swiper-button-prev {
+    color: var(--matrix-green);
+    width: 30px;
+    height: 30px;
+    --swiper-navigation-size: 20px;
+    top: 50%;
+    margin-top: -15px;
+}
 
-.modal-avatar-box {
+.testimonials-swiper .swiper-button-next {
+    right: 5px;
+}
+
+.testimonials-swiper .swiper-button-prev {
+    left: 5px;
+}
+
+.testimonials-swiper .swiper-button-next:hover,
+.testimonials-swiper .swiper-button-prev:hover {
+    color: var(--matrix-green-light);
+}
+
+.testimonials-swiper .swiper-button-next:after,
+.testimonials-swiper .swiper-button-prev:after {
+    font-weight: bold;
+}
+
+@media (max-width: 580px) {
+    .testimonials-swiper .swiper-button-next,
+    .testimonials-swiper .swiper-button-prev {
+        display: none;
+    }
+}
+
+/*TESTIMONIAL MODAL*/
+
+/* The styles for the old modal are kept for backward compatibility but hidden -
+   we're now using the ProjectModal style for testimonials */
+.modal-container {
+    display: none; /* Hiding the old modal styles */
+}
+
+/* Testimonial modal styling based on project modal */
+#testimonial-modal-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+}
+
+#testimonial-modal-root.active {
+    display: block;
+}
+
+/* Adapt animation for testimonial modal based on screen size */
+#testimonial-modal-root:not(.active) .project-modal-wrapper {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+}
+
+#testimonial-modal-root.active .project-modal-wrapper {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    #testimonial-modal-root:not(.active) .project-modal-wrapper {
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    #testimonial-modal-root.active .project-modal-wrapper {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Testimonial modal customizations */
+.testimonial-modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+    text-align: center;
+}
+
+.testimonial-modal-avatar {
     background: var(--bg-gradient-onyx);
     width: max-content;
-    border-radius: 14px;
+    border-radius: 20px;
     margin-bottom: 15px;
     box-shadow: var(--shadow2);
+    padding: 5px;
 }
 
-.modal-img-wrapper > img { display: none; }
+.testimonial-modal-title-wrapper {
+    margin-bottom: 15px;
+}
 
-.modal-title { margin-bottom: 4px; }
+.testimonial-modal-title {
+    color: var(--matrix-green-light);
+    margin-bottom: 5px;
+}
 
-.modal-content time {
-    font-size: var(--fs6);
+.testimonial-modal-title-wrapper time {
     color: var(--light-gray70);
-    font-weight: var(--fw500);
-    margin-bottom: 10px;
+    font-size: var(--fs6);
 }
 
-.modal-content p {
+.testimonial-quote-icon {
+    width: 40px;
+    margin: 0 auto 20px;
+}
+
+.testimonial-modal-content {
     color: var(--light-gray);
-    font-size: var(--fs6);
+    font-size: var(--fs5);
     font-weight: var(--fw300);
-    line-height: 1.6;
+    line-height: 1.8;
+    text-align: center;
+    padding: 0 15px;
+}
+
+/* Tablet and Desktop styles */
+@media (min-width: 768px) {
+    .testimonial-modal-content {
+        padding: 0 30px;
+        font-size: var(--fs4);
+    }
+
+    .testimonial-quote-icon {
+        width: 60px;
+    }
 }
 
 /*CLIENTS*/
 
 .clients {
-    margin-bottom: 30px; /* Ajustado para seguir o padrão das outras seções */
+    margin-bottom: 30px;
     position: relative;
 }
 
 .clients-title {
-    margin-bottom: 20px; /* Consistente com outras seções */
+    margin-bottom: 20px;
 }
 
-.clients-carousel {
+/* Swiper Styles for Clients */
+.clients-swiper-container {
+    padding: 15px 0;
+    width: 100%;
     overflow: hidden;
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-    padding: 10px 0; /* Reduzindo o padding vertical */
-    height: 80px; /* Altura fixa reduzida */
 }
 
-.clients-track {
-    display: flex;
-    width: max-content;
-    position: relative;
-    transition: transform 0s linear;
-    will-change: transform;
-    gap: 0; /* Removendo completamente o espaço entre itens */
+.clients-swiper {
+    overflow: hidden;
 }
 
-.clients-slide {
-    flex-shrink: 0;
-    width: 33.33%; /* Reduzindo a largura para mostrar mais itens */
-    padding: 0 2px; /* Padding mínimo */
-    box-sizing: border-box;
-    height: 60px; /* Reduzindo a altura vertical */
+.clients-item {
     display: flex;
+    justify-content: center;
     align-items: center;
+    height: 80px;
+    transition: var(--transition1);
+    margin: 0 auto;
+    max-width: 90%;
 }
 
-@media (min-width: 768px) {
-    .clients-slide {
-        width: 25%; /* Mostrando 4 itens em telas médias */
-    }
+.clients-item:hover {
+    transform: scale(1.05);
 }
 
-@media (min-width: 1024px) {
-    .clients-slide {
-        width: 20%; /* Mostrando 5 itens em telas grandes */
-    }
-}
-
-.clients-slide img {
+.clients-item a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     width: 100%;
-    max-height: 60px; /* Altura máxima controlada */
-    object-fit: contain; /* Mantém proporção da imagem */
-    display: block;
+}
+
+.clients-item img {
+    max-width: 100%;
+    max-height: 60px;
+    object-fit: contain;
     filter: grayscale(0.5);
-    pointer-events: none;
-    user-select: none;
+    opacity: 0.8;
+    transition: var(--transition1);
+}
+
+.clients-item:hover img {
+    filter: grayscale(0);
+    opacity: 1;
 }
 
 /*RESUME*/
@@ -1171,84 +1210,153 @@ article { display: none; }
 
 /*BLOG*/
 
-.blog-posts { margin-bottom: 10px; }
+.blog-posts { margin-bottom: 30px; }
 
 .blog-posts-list {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 30px;
+    padding: 0 10px;
 }
 
-.blog-posts-item > a {
-    position: relative;
-    background: var(--border-gradient-onyx);
+.blog-card {
     height: 100%;
-    box-shadow: var(--shadow4);
-    border-radius: 16px;
-    z-index: 1;
+    cursor: pointer;
+    transition: var(--transition1);
+    padding: 0;
+    overflow: hidden;
 }
 
-    .blog-posts-item > a::before {
-        content: '';
-        position: absolute;
-        inset: 1px;
-        border-radius: inherit;
-        background: hsla(240, 1%, 17%, .75);
-        backdrop-filter: blur(10px);
-        z-index: -1;
-    }
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow3);
+}
+
+.blog-card:hover .blog-banner-box img {
+    transform: scale(1.05);
+}
 
 .blog-banner-box {
     width: 100%;
     height: 200px;
-    border-radius: 12px;
     overflow: hidden;
+    border-radius: 14px 14px 0 0;
 }
 
-    .blog-banner-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: var(--transition1);
-    }
+.blog-banner-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition1);
+}
 
-.blog-content { padding: 15px; }
+.blog-content {
+    padding: 20px;
+    background: hsla(240, 1%, 17%, .85);
+    border-radius: 0 0 14px 14px;
+}
 
 .blog-meta {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     gap: 7px;
     margin-bottom: 10px;
 }
 
-    .blog-meta :is(.blog-category, time) {
-        color: var(--light-gray70);
-        font-size: var(--fs6);
-        font-weight: var(--fw300);
-    }
+.blog-meta :is(.blog-category, time) {
+    color: var(--light-gray70);
+    font-size: var(--fs7);
+    font-weight: var(--fw300);
+}
 
-    .blog-meta .dot {
-        background: var(--light-gray70);
-        width: 4px;
-        height: 4px;
-        border-radius: 4px;
-    }
+.blog-meta .dot {
+    background: var(--light-gray70);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+}
 
 .blog-item-title {
     margin-bottom: 10px;
     line-height: 1.3;
+    color: var(--white2);
+    font-size: var(--fs5);
+    font-weight: var(--fw500);
     transition: var(--transition1);
 }
 
-    .blog-post-item > a:hover .blog-item-title { color: var(--matrix-green); }
+.blog-card:hover .blog-item-title {
+    color: var(--matrix-green);
+}
 
 .blog-text {
     color: var(--light-gray);
     font-size: var(--fs6);
     font-weight: var(--fw300);
     line-height: 1.6;
-    text-align: justify;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-read-more {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--matrix-green);
+    font-size: var(--fs7);
+    font-weight: var(--fw500);
+    transition: var(--transition1);
+}
+
+.blog-read-more ion-icon {
+    font-size: 18px;
+    transition: var(--transition1);
+}
+
+.blog-card:hover .blog-read-more {
+    color: var(--matrix-green-light);
+}
+
+.blog-card:hover .blog-read-more ion-icon {
+    transform: translateX(5px);
+}
+
+@media (min-width: 580px) {
+    .blog-content {
+        padding: 25px;
+    }
+
+    .blog-item-title {
+        font-size: var(--fs4);
+    }
+
+    .blog-text {
+        font-size: var(--fs5);
+    }
+
+    .blog-read-more {
+        font-size: var(--fs6);
+    }
+}
+
+@media (min-width: 768px) {
+    .blog-posts-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .blog-banner-box {
+        height: 220px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .blog-banner-box {
+        height: 240px;
+    }
 }
 
 /*CONTACT*/
@@ -1288,10 +1396,27 @@ article { display: none; }
         z-index: 5;
         font-size: var(--fs7);
         box-shadow: var(--shadow1);
+        white-space: nowrap;
     }
 
     .digital-nomad-badge ion-icon {
         font-size: 18px;
+    }
+
+    @media (max-width: 580px) {
+        .digital-nomad-badge {
+            width: auto;
+            max-width: 90%;
+            padding: 6px 12px;
+            overflow: visible;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        .digital-nomad-badge span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
 .contact-form { margin-bottom: 10px; }

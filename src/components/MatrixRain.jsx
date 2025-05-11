@@ -26,14 +26,14 @@ function MatrixRain() {
       'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
     ],
     speed: 30, // Update interval in milliseconds
-    // Adjust density based on device type - reduced by 30% for desktop
+    // Adjust density based on device type - reduced by 50% for all devices
     get density() {
-      return isMobile() ? 0.03 : 0.021; // 0.03 reduced by 30% = 0.021 for desktop
+      return isMobile() ? 0.015 : 0.0105; // Previous values (0.03, 0.021) reduced by 50%
     },
     dropLength: 80, // Number of characters in each drop (set to at least 80vh)
-    // Adjust maximum drops based on device type
+    // Adjust maximum drops based on device type - reduced by 50% for all devices
     get maxDrops() {
-      return isMobile() ? 70 : 49; // 70 reduced by 30% = 49 for desktop
+      return isMobile() ? 35 : 25; // Previous values (70, 49) reduced by 50%
     },
     // Adjust drop speed based on device type
     get dropSpeed() {
@@ -71,8 +71,8 @@ function MatrixRain() {
       const columnWidth = config.fontSize * 0.8; // Increased spacing for larger characters
       const columns = Math.floor(canvas.width / columnWidth);
 
-      // Start with drops that cover more of the screen - reduced for desktop
-      const initialDrops = isMobile() ? 30 : 21; // 30 reduced by 30% = 21 for desktop
+      // Start with drops that cover more of the screen - reduced by 50% for all devices
+      const initialDrops = isMobile() ? 15 : 10; // Previous values (30, 21) reduced by 50%
       for (let i = 0; i < Math.min(columns, initialDrops); i++) {
         createNewDrop();
       }

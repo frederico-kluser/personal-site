@@ -1,4 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+// Import required modules
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 
 function About({ isActive }) {
   const [testimonials, setTestimonials] = useState([
@@ -27,7 +38,7 @@ function About({ isActive }) {
       text: "I was overwhelmed with the thought of redesigning my online store, but Richard made the process seamless. The site is not only visually appealing but also optimized for conversions. I've seen a 50% increase in traffic since the launch!"
     }
   ]);
-  
+
   const [activeTestimonial, setActiveTestimonial] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,55 +50,6 @@ function About({ isActive }) {
   const closeTestimonialModal = () => {
     setIsModalOpen(false);
   };
-
-  // Handle testimonials drag scrolling
-  useEffect(() => {
-    if (!isActive) return;
-    
-    const testimonialsList = document.querySelector('.testimonials-list');
-    if (!testimonialsList) return;
-
-    let isDragging = false;
-    let startX;
-    let scrollLeft;
-
-    const handleMouseDown = (e) => {
-      isDragging = true;
-      testimonialsList.classList.add('grabbing');
-      startX = e.pageX - testimonialsList.offsetLeft;
-      scrollLeft = testimonialsList.scrollLeft;
-    };
-
-    const handleMouseUp = () => {
-      isDragging = false;
-      testimonialsList.classList.remove('grabbing');
-    };
-
-    const handleMouseLeave = () => {
-      isDragging = false;
-      testimonialsList.classList.remove('grabbing');
-    };
-
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - testimonialsList.offsetLeft;
-      const walk = (x - startX) * 2;
-      testimonialsList.scrollLeft = scrollLeft - walk;
-    };
-
-    testimonialsList.addEventListener('mousedown', handleMouseDown);
-    testimonialsList.addEventListener('mouseup', handleMouseUp);
-    testimonialsList.addEventListener('mouseleave', handleMouseLeave);
-    testimonialsList.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      testimonialsList.removeEventListener('mousedown', handleMouseDown);
-      testimonialsList.removeEventListener('mouseup', handleMouseUp);
-      testimonialsList.removeEventListener('mouseleave', handleMouseLeave);
-      testimonialsList.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [isActive]);
 
   return (
     <article className={`about ${isActive ? 'active' : ''}`} data-page="about">
@@ -153,92 +115,152 @@ function About({ isActive }) {
       <section className="testimonials">
         <h3 className="h3 testimonials-title">Testimonials</h3>
 
-        <ul className="testimonials-list has-scrollbar">
-          {testimonials.map(testimonial => (
-            <li className="testimonials-item" key={testimonial.id}>
-              <div 
-                className="content-card" 
-                onClick={() => openTestimonialModal(testimonial)}
-              >
-                <figure className="testimonials-avatar-box">
-                  <img 
-                    src={testimonial.avatar} 
-                    alt={testimonial.name} 
-                    width="60" 
-                  />
-                </figure>
+        <div className="testimonials-swiper-container">
+          <Swiper
+            modules={[Pagination, Navigation, Autoplay]}
+            spaceBetween={30}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            navigation
+            loop={true}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            centeredSlides={true}
+            breakpoints={{
+              768: {
+                slidesPerView: 2,
+                centeredSlides: false,
+              }
+            }}
+            className="testimonials-swiper"
+          >
+            {testimonials.map(testimonial => (
+              <SwiperSlide key={testimonial.id}>
+                <div
+                  className="content-card testimonial-card"
+                  onClick={() => openTestimonialModal(testimonial)}
+                >
+                  <figure className="testimonials-avatar-box">
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      width="60"
+                    />
+                  </figure>
 
-                <h4 className="h4 testimonials-item-title">{testimonial.name}</h4>
+                  <h4 className="h4 testimonials-item-title">{testimonial.name}</h4>
 
-                <div className="testimonials-text">
-                  <p>{testimonial.text}</p>
+                  <div className="testimonials-text">
+                    <p>{testimonial.text}</p>
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </section>
 
-      <div className={`modal-container ${isModalOpen ? 'active' : ''}`}>
-        <div className={`overlay ${isModalOpen ? 'active' : ''}`} onClick={closeTestimonialModal}></div>
+      <div id="testimonial-modal-root" className={isModalOpen ? 'active' : ''}>
+        <div className="project-modal-overlay" onClick={closeTestimonialModal}></div>
+        <div className="project-modal-wrapper">
+          <div className="project-modal testimonial-modal">
+            <button className="project-modal-close-btn" onClick={closeTestimonialModal}>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
 
-        <section className="testimonials-modal">
-          <button className="modal-close-btn" onClick={closeTestimonialModal}>
-            <ion-icon name="close-outline"></ion-icon>
-          </button>
+            {activeTestimonial && (
+              <>
+                <div className="testimonial-modal-header">
+                  <figure className="testimonial-modal-avatar">
+                    <img src={activeTestimonial.avatar} alt={activeTestimonial.name} width="100" />
+                  </figure>
 
-          {activeTestimonial && (
-            <>
-              <div className="modal-img-wrapper">
-                <figure className="modal-avatar-box">
-                  <img src={activeTestimonial.avatar} alt={activeTestimonial.name} width="80" />
-                </figure>
+                  <div className="testimonial-modal-title-wrapper">
+                    <h3 className="h3 testimonial-modal-title">{activeTestimonial.name}</h3>
+                    <time dateTime="2023-06-14">14 June, 2023</time>
+                  </div>
 
-                <img src="https://i.postimg.cc/mZ00RwX7/icon-quote.png" alt="quote icon" />
-              </div>
+                  <img
+                    src="https://i.postimg.cc/mZ00RwX7/icon-quote.png"
+                    alt="quote icon"
+                    className="testimonial-quote-icon"
+                  />
+                </div>
 
-              <div className="modal-content">
-                <h4 className="h3 modal-title">{activeTestimonial.name}</h4>
-                <time dateTime="2023-06-14">14 June, 2023</time>
-
-                <div className="modal-text">
+                <div className="testimonial-modal-content">
                   <p>{activeTestimonial.text}</p>
                 </div>
-              </div>
-            </>
-          )}
-        </section>
+              </>
+            )}
+          </div>
+        </div>
       </div>
 
       <section className="clients">
         <h3 className="h3 clients-title">Clients</h3>
 
-        <div className="clients-list-container">
-          <ul className="clients-list has-scrollbar">
-            <li className="clients-item">
-              <a href="#"><img src="https://i.postimg.cc/YqfKyG66/logo-1-color.png" alt="logo" /></a>
-            </li>
-
-            <li className="clients-item">
-              <a href="#"><img src="https://i.postimg.cc/fWm6JtgG/logo-2-color.png" alt="logo" /></a>
-            </li>
-
-            <li className="clients-item">
-              <a href="#"><img src="https://i.postimg.cc/Bb07xpwd/logo-3-color.png" alt="logo" /></a>
-            </li>
-
-            <li className="clients-item">
-              <a href="#"><img src="https://i.postimg.cc/hv1yMmkh/logo-4-color.png" alt="logo" /></a>
-            </li>
-
-            <li className="clients-item">
-              <a href="#"><img src="https://i.postimg.cc/ry1P86Dc/logo-5-color.png" alt="logo" /></a>
-            </li>
-
-            <li className="clients-item">
-              <a href="#"><img src="https://i.postimg.cc/SsWDN8NV/logo-6-color.png" alt="logo" /></a>
-            </li>
-          </ul>
+        <div className="clients-swiper-container">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={15}
+            slidesPerView={2}
+            loop={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            centeredSlides={false}
+            allowTouchMove={true}
+            watchSlidesProgress={true}
+            breakpoints={{
+              580: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 25,
+              },
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 30,
+              }
+            }}
+            className="clients-swiper"
+          >
+            <SwiperSlide>
+              <div className="clients-item">
+                <a href="#"><img src="https://i.postimg.cc/YqfKyG66/logo-1-color.png" alt="logo" /></a>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="clients-item">
+                <a href="#"><img src="https://i.postimg.cc/fWm6JtgG/logo-2-color.png" alt="logo" /></a>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="clients-item">
+                <a href="#"><img src="https://i.postimg.cc/Bb07xpwd/logo-3-color.png" alt="logo" /></a>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="clients-item">
+                <a href="#"><img src="https://i.postimg.cc/hv1yMmkh/logo-4-color.png" alt="logo" /></a>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="clients-item">
+                <a href="#"><img src="https://i.postimg.cc/ry1P86Dc/logo-5-color.png" alt="logo" /></a>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="clients-item">
+                <a href="#"><img src="https://i.postimg.cc/SsWDN8NV/logo-6-color.png" alt="logo" /></a>
+              </div>
+            </SwiperSlide>
+          </Swiper>
         </div>
       </section>
     </article>
