@@ -564,7 +564,7 @@ article { display: none; }
     position: absolute;
     top: 15px;
     right: 15px;
-    background: var(--onyx);
+    background: var(--matrix-green);
     border-radius: 8px;
     width: 32px;
     height: 32px;
@@ -573,7 +573,7 @@ article { display: none; }
     align-items: center;
     color: var(--white2);
     font-size: 18px;
-    opacity: .7;
+    opacity: .9;
 }
 
     .modal-close-btn:hover, .modal-close-btn:focus { opacity: 1; }
