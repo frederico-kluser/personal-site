@@ -1,0 +1,89 @@
+/**
+ * Mobile Filter Dropdown Styles
+ * Simple, reliable dropdown for mobile without animations
+ */
+
+.mobile-filter-dropdown {
+  width: 100%;
+  position: relative;
+  margin: 15px 0 25px;
+  z-index: 1000;
+}
+
+.mobile-filter-button {
+  width: 100%;
+  background-color: var(--eerie-black1);
+  color: var(--light-gray);
+  border: 1px solid var(--jet);
+  border-radius: 8px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dropdown-arrow {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.up {
+  transform: rotate(180deg);
+}
+
+.mobile-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--eerie-black1);
+  border: 1px solid var(--jet);
+  border-radius: 8px;
+  margin-top: 5px;
+  padding: 8px 0;
+  z-index: 1000;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.mobile-dropdown-item {
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-dropdown-item button {
+  padding: 12px 15px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--light-gray);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-dropdown-item button.active {
+  color: var(--matrix-green);
+  font-weight: 500;
+}
+
+.mobile-dropdown-item button:hover,
+.mobile-dropdown-item button:focus {
+  background-color: rgba(3, 160, 98, 0.1);
+  color: var(--matrix-green);
+}
+
+/* Only use our custom dropdown for mobile */
+@media (min-width: 768px) {
+  .mobile-filter-dropdown {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .filter-list {
+    display: none;
+  }
+}

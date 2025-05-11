@@ -1,0 +1,80 @@
+/* 
+ * Portfolio Mobile Fixes
+ * Fixes for portfolio component on mobile devices
+ */
+
+/* Basic style resets for the portfolio page */
+.portfolio {
+  overflow: visible !important;
+}
+
+/* Fix for mobile select dropdown */
+.filter-select-box {
+  position: relative;
+  z-index: 100 !important;
+  margin: 15px 0 30px;
+}
+
+/* Mobile selector button styling */
+.filter-select {
+  width: 100%;
+  padding: 12px 15px !important;
+  border: 1px solid var(--jet);
+  border-radius: 8px;
+  background-color: hsla(240, 1%, 17%, 1) !important;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.filter-select:hover {
+  border-color: var(--matrix-green);
+}
+
+.select-value {
+  font-weight: 500;
+}
+
+/* Dropdown list container */
+.select-list-container {
+  z-index: 1000 !important;
+}
+
+/* Dropdown list styling */
+.select-list {
+  position: absolute !important;
+  top: calc(100% + 5px) !important;
+  left: 0 !important;
+  width: 100% !important;
+  background-color: hsla(240, 1%, 17%, 1) !important;
+  border: 1px solid var(--jet);
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5) !important;
+  max-height: 250px !important;
+  overflow-y: auto !important;
+  padding: 10px !important;
+  z-index: 1001 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* List items styling */
+.select-item {
+  margin: 5px 0 !important;
+}
+
+.select-item button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  background: transparent;
+  color: var(--light-gray);
+}
+
+.select-item button:hover {
+  background-color: rgba(3, 160, 98, 0.1);
+  color: var(--matrix-green);
+}

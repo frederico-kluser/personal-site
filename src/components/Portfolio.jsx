@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useAnimationControls, LayoutGroup } from 'moti
 import { staggerContainer, fadeInUpItem, portfolioTransitions, buttonHover } from '../animations/pageTransitions';
 import ProjectItem from './ProjectItem';
 import FilterCategory from './FilterCategory';
+import MobileFilterDropdown from './MobileFilterDropdown';
 
 function Portfolio({ isActive, openProjectModal }) {
   const { portfolio } = useContext(DataContext);
@@ -75,55 +76,14 @@ function Portfolio({ isActive, openProjectModal }) {
           ))}
         </motion.ul>
 
-        <div className="filter-select-box">
-          <motion.button
-            className="filter-select"
-            onClick={toggleSelect}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="select-value">
-              {filterCategory}
-            </div>
-            <motion.div
-              className="select-icon"
-              animate={{ rotate: selectOpen ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ion-icon name="chevron-down"></ion-icon>
-            </motion.div>
-          </motion.button>
-
-          <AnimatePresence>
-            {selectOpen && (
-              <motion.ul
-                className={`select-list ${selectOpen ? 'active' : ''}`}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                {portfolio.categories.map((category, index) => (
-                  <motion.li
-                    className="select-item"
-                    key={index}
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <motion.button
-                      onClick={() => handleSelectItemClick(category)}
-                      whileHover={{ x: 5 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    >
-                      {category}
-                    </motion.button>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
-        </div>
+        {/* Mobile filter dropdown - completely new implementation */}
+        <MobileFilterDropdown
+          categories={portfolio.categories}
+          selectedCategory={filterCategory}
+          onChange={handleFilterClick}
+          isOpen={selectOpen}
+          onToggle={() => setSelectOpen(prev => !prev)}
+        />
 
         <LayoutGroup>
           <motion.ul
