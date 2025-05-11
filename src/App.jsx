@@ -22,6 +22,7 @@ import './assets/css/page-transitions.css';
 import './assets/css/transition-fixes.css';
 import './assets/css/layout-fixes.css';
 import './assets/css/simple-fade.css';
+import './assets/css/simple-fade-fixes.css'; // Add this new file for scroll fixes
 import './assets/css/blog-transition-fixes.css';
 
 function App() {
@@ -105,7 +106,7 @@ function App() {
           <Navbar activePage={activePage} onPageChange={handlePageChange} />
 
           {/* Container principal para páginas com largura fixa e altura dinâmica */}
-          <div className="pages-container">
+          <div className="pages-container" style={{ overflow: 'visible', height: 'auto', minHeight: '100vh' }}>
             {/* Remover AnimatePresence e key causadores de renderização dupla */}
             <Routes>
                 <Route path="/" element={

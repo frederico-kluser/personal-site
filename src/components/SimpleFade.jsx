@@ -22,11 +22,12 @@ function SimpleFade({
   return (
     <div
       className={`simple-fade ${className} ${isVisible ? 'visible' : 'hidden'}`}
-      style={{ 
+      style={{
         display: 'block',
         position: 'relative',
         width: '100%',
-        height: '100%',
+        height: 'auto', // Changed from '100%' to 'auto' to allow content to determine height
+        overflow: 'visible', // Explicitly set overflow to visible
         pointerEvents: isVisible ? 'auto' : 'none',
         opacity: isVisible ? 1 : 0,
         transition: `opacity ${duration}s ease-in-out`,

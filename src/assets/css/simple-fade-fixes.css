@@ -1,0 +1,43 @@
+/* 
+ * Simple Fade Fixes
+ * Fixes for scrolling issues in pages using the SimpleFade component
+ */
+
+/* Fix the container for About and Resume pages to allow full scrolling */
+.simple-fade {
+  overflow: visible !important;
+  height: auto !important;
+  min-height: 100%;
+}
+
+/* Ensure the pages themselves can be scrolled to the bottom */
+.about, .resume {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+  padding-bottom: 50px; /* Add padding at bottom to ensure the last elements are visible */
+}
+
+/* Make sure the pages-container allows for full content height */
+.pages-container {
+  overflow: visible;
+  height: auto;
+  min-height: 100vh;
+  contain: none; /* Override the contain property that might be limiting size */
+}
+
+/* Make sure the main-content allows scrolling */
+.main-content {
+  overflow: visible;
+  min-height: 100vh;
+  height: auto;
+}
+
+/* Fix for the main element to allow proper scrolling */
+@media (min-width: 1024px) {
+  main {
+    min-height: 100vh;
+    height: auto;
+    align-items: flex-start;
+  }
+}
