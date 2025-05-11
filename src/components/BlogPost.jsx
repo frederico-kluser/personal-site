@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { motion, useInView, useScroll } from 'motion/react';
+import { motion, useInView, useScroll, AnimatePresence } from 'motion/react';
 import MatrixRain from './MatrixRain';
 import { DataContext } from '../context/DataContext';
 import '../assets/css/blog-post.css';
@@ -54,11 +54,17 @@ function BlogPost() {
         <MatrixRain />
         <main className="blog-main">
           <div className="main-content blog-full-width">
-            <nav className="navbar">
-              <ul className="navbar-list">
+            <motion.nav 
+              className="navbar"
+              layoutId="navbar-container"
+            >
+              <motion.ul 
+                className="navbar-list"
+                layoutId="navbar-list"
+              >
                 <NavLinks />
-              </ul>
-            </nav>
+              </motion.ul>
+            </motion.nav>
             <div className="blog-post-loading">
               <div style={{ display: 'inline-block', marginRight: '10px', animation: 'spin 1s linear infinite' }}>
                 <ion-icon name="sync-outline" size="large"></ion-icon>
@@ -78,11 +84,17 @@ function BlogPost() {
         <MatrixRain />
         <main className="blog-main">
           <div className="main-content blog-full-width">
-            <nav className="navbar">
-              <ul className="navbar-list">
+            <motion.nav 
+              className="navbar"
+              layoutId="navbar-container"
+            >
+              <motion.ul 
+                className="navbar-list"
+                layoutId="navbar-list"
+              >
                 <NavLinks />
-              </ul>
-            </nav>
+              </motion.ul>
+            </motion.nav>
             <div className="blog-post-error">
               <div style={{ display: 'inline-block', marginRight: '10px', color: '#ff5555' }}>
                 <ion-icon name="alert-circle-outline" size="large"></ion-icon>
@@ -102,11 +114,17 @@ function BlogPost() {
         <MatrixRain />
         <main className="blog-main">
           <div className="main-content blog-full-width">
-            <nav className="navbar">
-              <ul className="navbar-list">
+            <motion.nav 
+              className="navbar"
+              layoutId="navbar-container"
+            >
+              <motion.ul 
+                className="navbar-list"
+                layoutId="navbar-list"
+              >
                 <NavLinks />
-              </ul>
-            </nav>
+              </motion.ul>
+            </motion.nav>
             <div className="blog-post-not-found">
               <div style={{ display: 'inline-block', marginRight: '10px' }}>
                 <ion-icon name="search-outline" size="large"></ion-icon>
@@ -125,7 +143,7 @@ function BlogPost() {
       <main className="blog-main">
         <div className="main-content blog-full-width">
           {/* Indicador de progresso de leitura */}
-          <div 
+          <motion.div 
             className="reading-progress-bar"
             style={{
               position: 'fixed',
@@ -135,18 +153,38 @@ function BlogPost() {
               height: '4px',
               background: 'var(--matrix-green)',
               transformOrigin: '0%',
-              scaleX: scrollYProgress,
               zIndex: 1000
             }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: scrollYProgress }}
           />
           
-          <nav className="blog-navbar">
-            <ul className="navbar-list">
+          <motion.nav 
+            className="blog-navbar"
+            layoutId="navbar-container"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ 
+              type: 'spring', 
+              stiffness: 300, 
+              damping: 25,
+              delay: 0.2
+            }}
+          >
+            <motion.ul 
+              className="navbar-list"
+              layoutId="navbar-list"
+            >
               <NavLinks />
-            </ul>
-          </nav>
+            </motion.ul>
+          </motion.nav>
 
-          <article className="blog-post active">
+          <motion.article 
+            className="blog-post active"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.3 }}
+          >
             <header className="blog-post-header">
               <h2 className="h2 article-title">{post.title}</h2>
               
@@ -172,10 +210,13 @@ function BlogPost() {
             </figure>
 
             <div className="blog-content-wrapper">
-              <div 
+              <motion.div 
                 className="blog-content"
                 ref={contentRef}
                 style={{ display: 'block', width: '100%' }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={contentInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.7 }}
               >
                 {post.content ? (
                   <div className="markdown-content">
@@ -184,11 +225,14 @@ function BlogPost() {
                 ) : (
                   <div>Sem conteúdo disponível para este post.</div>
                 )}
-              </div>
+              </motion.div>
 
-              <div 
+              <motion.div 
                 className="blog-sidebar"
                 ref={sidebarRef}
+                initial={{ opacity: 0, x: 20 }}
+                animate={sidebarInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.2 }}
               >
                 <div className="author-box">
                   <figure className="author-avatar">
@@ -225,12 +269,12 @@ function BlogPost() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </article>
+          </motion.article>
           
           {/* Elemento de decoração de fundo */}
-          <div
+          <motion.div
             className="background-decoration"
             style={{
               position: 'fixed',
@@ -241,8 +285,16 @@ function BlogPost() {
               background: 'radial-gradient(circle, rgba(3, 160, 98, 0.1) 0%, rgba(3, 160, 98, 0) 70%)',
               borderRadius: '50%',
               zIndex: -1,
-              pointerEvents: 'none',
-              animation: 'pulse 10s infinite ease-in-out'
+              pointerEvents: 'none'
+            }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
             }}
           />
         </div>
@@ -255,21 +307,23 @@ function BlogPost() {
 function NavLinks() {
   return (
     <>
-      <li className="navbar-item">
+      <motion.li className="navbar-item">
         <Link to="/" className="navbar-link">About</Link>
-      </li>
-      <li className="navbar-item">
+      </motion.li>
+      <motion.li className="navbar-item">
         <Link to="/resume" className="navbar-link">Resume</Link>
-      </li>
-      <li className="navbar-item">
+      </motion.li>
+      <motion.li className="navbar-item">
         <Link to="/portfolio" className="navbar-link">Portfolio</Link>
-      </li>
-      <li className="navbar-item">
-        <Link to="/blog" className="navbar-link active">Blog</Link>
-      </li>
-      <li className="navbar-item">
+      </motion.li>
+      <motion.li className="navbar-item">
+        <Link to="/blog" className="navbar-link active">
+          <motion.span layoutId="nav-text-blog">Blog</motion.span>
+        </Link>
+      </motion.li>
+      <motion.li className="navbar-item">
         <Link to="/contact" className="navbar-link">Contact</Link>
-      </li>
+      </motion.li>
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 
 function Navbar({ activePage, onPageChange }) {
   const navItems = [
@@ -14,21 +15,34 @@ function Navbar({ activePage, onPageChange }) {
   };
 
   return (
-    <nav className="navbar">
-      <ul className="navbar-list">
+    <motion.nav
+      className="navbar"
+      layoutId="navbar-container"
+    >
+      <motion.ul
+        className="navbar-list"
+        layoutId="navbar-list"
+      >
         {navItems.map(item => (
-          <li className="navbar-item" key={item.id}>
-            <Link 
+          <motion.li className="navbar-item" key={item.id}>
+            <Link
               to={item.path}
-              className={`navbar-link ${activePage === item.id ? 'active' : ''}`} 
+              className={`navbar-link ${activePage === item.id ? 'active' : ''}`}
               onClick={() => handleNavClick(item)}
             >
-              {item.label}
+              {/* Use layoutId para o item do blog para animar a transição */}
+              {item.id === 'blog' ? (
+                <motion.span layoutId={`nav-text-${item.id}`}>
+                  {item.label}
+                </motion.span>
+              ) : (
+                item.label
+              )}
             </Link>
-          </li>
+          </motion.li>
         ))}
-      </ul>
-    </nav>
+      </motion.ul>
+    </motion.nav>
   );
 }
 
