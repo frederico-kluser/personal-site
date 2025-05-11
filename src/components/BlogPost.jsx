@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'mot
 import MatrixRain from './MatrixRain';
 import { DataContext } from '../context/DataContext';
 import '../assets/css/blog-post.css';
+import '../assets/css/blog-animations.css'; // Importando as animações CSS
 
 function BlogPost() {
   const { id } = useParams();
@@ -290,11 +291,18 @@ function BlogPost() {
               <motion.div
                 className="blog-content"
                 ref={contentRef}
-                initial={{ opacity: 0, y: 40 }}
-                animate={contentInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.4 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                style={{ display: 'block', width: '100%' }}
               >
-                <MotionMarkdown>{post.content}</MotionMarkdown>
+                {post.content ? (
+                  <div className="markdown-content">
+                    <ReactMarkdown>{post.content}</ReactMarkdown>
+                  </div>
+                ) : (
+                  <div>Sem conteúdo disponível para este post.</div>
+                )}
               </motion.div>
 
               <motion.div
@@ -552,133 +560,8 @@ function NavLinks() {
   );
 }
 
-// Custom ReactMarkdown component with animations
-function MotionMarkdown({ children }) {
-  return (
-    <ReactMarkdown components={{
-      p: ({ node, ...props }) => (
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          {...props}
-        />
-      ),
-      h1: ({ node, ...props }) => (
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{ color: 'var(--matrix-green)', x: 3 }}
-          {...props}
-        />
-      ),
-      h2: ({ node, ...props }) => (
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{ color: 'var(--matrix-green)', x: 3 }}
-          {...props}
-        />
-      ),
-      h3: ({ node, ...props }) => (
-        <motion.h3
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{ color: 'var(--matrix-green)', x: 3 }}
-          {...props}
-        />
-      ),
-      ul: ({ node, ...props }) => (
-        <motion.ul
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          {...props}
-        />
-      ),
-      li: ({ node, ...props }) => (
-        <motion.li
-          initial={{ opacity: 0, x: -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{ x: 5 }}
-          {...props}
-        />
-      ),
-      blockquote: ({ node, ...props }) => (
-        <motion.blockquote
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          whileHover={{
-            borderLeftColor: 'var(--matrix-green)',
-            backgroundColor: 'rgba(3, 160, 98, 0.05)'
-          }}
-          {...props}
-        />
-      ),
-      code: ({ node, ...props }) => (
-        <motion.code
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{
-            backgroundColor: 'rgba(3, 160, 98, 0.2)'
-          }}
-          {...props}
-        />
-      ),
-      pre: ({ node, ...props }) => (
-        <motion.pre
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{
-            boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-            y: -5
-          }}
-          {...props}
-        />
-      ),
-      a: ({ node, ...props }) => (
-        <motion.a
-          whileHover={{
-            color: 'var(--matrix-green)',
-            scale: 1.02
-          }}
-          {...props}
-        />
-      ),
-      img: ({ node, ...props }) => (
-        <motion.img
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            type: 'spring',
-            stiffness: 260,
-            damping: 20
-          }}
-          whileHover={{ scale: 1.02 }}
-          {...props}
-        />
-      ),
-    }}>
-      {children}
-    </ReactMarkdown>
-  );
-}
+// Este componente foi removido pois estamos usando ReactMarkdown diretamente
+// A lógica de animação para conteúdos dinâmicos deve ser aplicada de outra forma,
+// por exemplo, usando CSS com classes específicas ou animando o container pai
 
 export default BlogPost;
