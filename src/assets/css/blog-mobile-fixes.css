@@ -1,0 +1,28 @@
+/* 
+ * Blog Mobile Fixes
+ * Adjustments for blog post display on mobile devices
+ */
+
+/* Remove padding on blog content wrapper for mobile view */
+@media (max-width: 579px) {
+  .blog-content-wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Add padding only to the content itself so the text doesn't touch the edge */
+  .blog-content {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Adjust blog post header padding */
+  .blog-post header {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Ensure sidebar elements have proper padding */
+  .blog-sidebar {
+  }
+}

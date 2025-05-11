@@ -24,6 +24,7 @@ import './assets/css/layout-fixes.css';
 import './assets/css/simple-fade.css';
 import './assets/css/simple-fade-fixes.css'; // Add this new file for scroll fixes
 import './assets/css/mobile-sidebar-fixes.css'; // Add mobile sidebar fixes
+import './assets/css/blog-mobile-fixes.css'; // Add blog mobile padding fixes
 import './assets/css/blog-transition-fixes.css';
 
 function App() {
