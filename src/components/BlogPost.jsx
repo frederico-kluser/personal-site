@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { motion, useInView, useScroll, AnimatePresence } from 'motion/react';
+import { motion, useInView, useScroll } from 'motion/react';
 import MatrixRain from './MatrixRain';
-import FadeTransition from './FadeTransition';
+import SimpleFade from './SimpleFade';
 import { DataContext } from '../context/DataContext';
 import '../assets/css/blog-post.css';
 import '../assets/css/blog-animations.css'; // Importando as animações CSS

@@ -1,13 +1,13 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import About from './components/About';
 import Resume from './components/Resume';
 import Portfolio from './components/Portfolio';
 import Blog from './components/Blog';
-import BlogPost from './components/BlogPost';
+import SimpleBlogPost from './components/SimpleBlogPost';
 import Contact from './components/Contact';
 import Modal from './components/Modal';
 import ProjectModalContent from './components/ProjectModalContent';
@@ -22,6 +22,7 @@ import './assets/css/page-transitions.css';
 import './assets/css/transition-fixes.css';
 import './assets/css/layout-fixes.css';
 import './assets/css/simple-fade.css';
+import './assets/css/blog-transition-fixes.css';
 
 function App() {
   const [activePage, setActivePage] = useState('about');
@@ -89,7 +90,7 @@ function App() {
       <DataProvider>
         <MatrixRain />
         <Routes>
-          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/blog/:id" element={<SimpleBlogPost />} />
         </Routes>
       </DataProvider>
     );

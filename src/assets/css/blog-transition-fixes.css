@@ -1,0 +1,101 @@
+/* 
+ * Blog Transition Fixes 
+ * Prevent flickering when entering blog posts
+ */
+
+/* Style for the containing blog container */
+.blog-post-fade-container {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  will-change: opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.blog-post-fade-container.visible {
+  opacity: 1;
+}
+
+.blog-post-fade-container.hidden {
+  opacity: 0;
+}
+
+/* Fixing blog post loading state */
+.blog-post-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 30px;
+  color: #fff;
+  font-size: 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Fix navigation between blog and blog post */
+.blog-main {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease-in-out;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Reading progress bar */
+.reading-progress-bar {
+  transform-origin: left !important;
+  will-change: transform !important;
+  transition: transform 0.1s linear !important;
+}
+
+/* Fix blog post header animations */
+.blog-post-header, 
+.blog-banner, 
+.blog-meta, 
+.blog-content,
+.blog-sidebar {
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Override any animations from motion library */
+.blog-post * {
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transform: translateZ(0) !important;
+}
+
+/* Ensure Markdown content stays visible */
+.markdown-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+  min-height: 100px;
+}
+
+/* Ensure correct element display */
+.markdown-content h1, 
+.markdown-content h2, 
+.markdown-content h3, 
+.markdown-content p, 
+.markdown-content li, 
+.markdown-content ul,
+.markdown-content ol,
+.markdown-content pre,
+.markdown-content code {
+  color: #fff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Remove transitions from navigation */
+.navbar-item {
+  transition: none !important;
+}
+
+/* Ensure full height of containers */
+.blog-full-width {
+  min-height: 100vh;
+}
