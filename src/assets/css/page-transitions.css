@@ -1,0 +1,92 @@
+/* 
+ * Page Transitions Styles
+ * Estilos para transições entre páginas da aplicação
+ */
+
+.pages-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 400px; /* Altura mínima para evitar colapso */
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  transition: height 0.5s ease-in-out;
+  background: transparent;
+}
+
+.about, .resume, .portfolio, .blog, .contact {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  transform-origin: center;
+  backface-visibility: hidden; /* Melhora a performance das animações */
+  will-change: opacity, transform; /* Otimiza para animações */
+}
+
+.about.active, .resume.active, .portfolio.active,
+.blog.active, .contact.active {
+  position: relative;
+  z-index: 1;
+}
+
+/* Garantir que somente uma página ativa esteja visível de cada vez */
+.about:not(.active),
+.resume:not(.active),
+.portfolio:not(.active),
+.blog:not(.active),
+.contact:not(.active) {
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Estilo adicional para a timeline no Resume */
+.timeline {
+  position: relative;
+}
+
+.timeline-list {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  height: calc(100% - 40px);
+  width: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ajustar dot nas timelines */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: -20px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: var(--matrix-green);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover::before {
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(3, 160, 98, 0.5);
+}
+
+/* Versão para desktop */
+@media (min-width: 1024px) {
+  .pages-container {
+    padding-bottom: 60px;
+  }
+}

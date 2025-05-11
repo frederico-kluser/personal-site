@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 import { motion, AnimatePresence, useAnimationControls, LayoutGroup } from 'motion/react';
-import { staggerContainer, fadeInUpItem, pageTransitions, buttonHover } from '../animations/pageTransitions';
+import { staggerContainer, fadeInUpItem, portfolioTransitions, buttonHover } from '../animations/pageTransitions';
 
 function Portfolio({ isActive, openProjectModal }) {
   const { portfolio } = useContext(DataContext);
@@ -43,7 +43,7 @@ function Portfolio({ isActive, openProjectModal }) {
       initial="initial"
       animate={isActive ? "animate" : "initial"}
       exit="exit"
-      variants={pageTransitions}
+      variants={portfolioTransitions}
     >
       <motion.header
         initial={{ opacity: 0, y: -20 }}

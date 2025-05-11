@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,24 +16,44 @@ import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { DataContext } from '../context/DataContext';
 
 // Import animation variants
-import { pageTransitions, staggerContainer, fadeInUpItem } from '../animations/pageTransitions';
+import { aboutTransitions } from '../animations/pageTransitions';
+
+// Import reusable animated components
+import SectionHeader from './SectionHeader';
+import AnimatedSection from './AnimatedSection';
+import AnimatedList from './AnimatedList';
 
 function About({ isActive, openTestimonialModal }) {
   const { about, testimonials, services, clients } = useContext(DataContext);
 
-  // Refs for scroll animations
-  const serviceRef = useRef(null);
-  const serviceInView = useInView(serviceRef, { once: true, amount: 0.3 });
-
-  const testimonialsRef = useRef(null);
-  const testimonialsInView = useInView(testimonialsRef, { once: true, amount: 0.3 });
-
-  const clientsRef = useRef(null);
-  const clientsInView = useInView(clientsRef, { once: true, amount: 0.3 });
-
   // Scroll progress for parallax effect
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
+  // Custom renderer for service items
+  const renderServiceItem = (service, index, animationProps) => (
+    <motion.li
+      className="service-item"
+      key={service.id}
+      {...animationProps}
+    >
+      <motion.div
+        className="service-icon-box"
+        whileHover={{
+          scale: 1.1,
+          rotate: 5,
+          transition: { type: 'spring', stiffness: 300, damping: 10 }
+        }}
+      >
+        <img src={service.icon} alt="icon" width="40" />
+      </motion.div>
+
+      <div className="service-content-box">
+        <h4 className="h4 service-item-title">{service.title}</h4>
+        <p className="service-item-text">{service.description}</p>
+      </div>
+    </motion.li>
+  );
 
   return (
     <motion.article
@@ -42,17 +62,21 @@ function About({ isActive, openTestimonialModal }) {
       initial="initial"
       animate={isActive ? "animate" : "initial"}
       exit="exit"
-      variants={pageTransitions}
+      variants={aboutTransitions}
     >
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="h2 article-title">{about.title}</h2>
-      </motion.header>
+      {/* About Header */}
+      <SectionHeader
+        title={about.title}
+        delay={0}
+      />
 
-      <motion.section className="about-text">
+      {/* About Text */}
+      <AnimatedSection
+        className="about-text"
+        delay={0.2}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         {about.description.map((paragraph, index) => (
           <motion.p
             key={index}
@@ -66,79 +90,47 @@ function About({ isActive, openTestimonialModal }) {
             {paragraph}
           </motion.p>
         ))}
-      </motion.section>
+      </AnimatedSection>
 
-      <motion.section
+      {/* Services Section */}
+      <AnimatedSection
         className="service"
-        ref={serviceRef}
-        style={{ opacity: serviceInView ? 1 : 0, y: serviceInView ? 0 : 20 }}
-        transition={{ duration: 0.5 }}
+        delay={0.3}
       >
-        <motion.h3
-          className="h3 service-title"
-          initial={{ opacity: 0, y: 20 }}
-          animate={serviceInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          {services.title}
-        </motion.h3>
+        <SectionHeader
+          title={services.title}
+          tagName="h3"
+          delay={0.1}
+        />
 
-        <motion.ul
+        <AnimatedList
           className="service-list"
-          variants={staggerContainer}
-          initial="initial"
-          animate={serviceInView ? "animate" : "initial"}
-        >
-          {services.items.map((service, index) => (
-            <motion.li
-              className="service-item"
-              key={service.id}
-              variants={fadeInUpItem}
-              custom={index}
-              transition={{
-                delay: index * 0.1,
-                duration: 0.5
-              }}
-            >
-              <motion.div
-                className="service-icon-box"
-                whileHover={{
-                  scale: 1.1,
-                  rotate: 5,
-                  transition: { type: 'spring', stiffness: 300, damping: 10 }
-                }}
-              >
-                <img src={service.icon} alt="icon" width="40" />
-              </motion.div>
+          tag="ul"
+          itemTag="li"
+          delay={0.2}
+          staggerDelay={0.1}
+          itemInitial={{ opacity: 0, y: 20 }}
+          itemAnimate={{ opacity: 1, y: 0 }}
+          renderItem={renderServiceItem}
+          items={services.items}
+        />
+      </AnimatedSection>
 
-              <div className="service-content-box">
-                <h4 className="h4 service-item-title">{service.title}</h4>
-                <p className="service-item-text">{service.description}</p>
-              </div>
-            </motion.li>
-          ))}
-        </motion.ul>
-      </motion.section>
-
-      <motion.section
+      {/* Testimonials Section */}
+      <AnimatedSection
         className="testimonials"
-        ref={testimonialsRef}
-        style={{ opacity: testimonialsInView ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
+        delay={0.4}
       >
-        <motion.h3
-          className="h3 testimonials-title"
-          initial={{ opacity: 0, y: 20 }}
-          animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          Testimonials
-        </motion.h3>
+        <SectionHeader
+          title="Testimonials"
+          tagName="h3"
+          delay={0.1}
+        />
 
         <motion.div
           className="testimonials-swiper-container"
           initial={{ opacity: 0, y: 30 }}
-          animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
           <Swiper
@@ -194,27 +186,23 @@ function About({ isActive, openTestimonialModal }) {
             ))}
           </Swiper>
         </motion.div>
-      </motion.section>
+      </AnimatedSection>
 
-      <motion.section
+      {/* Clients Section */}
+      <AnimatedSection
         className="clients"
-        ref={clientsRef}
-        style={{ opacity: clientsInView ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
+        delay={0.5}
       >
-        <motion.h3
-          className="h3 clients-title"
-          initial={{ opacity: 0, y: 20 }}
-          animate={clientsInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          Clients
-        </motion.h3>
+        <SectionHeader
+          title="Clients"
+          tagName="h3"
+          delay={0.1}
+        />
 
         <motion.div
           className="clients-swiper-container"
           initial={{ opacity: 0, y: 30 }}
-          animate={clientsInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
           <Swiper
@@ -270,7 +258,7 @@ function About({ isActive, openTestimonialModal }) {
             ))}
           </Swiper>
         </motion.div>
-      </motion.section>
+      </AnimatedSection>
 
       {/* Parallax background element */}
       <motion.div

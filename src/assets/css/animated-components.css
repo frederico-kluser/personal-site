@@ -1,0 +1,269 @@
+/*
+ * Animated Components Styles
+ * Contains styles for the reusable animation components:
+ * - SectionHeader
+ * - AnimatedSection
+ * - AnimatedList
+ */
+
+/* SectionHeader */
+.section-header {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.section-header.centered {
+  text-align: center;
+}
+
+.section-header.centered .article-title::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.section-title {
+  position: relative;
+  padding-bottom: 7px;
+  margin-bottom: 15px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 3px;
+  background: var(--text-gradient-matrix);
+  border-radius: 3px;
+  transition: width 0.3s ease, transform 0.3s ease;
+}
+
+.section-header:hover .section-title::after,
+.section-header:hover .article-title::after {
+  width: 50px;
+}
+
+.section-subtitle {
+  color: var(--light-gray70);
+  font-size: var(--fs6);
+  font-weight: var(--fw300);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* AnimatedSection */
+.animated-section {
+  position: relative;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.animated-section:last-child {
+  margin-bottom: 0;
+}
+
+/* AnimatedList */
+.animated-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.animated-list-item {
+  position: relative;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.animated-list-item:last-child {
+  margin-bottom: 0;
+}
+
+.animated-list-item:hover {
+  transform: translateX(5px);
+}
+
+/* Decorativo */
+.decoration-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--matrix-green);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* Efeitos decorativos para seções animadas */
+.animated-section::before {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(3, 160, 98, 0.1) 0%, rgba(3, 160, 98, 0) 70%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.animated-section:hover::before {
+  opacity: 1;
+}
+
+/* Variantes de posição para efeitos decorativos */
+.decoration-top-right::before {
+  top: -75px;
+  right: -75px;
+}
+
+.decoration-bottom-left::before {
+  bottom: -75px;
+  left: -75px;
+}
+
+.decoration-center::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Enhanced animation utilities */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.fade-in.in-view {
+  opacity: 1;
+}
+
+.stagger-item:nth-child(1) { transition-delay: 0.1s; }
+.stagger-item:nth-child(2) { transition-delay: 0.2s; }
+.stagger-item:nth-child(3) { transition-delay: 0.3s; }
+.stagger-item:nth-child(4) { transition-delay: 0.4s; }
+.stagger-item:nth-child(5) { transition-delay: 0.5s; }
+.stagger-item:nth-child(6) { transition-delay: 0.6s; }
+.stagger-item:nth-child(7) { transition-delay: 0.7s; }
+.stagger-item:nth-child(8) { transition-delay: 0.8s; }
+.stagger-item:nth-child(9) { transition-delay: 0.9s; }
+.stagger-item:nth-child(10) { transition-delay: 1s; }
+
+/* Animation enhancers */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-rotate {
+  transition: transform 0.3s ease;
+}
+
+.hover-rotate:hover {
+  transform: rotate(3deg);
+}
+
+.hover-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: left 0.7s ease;
+}
+
+.hover-shine:hover::after {
+  left: 150%;
+}
+
+/* Matrix-themed pulse animation */
+.matrix-pulse {
+  position: relative;
+}
+
+.matrix-pulse::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(3, 160, 98, 0.7);
+  animation: matrix-pulse 2s infinite;
+}
+
+@keyframes matrix-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(3, 160, 98, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(3, 160, 98, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(3, 160, 98, 0);
+  }
+}
+
+/* Add matrix-themed glow effect */
+.matrix-glow {
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.matrix-glow:hover {
+  color: var(--matrix-green);
+  text-shadow: 0 0 8px rgba(3, 160, 98, 0.6);
+}
+
+/* Common styles for hover/focus states */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Timeline line animation extension */
+.timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 7px;
+  width: 2px;
+  background: var(--matrix-green);
+  transform-origin: top;
+}
+
+.timeline-line.animate {
+  animation: grow-line 1.5s ease-out forwards;
+}
+
+@keyframes grow-line {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}

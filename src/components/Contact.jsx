@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useAnimate, useInView } from 'motion/react';
-import { pageTransitions } from '../animations/pageTransitions';
+import { contactTransitions } from '../animations/pageTransitions';
 
 function Contact({ isActive }) {
   const [formData, setFormData] = useState({
@@ -90,7 +90,7 @@ function Contact({ isActive }) {
       initial="initial"
       animate={isActive ? "animate" : "initial"}
       exit="exit"
-      variants={pageTransitions}
+      variants={contactTransitions}
     >
       <motion.header
         initial={{ opacity: 0, y: -20 }}

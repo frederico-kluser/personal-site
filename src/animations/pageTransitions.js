@@ -1,13 +1,19 @@
 // Animation variants for different transitions
 
 export const pageTransitions = {
-  initial: { 
+  initial: {
     opacity: 0,
-    y: 20
+    y: 20,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 0
   },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     y: 0,
+    position: 'relative',
+    width: '100%',
+    zIndex: 1,
     transition: {
       type: 'spring',
       stiffness: 260,
@@ -15,12 +21,81 @@ export const pageTransitions = {
       duration: 0.5
     }
   },
-  exit: { 
+  exit: {
     opacity: 0,
     y: -20,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 0,
     transition: {
       duration: 0.3
     }
+  }
+};
+
+// Variantes específicas para páginas diferentes
+export const aboutTransitions = {
+  ...pageTransitions,
+  exit: {
+    opacity: 0,
+    x: -20,
+    y: 0,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 0,
+    transition: { duration: 0.3 }
+  }
+};
+
+export const resumeTransitions = {
+  ...pageTransitions,
+  exit: {
+    opacity: 0,
+    x: -20,
+    y: 0,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 0,
+    transition: { duration: 0.3 }
+  }
+};
+
+export const portfolioTransitions = {
+  ...pageTransitions,
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    y: 0,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 0,
+    transition: { duration: 0.3 }
+  }
+};
+
+export const blogTransitions = {
+  ...pageTransitions,
+  exit: {
+    opacity: 0,
+    x: 20,
+    y: 0,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 0,
+    transition: { duration: 0.3 }
+  }
+};
+
+export const contactTransitions = {
+  ...pageTransitions,
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    y: 0,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 0,
+    transition: { duration: 0.3 }
   }
 };
 
