@@ -1,7 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useCallback, useMemo } from 'react';
 import { DataContext } from '../context/DataContext';
 import { motion, AnimatePresence, useAnimationControls, LayoutGroup } from 'motion/react';
 import { staggerContainer, fadeInUpItem, portfolioTransitions, buttonHover } from '../animations/pageTransitions';
+import ProjectItem from './ProjectItem';
+import FilterCategory from './FilterCategory';
 
 function Portfolio({ isActive, openProjectModal }) {
   const { portfolio } = useContext(DataContext);
@@ -10,31 +12,33 @@ function Portfolio({ isActive, openProjectModal }) {
   const [filterCategory, setFilterCategory] = useState('All');
   const [selectOpen, setSelectOpen] = useState(false);
 
-  // Open project modal when clicked
-  const handleProjectClick = (project) => {
+  // Open project modal when clicked - memoized to prevent recreating on each render
+  const handleProjectClick = useCallback((project) => {
     openProjectModal(project);
-  };
+  }, [openProjectModal]);
 
-  // Filter project categories
-  const handleFilterClick = (category) => {
+  // Filter project categories - memoized to prevent recreating on each render
+  const handleFilterClick = useCallback((category) => {
     setFilterCategory(category);
-  };
+  }, []);
 
-  // Toggle select dropdown
-  const toggleSelect = () => {
-    setSelectOpen(!selectOpen);
-  };
+  // Toggle select dropdown - memoized
+  const toggleSelect = useCallback(() => {
+    setSelectOpen(prev => !prev);
+  }, []);
 
-  // Handle select item click
-  const handleSelectItemClick = (category) => {
+  // Handle select item click - memoized
+  const handleSelectItemClick = useCallback((category) => {
     setFilterCategory(category);
     setSelectOpen(false);
-  };
+  }, []);
 
-  // Filter projects based on selected category
-  const filteredProjects = filterCategory === 'All'
-    ? portfolio.projects
-    : portfolio.projects.filter(project => project.category === filterCategory);
+  // Filter projects based on selected category - memoized to prevent recalculation on every render
+  const filteredProjects = useMemo(() => {
+    return filterCategory === 'All'
+      ? portfolio.projects
+      : portfolio.projects.filter(project => project.category === filterCategory);
+  }, [filterCategory, portfolio.projects]);
 
   return (
     <motion.article
@@ -61,23 +65,13 @@ function Portfolio({ isActive, openProjectModal }) {
           animate="animate"
         >
           {portfolio.categories.map((category, index) => (
-            <motion.li
-              className="filter-item"
+            <FilterCategory
               key={index}
-              variants={fadeInUpItem}
-              custom={index}
-              transition={{ delay: index * 0.05 }}
-            >
-              <motion.button
-                className={filterCategory === category ? 'active' : ''}
-                onClick={() => handleFilterClick(category)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              >
-                {category}
-              </motion.button>
-            </motion.li>
+              category={category}
+              index={index}
+              filterCategory={filterCategory}
+              handleFilterClick={handleFilterClick}
+            />
           ))}
         </motion.ul>
 
@@ -138,69 +132,12 @@ function Portfolio({ isActive, openProjectModal }) {
           >
             <AnimatePresence>
               {filteredProjects.map((project, index) => (
-                <motion.li
-                  className="project-item active"
+                <ProjectItem
                   key={project.id}
-                  data-filter-item
-                  data-category={project.category.toLowerCase().replace(' ', '-')}
-                  data-project-item
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      delay: index * 0.05,
-                      type: 'spring',
-                      stiffness: 260,
-                      damping: 20
-                    }
-                  }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  whileHover={{ y: -10 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                >
-                  <a href="#" onClick={(e) => {
-                    e.preventDefault();
-                    handleProjectClick(project);
-                  }}>
-                    <figure className="project-img">
-                      <motion.div
-                        className="project-item-icon-box"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <motion.div
-                          whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.5 }}
-                        >
-                          <ion-icon name="eye-outline"></ion-icon>
-                        </motion.div>
-                      </motion.div>
-                      <motion.img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        layoutId={`project-image-${project.id}`}
-                        transition={{ type: 'spring', stiffness: 200, damping: 30 }}
-                      />
-                    </figure>
-                    <motion.h3
-                      className="project-title"
-                      data-project-title
-                      layoutId={`project-title-${project.id}`}
-                    >
-                      {project.title}
-                    </motion.h3>
-                    <motion.p
-                      className="project-category"
-                      layoutId={`project-category-${project.id}`}
-                    >
-                      {project.category}
-                    </motion.p>
-                  </a>
-                </motion.li>
+                  project={project}
+                  index={index}
+                  handleProjectClick={handleProjectClick}
+                />
               ))}
             </AnimatePresence>
           </motion.ul>
