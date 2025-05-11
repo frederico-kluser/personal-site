@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Animation variables
     let animationFrameId = null;
     let isTransitioning = false;
-    const speed = 0.5; // pixels per frame
+    const speed = 0.7; // pixels per frame - aumentando velocidade
     let currentPosition = -originalSlides.length * originalSlides[0].offsetWidth;
 
     // Initialize carousel position

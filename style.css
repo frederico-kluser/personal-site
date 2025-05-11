@@ -631,13 +631,13 @@ article { display: none; }
     position: relative;
     transition: transform 0s linear;
     will-change: transform;
-    gap: 5px; /* Reduzindo o espaço entre itens */
+    gap: 0; /* Removendo completamente o espaço entre itens */
 }
 
 .clients-slide {
     flex-shrink: 0;
-    width: 50%;
-    padding: 0 5px; /* Reduzindo o padding horizontal */
+    width: 33.33%; /* Reduzindo a largura para mostrar mais itens */
+    padding: 0 2px; /* Padding mínimo */
     box-sizing: border-box;
     height: 60px; /* Reduzindo a altura vertical */
     display: flex;
@@ -646,13 +646,13 @@ article { display: none; }
 
 @media (min-width: 768px) {
     .clients-slide {
-        width: 33.33%;
+        width: 25%; /* Mostrando 4 itens em telas médias */
     }
 }
 
 @media (min-width: 1024px) {
     .clients-slide {
-        width: 25%;
+        width: 20%; /* Mostrando 5 itens em telas grandes */
     }
 }
 
