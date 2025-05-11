@@ -460,6 +460,12 @@ article { display: none; }
     scroll-behavior: smooth;
     overscroll-behavior-inline: contain;
     scroll-snap-type: inline mandatory;
+    cursor: grab;
+    user-select: none;
+}
+
+.testimonials-list.grabbing {
+    cursor: grabbing;
 }
 
 .testimonials-item {
@@ -614,22 +620,28 @@ article { display: none; }
     overflow-x: auto;
     scroll-behavior: smooth;
     overscroll-behavior-inline: contain;
-    scroll-snap-type: inline mandatory;
+    scroll-snap-type: none;
     scroll-padding-inline: 25px;
+    user-select: none;
+    cursor: default;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.clients-list::-webkit-scrollbar {
+    display: none;
 }
 
 .clients-item {
     min-width: 50%;
-    scroll-snap-align: start;
+    pointer-events: none;
 }
 
     .clients-item img {
         width: 100%;
-        filter: grayscale(1);
-        transition: var(--transition1);
+        filter: grayscale(0.5);
     }
-
-        .clients-item img:hover { filter: grayscale(0);}
 
 /*RESUME*/
 
