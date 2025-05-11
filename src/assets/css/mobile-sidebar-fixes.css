@@ -1,0 +1,77 @@
+/* 
+ * Mobile Sidebar Fixes
+ * Fixes for sidebar behavior on mobile devices
+ */
+
+/* Make sidebar behave normally with the page scroll on mobile (not fixed) */
+@media (max-width: 1023px) {
+  .sidebar {
+    position: relative !important; /* Change to relative so it scrolls with page */
+    height: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    z-index: 1;
+    overflow: visible !important; /* Allow content to flow naturally */
+  }
+
+  /* When active, should still be part of the document flow */
+  .sidebar.active {
+    position: relative !important;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  
+  /* Ensure sidebar contents don't cause horizontal overflow */
+  .sidebar-info,
+  .sidebar-info-more,
+  .sidebar-info-wrapper,
+  .contacts-list {
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Remove any horizontal padding/margin that could cause overflow */
+  .sidebar-container {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden;
+  }
+}
+
+/* Prevent horizontal scrolling on the entire page */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
+}
+
+/* Ensure main content doesn't cause horizontal scrolling */
+.main-content {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure all containers don't exceed viewport width */
+.container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Fix for any absolute positioned elements */
+.pages-container {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Ensure no page elements are causing overflow */
+.about, .resume, .portfolio, .blog, .contact {
+  max-width: 100%;
+  overflow-x: hidden;
+}
