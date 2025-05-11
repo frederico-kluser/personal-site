@@ -21,11 +21,13 @@ if (sidebarBtn) {
 document.addEventListener('DOMContentLoaded', function() {
     // Get post ID from URL
     const postId = getPostIdFromUrl();
-    
+
     if (postId) {
+        console.log('Loading post with ID:', postId);
         loadPost(postId);
     } else {
         // Handle case where no post ID is provided
+        console.error('No post ID found in URL');
         showNotFoundMessage();
     }
     
@@ -78,17 +80,22 @@ async function loadPost(postId) {
         // Show loading state
         document.getElementById('post-title').textContent = 'Loading...';
         document.getElementById('post-content').innerHTML = '<p>Loading post content...</p>';
-        
+
+        // Clear image src to prevent old image from showing
+        const bannerImg = document.getElementById('post-image');
+        if (bannerImg) bannerImg.src = '';
+
         // Fetch the post JSON
         const response = await fetch(`posts/${postId}.json`);
-        
+
         if (!response.ok) {
             throw new Error('Post not found');
         }
-        
+
         const post = await response.json();
+        console.log('Post data loaded:', post.title, 'Image URL:', post.coverImage?.url);
         renderPost(post);
-        
+
         // Optional: After rendering, load recent posts
         loadRecentPosts(postId);
     } catch (error) {
@@ -119,8 +126,13 @@ function renderPost(post) {
     
     // Set banner image
     const bannerImg = document.getElementById('post-image');
-    bannerImg.src = post.coverImage.url;
-    bannerImg.alt = post.coverImage.alt;
+    if (bannerImg && post.coverImage && post.coverImage.url) {
+        bannerImg.src = post.coverImage.url;
+        bannerImg.alt = post.coverImage.alt || 'Blog post image';
+        // Ensure the image container is visible
+        const blogBanner = document.querySelector('.blog-banner');
+        if (blogBanner) blogBanner.style.display = 'block';
+    }
     
     // Render markdown content
     const contentElement = document.getElementById('post-content');
@@ -188,17 +200,22 @@ function showNotFoundMessage() {
     document.getElementById('post-title').textContent = 'Post Not Found';
     document.getElementById('post-category').textContent = 'Error';
     document.getElementById('post-date').textContent = '';
-    
+
     const contentElement = document.getElementById('post-content');
     contentElement.innerHTML = `
         <h3 class="h3">Post Not Found</h3>
         <p>Sorry, we couldn't find the blog post you're looking for. It may have been moved or deleted.</p>
         <p><a href="index.html#blog">Return to the blog listing</a></p>
     `;
-    
+
     // Hide banner image
-    document.querySelector('.blog-banner').style.display = 'none';
-    
+    const blogBanner = document.querySelector('.blog-banner');
+    if (blogBanner) blogBanner.style.display = 'none';
+
+    // Clear image src
+    const bannerImg = document.getElementById('post-image');
+    if (bannerImg) bannerImg.src = '';
+
     // Clear tags
     document.getElementById('tags-list').innerHTML = '';
 }
