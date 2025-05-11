@@ -164,41 +164,43 @@ function About({ isActive }) {
         </div>
       </section>
 
-      <div id="testimonial-modal-root" className={isModalOpen ? 'active' : ''}>
-        <div className="project-modal-overlay" onClick={closeTestimonialModal}></div>
-        <div className="project-modal-wrapper">
-          <div className="project-modal testimonial-modal">
-            <button className="project-modal-close-btn" onClick={closeTestimonialModal}>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
+      {isModalOpen && (
+        <div id="project-modal-root" className="active">
+          <div className="project-modal-overlay" onClick={closeTestimonialModal}></div>
+          <div className="project-modal-wrapper">
+            <div className="project-modal testimonial-modal">
+              <button className="project-modal-close-btn" onClick={closeTestimonialModal}>
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
 
-            {activeTestimonial && (
-              <>
-                <div className="testimonial-modal-header">
-                  <figure className="testimonial-modal-avatar">
-                    <img src={activeTestimonial.avatar} alt={activeTestimonial.name} width="100" />
-                  </figure>
+              {activeTestimonial && (
+                <>
+                  <div className="testimonial-modal-header">
+                    <figure className="testimonial-modal-avatar">
+                      <img src={activeTestimonial.avatar} alt={activeTestimonial.name} width="100" />
+                    </figure>
 
-                  <div className="testimonial-modal-title-wrapper">
-                    <h3 className="h3 testimonial-modal-title">{activeTestimonial.name}</h3>
-                    <time dateTime="2023-06-14">14 June, 2023</time>
+                    <div className="testimonial-modal-title-wrapper">
+                      <h3 className="h3 testimonial-modal-title">{activeTestimonial.name}</h3>
+                      <time dateTime="2023-06-14">14 June, 2023</time>
+                    </div>
+
+                    <img
+                      src="https://i.postimg.cc/mZ00RwX7/icon-quote.png"
+                      alt="quote icon"
+                      className="testimonial-quote-icon"
+                    />
                   </div>
 
-                  <img
-                    src="https://i.postimg.cc/mZ00RwX7/icon-quote.png"
-                    alt="quote icon"
-                    className="testimonial-quote-icon"
-                  />
-                </div>
-
-                <div className="testimonial-modal-content">
-                  <p>{activeTestimonial.text}</p>
-                </div>
-              </>
-            )}
+                  <div className="testimonial-modal-content">
+                    <p>{activeTestimonial.text}</p>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <section className="clients">
         <h3 className="h3 clients-title">Clients</h3>

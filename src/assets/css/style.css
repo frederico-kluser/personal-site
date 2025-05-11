@@ -457,7 +457,7 @@ article { display: none; }
 }
 
 .testimonials-swiper {
-    padding-bottom: 40px; /* Space for pagination */
+    padding: 40px 0px; /* Space for pagination */
     overflow: hidden;
 }
 
@@ -531,12 +531,16 @@ article { display: none; }
     margin-top: -15px;
 }
 
+.swiper-button-prev, .swiper-button-next {
+    display: none;
+}
+
 .testimonials-swiper .swiper-button-next {
-    right: 5px;
+    right: -5px;
 }
 
 .testimonials-swiper .swiper-button-prev {
-    left: 5px;
+    left: -5px;
 }
 
 .testimonials-swiper .swiper-button-next:hover,
