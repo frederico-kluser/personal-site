@@ -27,10 +27,12 @@ import './assets/css/mobile-sidebar-fixes.css'; // Add mobile sidebar fixes
 import './assets/css/blog-mobile-fixes.css'; // Add blog mobile padding fixes
 import './assets/css/portfolio-mobile-fixes.css'; // Fix portfolio mobile category selector
 import './assets/css/mobile-dropdown.css'; // Simple mobile dropdown styles
+import './assets/css/transition-overflow-fix.css'; // Temporarily hide overflow during transitions
 import './assets/css/blog-transition-fixes.css';
 
 function App() {
   const [activePage, setActivePage] = useState('about');
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [modalState, setModalState] = useState({
     isOpen: false,
     type: null, // 'project' or 'testimonial'
@@ -41,25 +43,48 @@ function App() {
   // Update active page based on URL path - simplified for direct transition
   useEffect(() => {
     const path = location.pathname;
+    let newPage;
 
     if (path === '/' || path === '/about') {
-      setActivePage('about');
+      newPage = 'about';
     } else if (path.startsWith('/blog/')) {
-      setActivePage('blog');
+      newPage = 'blog';
     } else if (path.startsWith('/resume')) {
-      setActivePage('resume');
+      newPage = 'resume';
     } else if (path.startsWith('/portfolio')) {
-      setActivePage('portfolio');
+      newPage = 'portfolio';
     } else if (path.startsWith('/contact')) {
-      setActivePage('contact');
+      newPage = 'contact';
     } else if (path.startsWith('/blog')) {
-      setActivePage('blog');
+      newPage = 'blog';
     }
-  }, [location]);
+
+    if (newPage && newPage !== activePage) {
+      // Set transition state to true briefly
+      setIsTransitioning(true);
+
+      // Change the page
+      setActivePage(newPage);
+
+      // After transition duration, set back to false
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 500); // Match this with your transition duration
+    }
+  }, [location, activePage]);
 
   const handlePageChange = (page) => {
     if (page !== activePage) {
+      // Set transition state to true briefly
+      setIsTransitioning(true);
+
+      // Change the page
       setActivePage(page);
+
+      // After transition duration, set back to false
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 500); // Match this with your transition duration
     }
   };
 
@@ -110,7 +135,10 @@ function App() {
           <Navbar activePage={activePage} onPageChange={handlePageChange} />
 
           {/* Container principal para páginas com largura fixa e altura dinâmica */}
-          <div className="pages-container" style={{ overflow: 'visible', height: 'auto', minHeight: '100vh' }}>
+          <div
+            className={`pages-container ${isTransitioning ? 'transition-in-progress' : ''}`}
+            style={{ overflow: isTransitioning ? 'hidden' : 'visible', height: 'auto', minHeight: '100vh' }}
+          >
             {/* Remover AnimatePresence e key causadores de renderização dupla */}
             <Routes>
                 <Route path="/" element={

@@ -1,0 +1,14 @@
+/* 
+ * Transition Overflow Fix
+ * Temporarily hides overflow during page transitions
+ */
+
+/* Apply transition overflow class to pages container for better transitions */
+.pages-container {
+  transition: overflow 0.4s ease;
+}
+
+/* Add this class temporarily during transitions */
+.transition-in-progress {
+  overflow: hidden !important;
+}
