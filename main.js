@@ -186,87 +186,177 @@ for(let i = 0; i < formInputs.length; i++) {
     })
 }
 
-// Automatic infinite carousel for clients list using CSS transforms
-const clientsList = document.querySelector('.clients-list');
+// Infinite carousel for clients section - Optimized implementation
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the clients section
+    const clientsSection = document.querySelector('.clients');
 
-if (clientsList) {
-    // Check if clients list is already wrapped, if not add the container
-    let clientsListContainer = clientsList.parentElement;
-    if (!clientsListContainer.classList.contains('clients-list-container')) {
-        const container = document.createElement('div');
-        container.className = 'clients-list-container';
-        clientsList.parentNode.insertBefore(container, clientsList);
-        container.appendChild(clientsList);
-        clientsListContainer = container;
+    if (!clientsSection) return;
+
+    // Get or create carousel elements
+    let clientsCarousel = clientsSection.querySelector('.clients-carousel');
+    let clientsTrack = clientsSection.querySelector('.clients-track');
+    let originalSlides;
+
+    // If structure doesn't exist yet, create it
+    if (!clientsCarousel) {
+        // Get the original client list
+        const oldClientsList = clientsSection.querySelector('.clients-list');
+
+        if (!oldClientsList) return;
+
+        // Create new carousel structure
+        clientsCarousel = document.createElement('div');
+        clientsCarousel.className = 'clients-carousel';
+
+        clientsTrack = document.createElement('div');
+        clientsTrack.className = 'clients-track';
+
+        // Move client items to the new structure
+        originalSlides = Array.from(oldClientsList.children).map(item => {
+            const slide = document.createElement('div');
+            slide.className = 'clients-slide';
+            slide.appendChild(item.cloneNode(true));
+            return slide;
+        });
+
+        // If no slides found, exit
+        if (originalSlides.length === 0) return;
+
+        // Add original slides to track
+        originalSlides.forEach(slide => {
+            clientsTrack.appendChild(slide);
+        });
+
+        // Replace the old structure with new one
+        clientsCarousel.appendChild(clientsTrack);
+        if (oldClientsList.parentNode) {
+            oldClientsList.parentNode.replaceChild(clientsCarousel, oldClientsList);
+        } else {
+            clientsSection.appendChild(clientsCarousel);
+        }
+    } else {
+        // Get existing slides
+        originalSlides = Array.from(clientsTrack.children);
     }
 
-    // Clone items for infinite effect
-    const originalItems = Array.from(clientsList.children);
-    originalItems.forEach(item => {
-        const clone = item.cloneNode(true);
-        clientsList.appendChild(clone);
+    // Clone slides for infinite effect
+    // We need at least 2x width of viewport in clones to ensure smooth transition
+    let slidesToClone = [...originalSlides];
+
+    // Add cloned slides to the beginning and end
+    slidesToClone.forEach(slide => {
+        const endClone = slide.cloneNode(true);
+        clientsTrack.appendChild(endClone);
     });
 
-    // Get carousel dimensions
-    let position = 0;
-    let animation = null;
-    const speed = 0.5; // pixels per frame (adjust as needed for speed)
+    slidesToClone.forEach(slide => {
+        const startClone = slide.cloneNode(true);
+        clientsTrack.insertBefore(startClone, clientsTrack.firstChild);
+    });
 
-    // Calculate when to reset the animation
-    const calculateWidth = () => {
-        const itemWidth = originalItems[0].offsetWidth;
-        const itemsCount = originalItems.length;
-        return itemWidth * itemsCount;
-    };
+    // Animation variables
+    let animationFrameId = null;
+    let isTransitioning = false;
+    const speed = 0.5; // pixels per frame
+    let currentPosition = -originalSlides.length * originalSlides[0].offsetWidth;
 
-    let resetPoint = calculateWidth();
+    // Initialize carousel position
+    clientsTrack.style.transform = `translateX(${currentPosition}px)`;
+
+    // Calculate the reset point (when first set of original slides is out of view)
+    function calculateResetPoint() {
+        return -2 * originalSlides.length * originalSlides[0].offsetWidth;
+    }
+
+    // Animate the carousel
+    function animateCarousel() {
+        if (isTransitioning) {
+            animationFrameId = requestAnimationFrame(animateCarousel);
+            return;
+        }
+
+        // Move carousel
+        currentPosition -= speed;
+        clientsTrack.style.transform = `translateX(${currentPosition}px)`;
+
+        // Check if we need to reset
+        const resetPoint = calculateResetPoint();
+        if (currentPosition <= resetPoint) {
+            // Reset to the middle position (original slides)
+            isTransitioning = true;
+            clientsTrack.style.transition = 'none';
+            currentPosition = -originalSlides.length * originalSlides[0].offsetWidth;
+            clientsTrack.style.transform = `translateX(${currentPosition}px)`;
+
+            // Force browser to process the style change before re-enabling transition
+            void clientsTrack.offsetWidth;
+            clientsTrack.style.transition = 'transform 0s linear';
+            isTransitioning = false;
+        }
+
+        animationFrameId = requestAnimationFrame(animateCarousel);
+    }
+
+    // Start animation
+    animateCarousel();
+
+    // Performance optimizations
+
+    // Pause when not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+        } else if (!animationFrameId) {
+            animateCarousel();
+        }
+    });
+
+    // Stop carousel when not in viewport to save resources
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                if (!animationFrameId) {
+                    animateCarousel();
+                }
+            } else {
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+            }
+        }, { threshold: 0.1 });
+
+        observer.observe(clientsCarousel);
+    }
 
     // Handle window resize to recalculate dimensions
     window.addEventListener('resize', () => {
-        resetPoint = calculateWidth();
+        if (isTransitioning) return;
+
+        isTransitioning = true;
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+
+        // Reset position
+        clientsTrack.style.transition = 'none';
+        currentPosition = -originalSlides.length * originalSlides[0].offsetWidth;
+        clientsTrack.style.transform = `translateX(${currentPosition}px)`;
+
+        // Force browser to process the style change before re-enabling animation
+        void clientsTrack.offsetWidth;
+        clientsTrack.style.transition = 'transform 0s linear';
+        isTransitioning = false;
+
+        // Restart animation
+        animateCarousel();
     });
-
-    // Animation function using transforms
-    function animate() {
-        position -= speed;
-
-        // Apply transform for smooth animation
-        clientsList.style.transform = `translateX(${position}px)`;
-
-        // When first set of items moves out of view, reset position
-        if (Math.abs(position) >= resetPoint) {
-            position = 0;
-        }
-
-        animation = requestAnimationFrame(animate);
-    }
-
-    // Start the animation
-    animate();
-
-    // Pause animation when not visible
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            cancelAnimationFrame(animation);
-        } else {
-            animate();
-        }
-    });
-
-    // Performance optimization - pause when not in viewport
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            if (!animation) {
-                animate();
-            }
-        } else {
-            cancelAnimationFrame(animation);
-            animation = null;
-        }
-    }, { threshold: 0.1 });
-
-    observer.observe(clientsListContainer);
-}
+});
 
 // Enabling Page Navigation
 
