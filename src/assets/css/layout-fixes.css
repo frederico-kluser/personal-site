@@ -1,0 +1,86 @@
+/* 
+ * Layout Fixes
+ * Correções e ajustes de layout para evitar movimentos durante transições
+ */
+
+/* Fix para a sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  z-index: 50;
+}
+
+/* Container principal */
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+@media (min-width: 1024px) {
+  main {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 25px;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    height: calc(100vh - 40px);
+    overflow: auto;
+    flex-shrink: 0;
+    width: 300px;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    min-width: 0;
+    width: calc(100% - 325px); /* Largura fixa em relação à sidebar */
+    transition: none; /* Sem transição de dimensões */
+  }
+}
+
+/* Garante que o conteúdo não seja afetado por alterações de altura */
+.main-content {
+  position: relative;
+  width: 100%;
+  transition: none;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+.about, .resume, .portfolio, .blog, .contact {
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.about.active, .resume.active, .portfolio.active,
+.blog.active, .contact.active {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Melhoria de performance para scroll */
+.has-scrollbar {
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Força o container de páginas a manter uma posição consistente */
+.pages-container {
+  contain: layout size;
+}
+
+/* Previne que elementos internos expandam o container */
+.about *, .resume *, .portfolio *, .blog *, .contact * {
+  max-width: 100%;
+}

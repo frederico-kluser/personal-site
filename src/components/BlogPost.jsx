@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { motion, useInView, useScroll, AnimatePresence } from 'motion/react';
 import MatrixRain from './MatrixRain';
+import FadeTransition from './FadeTransition';
 import { DataContext } from '../context/DataContext';
 import '../assets/css/blog-post.css';
 import '../assets/css/blog-animations.css'; // Importando as animações CSS
@@ -14,6 +15,8 @@ function BlogPost() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [contentLoaded, setContentLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(true); // Ensure content is showing
 
   // Refs para scroll animations
   const contentRef = useRef(null);
@@ -24,9 +27,44 @@ function BlogPost() {
   // Progress da página para o indicador de leitura
   const { scrollYProgress } = useScroll();
 
+  // Force content to be visible when the component mounts
   useEffect(() => {
-    // Encontrar o post no data store
-    const findPost = () => {
+    const timer = setTimeout(() => {
+      // Force content to be visible through direct DOM manipulation as a fallback
+      const markdownContent = document.querySelector('.markdown-content');
+      if (markdownContent) {
+        markdownContent.style.opacity = '1';
+        markdownContent.style.visibility = 'visible';
+        markdownContent.style.display = 'block';
+        markdownContent.style.color = '#ffffff';
+
+        // Force all child elements to be visible
+        const contentElements = markdownContent.querySelectorAll('h1, h2, h3, p, li, a, strong, em, ul, pre, code');
+        contentElements.forEach(el => {
+          el.style.opacity = '1';
+          el.style.visibility = 'visible';
+          el.style.color = '#ffffff';
+          el.style.display = el.tagName === 'LI' ? 'list-item' : 'block';
+        });
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [post]);
+
+  // Preload de imagens para evitar flickering
+  const preloadImage = (src) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => reject();
+      img.src = src;
+    });
+  };
+
+  useEffect(() => {
+    // Encontrar o post no data store e preload de imagens
+    const findPostAndPreload = async () => {
       try {
         setLoading(true);
         const foundPost = blog.posts.find(post => post.id === id);
@@ -36,6 +74,25 @@ function BlogPost() {
         }
 
         setPost(foundPost);
+
+        // Preload da imagem de capa para evitar flickering
+        if (foundPost.coverImage && foundPost.coverImage.url) {
+          try {
+            await preloadImage(foundPost.coverImage.url);
+            // Preload de avatar do autor
+            if (siteInfo.owner && siteInfo.owner.avatar) {
+              await preloadImage(siteInfo.owner.avatar);
+            }
+            setContentLoaded(true);
+          } catch (imgErr) {
+            console.warn('Failed to preload some images:', imgErr);
+            // Continuar mesmo se o preload falhar
+            setContentLoaded(true);
+          }
+        } else {
+          setContentLoaded(true);
+        }
+
         setLoading(false);
       } catch (err) {
         console.error('Error loading blog post:', err);
@@ -44,8 +101,8 @@ function BlogPost() {
       }
     };
 
-    findPost();
-  }, [id, blog.posts]);
+    findPostAndPreload();
+  }, [id, blog.posts, siteInfo.owner]);
 
   // Estado de carregamento
   if (loading) {
@@ -143,7 +200,7 @@ function BlogPost() {
       <main className="blog-main">
         <div className="main-content blog-full-width">
           {/* Indicador de progresso de leitura */}
-          <motion.div 
+          <motion.div
             className="reading-progress-bar"
             style={{
               position: 'fixed',
@@ -158,20 +215,20 @@ function BlogPost() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: scrollYProgress }}
           />
-          
-          <motion.nav 
+
+          <motion.nav
             className="blog-navbar"
             layoutId="navbar-container"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ 
-              type: 'spring', 
-              stiffness: 300, 
+            transition={{
+              type: 'spring',
+              stiffness: 300,
               damping: 25,
               delay: 0.2
             }}
           >
-            <motion.ul 
+            <motion.ul
               className="navbar-list"
               layoutId="navbar-list"
             >
@@ -179,12 +236,17 @@ function BlogPost() {
             </motion.ul>
           </motion.nav>
 
-          <motion.article 
-            className="blog-post active"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.3 }}
+          <FadeTransition
+            isVisible={contentLoaded && showContent}
+            duration={0.3}
+            className="blog-post-fade-container"
           >
+            <motion.article
+              className="blog-post active"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.3 }}
+            >
             <header className="blog-post-header">
               <h2 className="h2 article-title">{post.title}</h2>
               
@@ -210,17 +272,55 @@ function BlogPost() {
             </figure>
 
             <div className="blog-content-wrapper">
-              <motion.div 
+              <motion.div
                 className="blog-content"
                 ref={contentRef}
-                style={{ display: 'block', width: '100%' }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={contentInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.7 }}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  color: '#ffffff',
+                  opacity: 1
+                }}
+                initial={{ opacity: 1, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0 }}
               >
                 {post.content ? (
-                  <div className="markdown-content">
-                    <ReactMarkdown>{post.content}</ReactMarkdown>
+                  <div className="markdown-content" style={{
+                      color: '#ffffff',
+                      opacity: '1 !important',
+                      visibility: 'visible !important',
+                      display: 'block !important',
+                      fontSize: '16px',
+                      lineHeight: '1.6',
+                      margin: '0',
+                      padding: '0'
+                    }}>
+                    {/* Rendering blog content directly as HTML with inline styles for visibility */}
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: post.content
+                          .replace(/^# (.*$)/gm, '<h1 style="color:#ffffff;margin:20px 0;font-size:28px;font-weight:bold;">$1</h1>')
+                          .replace(/^## (.*$)/gm, '<h2 style="color:#ffffff;margin:16px 0;font-size:24px;font-weight:bold;">$1</h2>')
+                          .replace(/^### (.*$)/gm, '<h3 style="color:#ffffff;margin:14px 0;font-size:20px;font-weight:bold;">$1</h3>')
+                          .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#ffffff;font-weight:bold;">$1</strong>')
+                          .replace(/\*(.*?)\*/g, '<em style="color:#ffffff;font-style:italic;">$1</em>')
+                          .replace(/```([\s\S]*?)```/g, '<pre style="background:#222;padding:15px;border-radius:5px;overflow:auto;margin:15px 0;"><code style="color:#03A062;font-family:monospace;">$1</code></pre>')
+                          .replace(/- (.*$)/gm, '<li style="color:#ffffff;margin:5px 0;">$1</li>')
+                          .replace(/<li style.*<\/li>(\s*)<li style/g, '<li style$1</li><li style')
+                          .replace(/(<li style.*<\/li>)(?!\s*<li style)/g, '<ul style="color:#ffffff;margin:15px 0;padding-left:20px;">$1</ul>')
+                          .replace(/\n\n/g, '</p><p style="color:#ffffff;margin:10px 0;">')
+                          .replace(/\n/g, '<br />')
+                          .replace(/^(.+)$/gm, '<p style="color:#ffffff;margin:10px 0;">$1</p>')
+                      }}
+                      style={{
+                        display: 'block',
+                        color: '#ffffff',
+                        fontFamily: 'inherit',
+                        fontSize: '16px',
+                        lineHeight: '1.6'
+                      }}
+                    />
                   </div>
                 ) : (
                   <div>Sem conteúdo disponível para este post.</div>
@@ -272,7 +372,8 @@ function BlogPost() {
               </motion.div>
             </div>
           </motion.article>
-          
+          </FadeTransition>
+
           {/* Elemento de decoração de fundo */}
           <motion.div
             className="background-decoration"

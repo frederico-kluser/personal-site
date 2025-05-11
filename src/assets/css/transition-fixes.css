@@ -1,0 +1,99 @@
+/* 
+ * Transition Fixes
+ * Prevents flickering and improves transitions between pages
+ */
+
+/* Base transitions helper class */
+.fade-transition {
+  position: relative;
+  min-height: 400px;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: opacity, transform;
+}
+
+/* Prevent layout shifts during transitions */
+.pages-container {
+  min-height: 80vh; /* Ensure consistent height */
+  position: relative;
+  overflow: visible;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: contents;
+}
+
+/* Ensure contents remain within the container */
+.about, .resume, .portfolio, .blog, .contact {
+  height: auto;
+  min-height: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  will-change: opacity, transform;
+}
+
+/* Ensure proper z-index behavior */
+.about.active, .resume.active, .portfolio.active,
+.blog.active, .contact.active {
+  z-index: 2;
+}
+
+/* Preload content */
+.about:not(.active), .resume:not(.active), 
+.portfolio:not(.active), .blog:not(.active), 
+.contact:not(.active) {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fix for Blog Post component */
+.blog-post {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
+}
+
+/* Ensure images are loaded with proper dimensions */
+img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Fix for matrix animation during transitions */
+.matrix-rain-container {
+  position: fixed;
+  z-index: -1;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Enhanced performance for modal transitions */
+.modal {
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Fix for specific page issues */
+.blog-content-wrapper {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Versão para desktop */
+@media (min-width: 1024px) {
+  .pages-container {
+    min-height: 85vh;
+  }
+}

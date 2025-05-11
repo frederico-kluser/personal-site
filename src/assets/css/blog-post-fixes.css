@@ -1,4 +1,18 @@
-/* Estilos adicionais para consertar problemas de visibilidade no blog post */
+/*
+ * Blog Post Fixes
+ * Correções e melhorias para o componente de blog post e suas transições
+ */
+
+/* Evitar o flash de conteúdo durante transições */
+.blog-post-fade-container {
+  min-height: 500px;
+  width: 100%;
+  transition: opacity 0.5s ease-in-out;
+  will-change: opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
 
 /* Animação para spin usado no loading */
 @keyframes spin {
@@ -87,6 +101,9 @@
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 300px;
+  background-color: rgba(3, 160, 98, 0.05);
+  position: relative;
 }
 
 .blog-banner:hover {
@@ -99,6 +116,10 @@
   height: auto;
   display: block;
   transition: transform 0.5s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 .blog-banner:hover img {
@@ -404,16 +425,28 @@
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 .blog-content {
   flex: 1 1 60%;
   min-width: 300px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 .blog-sidebar {
   flex: 1 1 30%;
   min-width: 250px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 /* Responsividade */
@@ -421,12 +454,94 @@
   .blog-content-wrapper {
     flex-direction: column;
   }
-  
+
   .blog-content, .blog-sidebar {
     width: 100%;
   }
-  
+
   .blog-post-header .article-title {
     font-size: 2em;
   }
+}
+
+/* Markdown content fixes */
+.markdown-content {
+  opacity: 1 !important; /* Always visible */
+  transition: none !important; /* Remove transitions that might cause flicker */
+  animation: none !important; /* Remove animations that might cause flicker */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  display: block !important;
+  visibility: visible !important;
+  color: #ffffff !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+/* Make sure all text content is visible */
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content p,
+.markdown-content li,
+.markdown-content a,
+.markdown-content strong,
+.markdown-content em,
+.markdown-content ul {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.markdown-content h1 {
+  font-size: 28px !important;
+  margin: 20px 0 !important;
+  font-weight: bold !important;
+}
+
+.markdown-content h2 {
+  font-size: 24px !important;
+  margin: 16px 0 !important;
+  font-weight: bold !important;
+}
+
+.markdown-content h3 {
+  font-size: 20px !important;
+  margin: 14px 0 !important;
+  font-weight: bold !important;
+}
+
+.markdown-content p {
+  margin: 10px 0 !important;
+  display: block !important;
+}
+
+.markdown-content pre {
+  background: #222 !important;
+  padding: 15px !important;
+  border-radius: 5px !important;
+  overflow: auto !important;
+  margin: 15px 0 !important;
+  display: block !important;
+}
+
+.markdown-content code {
+  color: #03A062 !important;
+  font-family: monospace !important;
+  display: block !important;
+}
+
+.markdown-content ul {
+  margin: 15px 0 !important;
+  padding-left: 20px !important;
+  display: block !important;
+}
+
+.markdown-content li {
+  margin: 5px 0 !important;
+  display: list-item !important;
 }

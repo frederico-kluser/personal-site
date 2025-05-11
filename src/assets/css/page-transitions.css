@@ -5,34 +5,46 @@
 
 .pages-container {
   position: relative;
-  width: 100%;
-  height: auto;
-  min-height: 400px; /* Altura mínima para evitar colapso */
+  width: 100%; /* Largura fixa em 100% */
+  height: auto; /* Altura dinâmica baseada no conteúdo */
+  min-height: 200px; /* Altura mínima para evitar colapso */
   overflow: visible;
   display: flex;
   flex-direction: column;
-  transition: height 0.5s ease-in-out;
+  transition: opacity 0.3s ease; /* Apenas transição de opacidade */
   background: transparent;
+  /* Otimizações de performance */
+  will-change: contents;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .about, .resume, .portfolio, .blog, .contact {
   display: block;
   width: 100%;
-  height: auto;
-  overflow: visible;
-  position: absolute;
+  height: auto; /* Altura dinâmica */
+  overflow: visible; /* Não limita o conteúdo */
+  position: absolute; /* Mantém posição absoluta para transições */
   left: 0;
   right: 0;
   top: 0;
   transform-origin: center;
   backface-visibility: hidden; /* Melhora a performance das animações */
-  will-change: opacity, transform; /* Otimiza para animações */
+  will-change: opacity; /* Otimiza apenas para opacidade */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  opacity: 0; /* Começa invisível */
+  pointer-events: none; /* Desativa interações quando não visível */
 }
 
 .about.active, .resume.active, .portfolio.active,
 .blog.active, .contact.active {
   position: relative;
   z-index: 1;
+  opacity: 1; /* Totalmente visível quando ativo */
+  pointer-events: auto; /* Habilita interações quando visível */
+  transition: opacity 0.3s ease; /* Transição suave de opacidade */
 }
 
 /* Garantir que somente uma página ativa esteja visível de cada vez */
@@ -87,6 +99,24 @@
 /* Versão para desktop */
 @media (min-width: 1024px) {
   .pages-container {
+    width: 100%; /* Mantém largura fixa */
+    height: auto; /* Altura dinâmica */
+    min-height: 400px; /* Altura mínima apenas para garantir espaço */
     padding-bottom: 60px;
+  }
+
+  .about, .resume, .portfolio, .blog, .contact {
+    height: auto; /* Altura dinâmica baseada no conteúdo */
+    transition: opacity 0.3s ease;
+  }
+
+  /* Garante que o main-content mantenha sua largura durante as transições */
+  .main-content {
+    width: 100%;
+    position: relative;
+    will-change: contents;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 }
