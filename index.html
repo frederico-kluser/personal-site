@@ -682,35 +682,7 @@
                     </ul>
                 </section>
 
-                <div class="project-modal-container" data-project-modal-container>
-                    <div class="overlay" data-project-overlay></div>
-
-                    <section class="project-modal">
-                        <button class="modal-close-btn" data-project-modal-close-btn><ion-icon name="close-outline"></ion-icon></button>
-
-                        <div class="project-modal-img-wrapper">
-                            <figure class="project-modal-img">
-                                <img src="" alt="" data-project-modal-img>
-                            </figure>
-                        </div>
-
-                        <div class="project-modal-content">
-                            <h3 class="h3 project-modal-title" data-project-modal-title></h3>
-
-                            <div class="project-modal-role" data-project-modal-role></div>
-
-                            <div class="project-modal-text" data-project-modal-text></div>
-
-                            <div class="project-modal-techs" data-project-modal-techs></div>
-
-                            <div class="project-modal-methodologies" data-project-modal-methodologies></div>
-
-                            <div class="project-modal-tools" data-project-modal-tools></div>
-
-                            <div class="project-modal-downloads" data-project-modal-downloads></div>
-                        </div>
-                    </section>
-                </div>
+<!-- Modal moved to body level for better positioning -->
             </article>
 
             <article class="blog " data-page="blog">
@@ -874,6 +846,32 @@
             </article>
         </div>
     </main>
+
+    <!-- Project Modal - New Implementation (directly in body) -->
+    <div id="project-modal-root">
+        <div class="project-modal-overlay"></div>
+        <div class="project-modal">
+            <button class="project-modal-close-btn" id="project-modal-close-btn">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+            <div class="project-modal-img-wrapper">
+                <figure class="project-modal-img">
+                    <img src="" alt="" id="project-modal-img">
+                </figure>
+            </div>
+
+            <div class="project-modal-content">
+                <h3 class="h3 project-modal-title" id="project-modal-title"></h3>
+                <div class="project-modal-role" id="project-modal-role"></div>
+                <div class="project-modal-text" id="project-modal-text"></div>
+                <div class="project-modal-techs" id="project-modal-techs"></div>
+                <div class="project-modal-methodologies" id="project-modal-methodologies"></div>
+                <div class="project-modal-tools" id="project-modal-tools"></div>
+                <div class="project-modal-downloads" id="project-modal-downloads"></div>
+            </div>
+        </div>
+    </div>
 
     <script src="main.js"></script>
     <script src="background.js"></script>

@@ -503,9 +503,6 @@ article { display: none; }
     left: 0;
     width: 100%;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     z-index: 20;
     pointer-events: none;
     visibility: hidden;
@@ -519,7 +516,7 @@ article { display: none; }
     }
 
         .modal-container.active .testimonials-modal {
-            transform: translate(-50%, -50%) scale(1);
+            transform: translateX(-50%) scale(1);
             opacity: 1;
         }
 
@@ -533,7 +530,7 @@ article { display: none; }
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    z-index: 1;
+    z-index: 20; /* Higher z-index to ensure it's above everything except the modal */
     transition: var(--transition1);
 }
 
@@ -546,21 +543,23 @@ article { display: none; }
 .testimonials-modal {
     background: hsla(240, 1%, 17%, .95);
     backdrop-filter: blur(10px);
-    position: absolute;
-    top: 50%;
+    position: fixed;
+    top: 15px;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translateX(-50%) scale(1.2);
     padding: 15px;
+    padding-bottom: 30px; /* Extra padding to ensure content isn't hidden */
     width: calc(100% - 30px);
     max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
+    max-height: calc(100vh - 30px);
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid var(--jet);
     border-radius: 14px;
     box-shadow: var(--shadow5);
     opacity: 0;
     transition: var(--transition1);
-    z-index: 2;
+    z-index: 21; /* Higher than the container */
 }
 
 .modal-close-btn {
@@ -580,6 +579,7 @@ article { display: none; }
     font-size: 18px;
     opacity: 1;
     box-shadow: var(--shadow2);
+    z-index: 22; /* Make sure it's above the modal */
 }
 
     .modal-close-btn:hover, .modal-close-btn:focus {
@@ -785,51 +785,49 @@ article { display: none; }
     display: none;
 }
 
-/* Project Modal Styling */
-.project-modal-container {
+/* Project Modal Styling - New Implementation */
+#project-modal-root {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 20;
-    pointer-events: none;
-    visibility: hidden;
+    z-index: 9999;
+    display: none;
 }
 
-.project-modal-container::-webkit-scrollbar { display: none; }
-
-.project-modal-container.active {
-    pointer-events: all;
-    visibility: visible;
+#project-modal-root.active {
+    display: block;
 }
 
-.project-modal-container.active .project-modal {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+.project-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
 }
 
 .project-modal {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 30px);
+    max-width: 600px;
+    max-height: calc(100vh - 30px);
     background: hsla(240, 1%, 17%, .95);
     backdrop-filter: blur(10px);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.2);
-    padding: 20px;
-    width: calc(100% - 30px);
     border: 1px solid var(--jet);
     border-radius: 14px;
     box-shadow: var(--shadow5);
-    opacity: 0;
-    transition: var(--transition1);
-    z-index: 2;
-    max-width: 600px;
-    max-height: 80vh;
+    z-index: 10001;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px;
+    padding-bottom: 30px;
 }
 
 .project-modal::-webkit-scrollbar {
@@ -847,8 +845,85 @@ article { display: none; }
     border-radius: 5px;
 }
 
+.project-modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--bg-gradient-matrix2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--matrix-green);
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--matrix-green);
+    font-size: 18px;
+    opacity: 1;
+    box-shadow: var(--shadow2);
+    z-index: 10002;
+    cursor: pointer;
+}
+
+.project-modal-close-btn:hover,
+.project-modal-close-btn:focus {
+    background: var(--bg-gradient-matrix1);
+    color: var(--white2);
+}
+
 .project-modal-img-wrapper {
     margin-bottom: 20px;
+}
+
+.project-modal-img {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.project-modal-img img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.project-modal-title {
+    margin-bottom: 10px;
+    color: var(--matrix-green-light);
+}
+
+.project-modal-role h4,
+.project-modal-text h4,
+.project-modal-techs h4,
+.project-modal-methodologies h4,
+.project-modal-tools h4,
+.project-modal-downloads h4 {
+    color: var(--white2);
+    font-size: var(--fs6);
+    font-weight: var(--fw500);
+    margin-bottom: 5px;
+}
+
+.project-modal-role p,
+.project-modal-text p,
+.project-modal-techs p,
+.project-modal-methodologies p,
+.project-modal-tools p,
+.project-modal-downloads p {
+    color: var(--light-gray);
+    font-size: var(--fs7);
+    font-weight: var(--fw300);
+    line-height: 1.6;
+}
+
+.project-modal-role,
+.project-modal-text,
+.project-modal-techs,
+.project-modal-methodologies,
+.project-modal-tools,
+.project-modal-downloads {
+    margin-bottom: 15px;
 }
 
 .project-modal-img {

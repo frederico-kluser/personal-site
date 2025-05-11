@@ -25,11 +25,39 @@ const testimonialsModalFunc = function () {
     modalContainer.classList.toggle('active');
     overlay.classList.toggle('active');
 
-    // Force scroll to top when opening modal on mobile
+    // Toggle body scroll lock to prevent background scrolling
     if (modalContainer.classList.contains('active')) {
-        window.scrollTo(0, 0);
+        // Lock scroll
+        lockBodyScroll();
+    } else {
+        // Restore scroll
+        unlockBodyScroll();
     }
 }
+
+// Function to handle scrolling when modals are open (for iOS compatibility)
+let scrollPosition = 0;
+const lockBodyScroll = function() {
+    // Capture the current scroll position
+    scrollPosition = window.pageYOffset;
+
+    // Scroll to top first to ensure modal is visible
+    window.scrollTo(0, 0);
+
+    // Then lock the body
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = '0';
+    document.body.style.width = '100%';
+};
+
+const unlockBodyScroll = function() {
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('position');
+    document.body.style.removeProperty('top');
+    document.body.style.removeProperty('width');
+    window.scrollTo(0, scrollPosition);
+};
 
 // Add drag-to-scroll functionality to testimonials list
 let isDragging = false;
@@ -312,30 +340,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Portfolio Project Modal
+// Portfolio Project Modal - New Implementation
 const projectItems = document.querySelectorAll('[data-project-item]');
-const projectModalContainer = document.querySelector('[data-project-modal-container]');
-const projectModalCloseBtn = document.querySelector('[data-project-modal-close-btn]');
-const projectOverlay = document.querySelector('[data-project-overlay]');
+const projectModalRoot = document.getElementById('project-modal-root');
+const projectModalCloseBtn = document.getElementById('project-modal-close-btn');
+const projectModalOverlay = document.querySelector('.project-modal-overlay');
 
-const projectModalImg = document.querySelector('[data-project-modal-img]');
-const projectModalTitle = document.querySelector('[data-project-modal-title]');
-const projectModalRole = document.querySelector('[data-project-modal-role]');
-const projectModalText = document.querySelector('[data-project-modal-text]');
-const projectModalTechs = document.querySelector('[data-project-modal-techs]');
-const projectModalMethodologies = document.querySelector('[data-project-modal-methodologies]');
-const projectModalTools = document.querySelector('[data-project-modal-tools]');
-const projectModalDownloads = document.querySelector('[data-project-modal-downloads]');
+const projectModalImg = document.getElementById('project-modal-img');
+const projectModalTitle = document.getElementById('project-modal-title');
+const projectModalRole = document.getElementById('project-modal-role');
+const projectModalText = document.getElementById('project-modal-text');
+const projectModalTechs = document.getElementById('project-modal-techs');
+const projectModalMethodologies = document.getElementById('project-modal-methodologies');
+const projectModalTools = document.getElementById('project-modal-tools');
+const projectModalDownloads = document.getElementById('project-modal-downloads');
 
-const projectModalFunc = function () {
-    projectModalContainer.classList.toggle('active');
-    projectOverlay.classList.toggle('active');
+// Function to toggle the project modal
+const toggleProjectModal = function() {
+    projectModalRoot.classList.toggle('active');
 
-    // Force scroll to top when opening modal on mobile
-    if (projectModalContainer.classList.contains('active')) {
-        window.scrollTo(0, 0);
+    if (projectModalRoot.classList.contains('active')) {
+        // Lock body scroll
+        lockBodyScroll();
+    } else {
+        // Restore body scroll
+        unlockBodyScroll();
     }
-}
+};
 
 // Attach event listeners to project items
 for (let i = 0; i < projectItems.length; i++) {
@@ -399,14 +430,17 @@ for (let i = 0; i < projectItems.length; i++) {
         }
 
         // Show modal
-        projectModalFunc();
+        toggleProjectModal();
     });
 }
 
-// Close button for project modal
-if (projectModalCloseBtn && projectOverlay) {
-    projectModalCloseBtn.addEventListener('click', projectModalFunc);
-    projectOverlay.addEventListener('click', projectModalFunc);
+// Add event listeners for closing the modal
+if (projectModalCloseBtn) {
+    projectModalCloseBtn.addEventListener('click', toggleProjectModal);
+}
+
+if (projectModalOverlay) {
+    projectModalOverlay.addEventListener('click', toggleProjectModal);
 }
 
 // Enabling Page Navigation
