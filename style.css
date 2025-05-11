@@ -877,7 +877,7 @@ article { display: none; }
 .project-modal-close-btn {
     position: fixed;
     top: 15px;
-    right: calc(50% - (min(600px, calc(100% - 30px)) / 2) + 15px);
+    right: 15px; /* Simple fixed position on mobile */
     background: var(--bg-gradient-matrix2);
     backdrop-filter: blur(10px);
     border: 1px solid var(--matrix-green);
@@ -895,9 +895,11 @@ article { display: none; }
     cursor: pointer;
 }
 
-@media (max-width: 767px) {
+/* Desktop positioning */
+@media (min-width: 768px) {
     .project-modal-close-btn {
-        right: 15px; /* Simplify on mobile */
+        top: calc(50% - min(40vh, 300px)); /* Position relative to vertical center */
+        right: calc(50% - 300px - 15px); /* Position to the right of the modal (300px is half of max width) */
     }
 }
 
