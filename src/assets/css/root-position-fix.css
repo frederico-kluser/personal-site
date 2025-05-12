@@ -1,0 +1,62 @@
+/*
+ * Root Position Fix
+ * Ensures the #root element starts exactly at the top of the page
+ */
+
+/* Reset all defaults for body and html */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Force proper margin and positioning all the way up the DOM */
+html {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100%;
+  line-height: 1.5;
+}
+
+/* Fix for root element to start at the very top */
+#root {
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100%;
+  min-height: 100vh;
+  display: block;
+}
+
+/* Remove any top space from main element */
+main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  display: flex;
+  position: relative;
+  top: 0;
+}
+
+/* Fix for any potential scrollbar issues */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--matrix-green);
+  border-radius: 3px;
+}

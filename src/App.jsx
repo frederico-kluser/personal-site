@@ -28,6 +28,7 @@ import './assets/css/blog-mobile-fixes.css'; // Add blog mobile padding fixes
 import './assets/css/portfolio-mobile-fixes.css'; // Fix portfolio mobile category selector
 import './assets/css/mobile-dropdown.css'; // Simple mobile dropdown styles
 import './assets/css/transition-overflow-fix.css'; // Temporarily hide overflow during transitions
+import './assets/css/root-position-fix.css'; // Fix root element starting position
 import './assets/css/blog-transition-fixes.css';
 
 function App() {
