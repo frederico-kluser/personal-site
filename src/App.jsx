@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import About from './components/About';

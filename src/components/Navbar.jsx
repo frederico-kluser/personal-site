@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 function Navbar({ activePage, onPageChange }) {
+  const { t } = useTranslation();
+
   const navItems = [
-    { id: 'about', label: 'About', path: '/about' },
-    { id: 'resume', label: 'Resume', path: '/resume' },
-    { id: 'portfolio', label: 'Portfolio', path: '/portfolio' },
-    { id: 'blog', label: 'Blog', path: '/blog' },
-    { id: 'contact', label: 'Contact', path: '/contact' }
+    { id: 'about', label: t('navbar.about'), path: '/about' },
+    { id: 'resume', label: t('navbar.resume'), path: '/resume' },
+    { id: 'portfolio', label: t('navbar.portfolio'), path: '/portfolio' },
+    { id: 'blog', label: t('navbar.blog'), path: '/blog' },
+    { id: 'contact', label: t('navbar.contact'), path: '/contact' }
   ];
 
   const handleNavClick = (item) => {

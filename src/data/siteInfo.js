@@ -1,4 +1,6 @@
 // Site information data
+// Note: Fixed text in this file is not automatically translated
+// Translations of labels are handled by the i18n system
 const siteInfo = {
   owner: {
     name: "Fred K.",
@@ -17,7 +19,8 @@ const siteInfo = {
   },
   copyright: {
     year: new Date().getFullYear(),
-    text: "All rights reserved."
+    // Text is now handled by i18n
+    textKey: "common.copyright"
   }
 };
 

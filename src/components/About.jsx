@@ -1,5 +1,6 @@
 import { useContext, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -25,6 +26,7 @@ import AnimatedList from './AnimatedList';
 
 function About({ isActive, openTestimonialModal }) {
   const { about, testimonials, services, clients } = useContext(DataContext);
+  const { t } = useTranslation();
 
   // Scroll progress for parallax effect
   const { scrollYProgress } = useScroll();

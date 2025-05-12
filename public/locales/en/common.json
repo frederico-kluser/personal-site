@@ -1,0 +1,68 @@
+{
+  "sidebar": {
+    "contact": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location"
+  },
+  "navbar": {
+    "about": "About",
+    "resume": "Resume",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "about": {
+    "title": "About Me",
+    "intro": "I'm a React Developer and LLM specialist with a passion for creating immersive digital experiences.",
+    "services": "My Services",
+    "testimonials": "Testimonials",
+    "serviceItems": {
+      "webDev": "Web Development",
+      "uiDesign": "UI/UX Design",
+      "mobileDev": "Mobile Development",
+      "api": "API Integration"
+    }
+  },
+  "resume": {
+    "title": "Resume",
+    "education": "Education",
+    "experience": "Experience",
+    "skills": "Skills",
+    "download": "Download CV"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "categories": {
+      "all": "All",
+      "web": "Web",
+      "mobile": "Mobile",
+      "design": "Design"
+    },
+    "view": "View Project"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Read More",
+    "recentPosts": "Recent Posts",
+    "categories": "Categories",
+    "backToList": "Back to Blog List"
+  },
+  "contact": {
+    "title": "Contact",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "message": "Your Message",
+      "submit": "Send Message"
+    },
+    "success": "Message sent successfully!",
+    "error": "There was an error sending your message."
+  },
+  "common": {
+    "loading": "Loading...",
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "copyright": "All rights reserved."
+  }
+}

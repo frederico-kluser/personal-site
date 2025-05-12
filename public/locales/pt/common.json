@@ -1,0 +1,68 @@
+{
+  "sidebar": {
+    "contact": "Contato",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "location": "Localização"
+  },
+  "navbar": {
+    "about": "Sobre",
+    "resume": "Currículo",
+    "portfolio": "Portfólio",
+    "blog": "Blog",
+    "contact": "Contato"
+  },
+  "about": {
+    "title": "Sobre Mim",
+    "intro": "Sou um Desenvolvedor React e especialista em LLM com paixão por criar experiências digitais imersivas.",
+    "services": "Meus Serviços",
+    "testimonials": "Depoimentos",
+    "serviceItems": {
+      "webDev": "Desenvolvimento Web",
+      "uiDesign": "Design de UI/UX",
+      "mobileDev": "Desenvolvimento Mobile",
+      "api": "Integração de APIs"
+    }
+  },
+  "resume": {
+    "title": "Currículo",
+    "education": "Educação",
+    "experience": "Experiência",
+    "skills": "Habilidades",
+    "download": "Baixar CV"
+  },
+  "portfolio": {
+    "title": "Portfólio",
+    "categories": {
+      "all": "Todos",
+      "web": "Web",
+      "mobile": "Mobile",
+      "design": "Design"
+    },
+    "view": "Ver Projeto"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Leia Mais",
+    "recentPosts": "Posts Recentes",
+    "categories": "Categorias",
+    "backToList": "Voltar para a Lista do Blog"
+  },
+  "contact": {
+    "title": "Contato",
+    "form": {
+      "name": "Nome Completo",
+      "email": "Endereço de E-mail",
+      "message": "Sua Mensagem",
+      "submit": "Enviar Mensagem"
+    },
+    "success": "Mensagem enviada com sucesso!",
+    "error": "Houve um erro ao enviar sua mensagem."
+  },
+  "common": {
+    "loading": "Carregando...",
+    "readMore": "Leia Mais",
+    "viewAll": "Ver Todos",
+    "copyright": "Todos os direitos reservados."
+  }
+}

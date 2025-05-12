@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { motion } from 'motion/react';
 import { DataContext } from '../context/DataContext';
+import { useTranslation } from 'react-i18next';
+import LanguageSelector from './LanguageSelector';
 
 function Sidebar() {
   const { siteInfo } = useContext(DataContext);
@@ -85,6 +87,8 @@ function Sidebar() {
             style={{ opacity: 1, visibility: 'visible' }}
             transition={{ duration: 0.5 }}
           >
+            <LanguageSelector />
+
             <div className="separator"></div>
 
             <motion.ul
@@ -162,6 +166,9 @@ function Sidebar() {
 
 // Componente para item de contato com animação
 function ContactItem({ icon, title, link, text, isAddress = false, delay }) {
+  const { t } = useTranslation();
+  const translatedTitle = t(`sidebar.${title.toLowerCase()}`);
+
   return (
     <motion.li
       className="contact-item"
@@ -205,7 +212,7 @@ function ContactItem({ icon, title, link, text, isAddress = false, delay }) {
             transition: { duration: 0.2 }
           }}
         >
-          {title}
+          {translatedTitle}
         </motion.p>
 
         {isAddress ? (

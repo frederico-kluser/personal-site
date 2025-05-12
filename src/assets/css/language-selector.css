@@ -1,0 +1,103 @@
+/* Language Selector Styles */
+.language-selector {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  z-index: 10;
+}
+
+.current-language {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: var(--eerie-black-1);
+  transition: background-color 0.3s;
+}
+
+.current-language:hover {
+  background-color: rgba(3, 160, 98, 0.2);
+}
+
+.language-label {
+  font-size: 16px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--eerie-black-2);
+  border-radius: 6px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  margin-top: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 100;
+}
+
+.language-selector:hover .language-dropdown {
+  max-height: 150px;
+  opacity: 1;
+  margin-top: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.language-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.language-option:hover {
+  background-color: rgba(3, 160, 98, 0.2);
+  color: var(--matrix-green);
+}
+
+.language-option.active {
+  background-color: rgba(3, 160, 98, 0.1);
+  color: var(--matrix-green-light);
+}
+
+.language-flag {
+  font-size: 16px;
+}
+
+.language-name {
+  font-size: 14px;
+}
+
+/* For RTL languages like Arabic */
+html[dir="rtl"] .language-option {
+  flex-direction: row-reverse;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .language-selector {
+    position: absolute;
+    top: 15px;
+    right: 70px;
+    width: auto;
+  }
+  
+  .language-dropdown {
+    width: 120px;
+    right: 0;
+    left: auto;
+  }
+}
