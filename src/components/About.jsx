@@ -13,8 +13,9 @@ import 'swiper/css/navigation';
 // Import required modules
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 
-// Import data store
+// Import data stores
 import { DataContext } from '../context/DataContext';
+import { useLanguageContext } from '../context/LanguageContext';
 
 // Import animation variants
 import { aboutTransitions } from '../animations/pageTransitions';
@@ -25,8 +26,13 @@ import AnimatedSection from './AnimatedSection';
 import AnimatedList from './AnimatedList';
 
 function About({ isActive, openTestimonialModal }) {
-  const { about, testimonials, services, clients } = useContext(DataContext);
+  const { testimonials, clients } = useContext(DataContext);
   const { t } = useTranslation();
+  const { contentData } = useLanguageContext();
+
+  // Use language specific data
+  const about = contentData.about;
+  const services = contentData.services;
 
   // Scroll progress for parallax effect
   const { scrollYProgress } = useScroll();
@@ -51,7 +57,9 @@ function About({ isActive, openTestimonialModal }) {
       </motion.div>
 
       <div className="service-content-box">
-        <h4 className="h4 service-item-title">{service.title}</h4>
+        <h4 className="h4 service-item-title">
+          {t(`about.serviceItems.${service.key || service.title.toLowerCase().replace(/\s+/g, '')}`)}
+        </h4>
         <p className="service-item-text">{service.description}</p>
       </div>
     </motion.li>
@@ -70,6 +78,7 @@ function About({ isActive, openTestimonialModal }) {
       <SectionHeader
         title={about.title}
         delay={0}
+        translateKey="about.title"
       />
 
       {/* About Text */}
@@ -103,6 +112,7 @@ function About({ isActive, openTestimonialModal }) {
           title={services.title}
           tagName="h3"
           delay={0.1}
+          translateKey="about.services"
         />
 
         <AnimatedList
@@ -127,6 +137,7 @@ function About({ isActive, openTestimonialModal }) {
           title="Testimonials"
           tagName="h3"
           delay={0.1}
+          translateKey="about.testimonials"
         />
 
         <motion.div

@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { DataContext } from '../context/DataContext';
+import { useLanguageContext } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 import { blogTransitions } from '../animations/pageTransitions';
 
 // Import reusable animated components
@@ -10,7 +12,9 @@ import AnimatedSection from './AnimatedSection';
 import AnimatedList from './AnimatedList';
 
 function Blog({ isActive }) {
-  const { blog } = useContext(DataContext);
+  const { t } = useTranslation();
+  const { contentData } = useLanguageContext();
+  const blog = contentData.blog;
 
   // Custom renderer for blog post items
   const renderBlogItem = (post, index, animationProps) => (

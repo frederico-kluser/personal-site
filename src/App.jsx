@@ -41,6 +41,16 @@ function App() {
     data: null
   });
   const location = useLocation();
+  const { i18n } = useTranslation();
+
+  // Atualiza a direção do texto baseado no idioma
+  useEffect(() => {
+    // Idiomas RTL (right-to-left) como Árabe, Hebraico, etc.
+    const rtlLanguages = ['ar', 'he', 'fa'];
+    const isRtl = rtlLanguages.includes(i18n.language.substring(0, 2));
+
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  }, [i18n.language]);
 
   // Update active page based on URL path - simplified for direct transition
   useEffect(() => {

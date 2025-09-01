@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * SectionHeader - Componente reutilizável para cabeçalhos de seção
@@ -14,18 +15,23 @@ import { motion, useInView } from 'motion/react';
  * @param {boolean} props.animate - Se deve animar (padrão: true)
  * @param {React.ReactNode} props.children - Conteúdo adicional para o cabeçalho
  */
-function SectionHeader({ 
-  title, 
-  subtitle, 
-  className = '', 
-  centered = false, 
-  tagName = 'h2', 
+function SectionHeader({
+  title,
+  subtitle,
+  className = '',
+  centered = false,
+  tagName = 'h2',
   delay = 0,
   animate = true,
-  children
+  children,
+  translateKey = '' // Adiciona uma chave de tradução opcional
 }) {
   const headerRef = useRef(null);
   const inView = useInView(headerRef, { once: true, amount: 0.3 });
+  const { t } = useTranslation();
+
+  // Se uma chave de tradução for fornecida, use-a para traduzir o título
+  const translatedTitle = translateKey ? t(translateKey) : title;
   
   // Configuração para animações
   const shouldAnimate = animate && inView;
@@ -54,7 +60,7 @@ function SectionHeader({
             transition: { duration: 0.2 }
           }}
         >
-          {title}
+          {translatedTitle}
         </motion.h2>
       ) : tagName === 'h3' ? (
         <motion.h3
@@ -62,13 +68,13 @@ function SectionHeader({
           initial={animate ? { opacity: 0, y: -10 } : { opacity: 1 }}
           animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: delay + 0.1 }}
-          whileHover={{ 
+          whileHover={{
             color: 'var(--matrix-green)',
             x: 3,
             transition: { duration: 0.2 }
           }}
         >
-          {title}
+          {translatedTitle}
         </motion.h3>
       ) : (
         <motion.h4
@@ -76,13 +82,13 @@ function SectionHeader({
           initial={animate ? { opacity: 0, y: -10 } : { opacity: 1 }}
           animate={shouldAnimate ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: delay + 0.1 }}
-          whileHover={{ 
+          whileHover={{
             color: 'var(--matrix-green)',
             x: 3,
             transition: { duration: 0.2 }
           }}
         >
-          {title}
+          {translatedTitle}
         </motion.h4>
       )}
       

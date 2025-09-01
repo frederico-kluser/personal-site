@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { DataContext } from '../context/DataContext';
+import { useLanguageContext } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 import MatrixRain from './MatrixRain';
 import '../assets/css/blog-post.css';
 import '../assets/css/blog-post-fixes.css';
@@ -13,7 +15,11 @@ import '../assets/css/simple-fade.css';
  */
 function SimpleBlogPost() {
   const { id } = useParams();
-  const { blog, siteInfo } = useContext(DataContext);
+  const { siteInfo } = useContext(DataContext);
+  const { t } = useTranslation();
+  const { contentData } = useLanguageContext();
+  const blog = contentData.blog;
+
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
