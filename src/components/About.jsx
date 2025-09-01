@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+
+// Import mobile fixes for testimonials
+import '../assets/css/testimonials-mobile-fix.css';
 
 // Import required modules
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
@@ -37,6 +40,20 @@ function About({ isActive, openTestimonialModal }) {
   // Scroll progress for parallax effect
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
+  // Check if device is mobile
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Custom renderer for service items
   const renderServiceItem = (service, index, animationProps) => (
@@ -156,8 +173,20 @@ function About({ isActive, openTestimonialModal }) {
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
+              pauseOnMouseEnter: true,
             }}
             centeredSlides={true}
+            touchRatio={1}
+            touchAngle={45}
+            grabCursor={true}
+            resistanceRatio={0.85}
+            threshold={5}
+            preventInteractionOnTransition={false}
+            allowTouchMove={true}
+            touchEventsTarget="container"
+            simulateTouch={true}
+            touchStartPreventDefault={false}
+            touchMoveStopPropagation={false}
             breakpoints={{
               768: {
                 slidesPerView: 2,
@@ -171,12 +200,13 @@ function About({ isActive, openTestimonialModal }) {
                 <motion.div
                   className="content-card testimonial-card"
                   onClick={() => openTestimonialModal(testimonial)}
-                  whileHover={{
+                  whileHover={!isMobile ? {
                     y: -10,
                     boxShadow: '0 10px 20px rgba(0,0,0,0.19)',
                     transition: { type: 'spring', stiffness: 300, damping: 20 }
-                  }}
+                  } : {}}
                   layoutId={`testimonial-card-${testimonial.id}`}
+                  drag={false}
                 >
                   <figure className="testimonials-avatar-box">
                     <motion.img

@@ -7,6 +7,8 @@ import App from './App';
 import './i18n/i18n';
 // Import language selector styles
 import './assets/css/language-selector.css';
+// Import global text selection control
+import './assets/css/global-text-selection.css';
 // Import Language Provider
 import { LanguageProvider } from './context/LanguageContext';
 

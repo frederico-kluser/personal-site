@@ -1,0 +1,83 @@
+/* Global Text Selection Control */
+
+/* Disable text selection for entire site by default */
+* {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* Enable text selection ONLY for blog post content */
+.blog-post-content,
+.blog-post-content * {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    -webkit-touch-callout: default !important;
+    cursor: text !important;
+}
+
+/* Also enable for blog article content */
+.blog-article-content,
+.blog-article-content * {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    -webkit-touch-callout: default !important;
+    cursor: text !important;
+}
+
+/* Enable for SimpleBlogPost content area */
+.simple-blog-content,
+.simple-blog-content * {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    -webkit-touch-callout: default !important;
+    cursor: text !important;
+}
+
+/* Enable for blog post paragraphs and headers within content */
+.blog-post main p,
+.blog-post main h1,
+.blog-post main h2,
+.blog-post main h3,
+.blog-post main h4,
+.blog-post main h5,
+.blog-post main h6,
+.blog-post main ul,
+.blog-post main ol,
+.blog-post main li,
+.blog-post main blockquote,
+.blog-post main pre,
+.blog-post main code {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    -webkit-touch-callout: default !important;
+}
+
+/* Enable selection for code blocks in blog posts */
+.blog-post pre code,
+.blog-post .code-block {
+    user-select: all !important;
+    -webkit-user-select: all !important;
+    -moz-user-select: all !important;
+    -ms-user-select: all !important;
+}
+
+/* Ensure form inputs remain selectable */
+input,
+textarea,
+select {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+}

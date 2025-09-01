@@ -1,0 +1,127 @@
+/* Testimonials Swiper Mobile Fixes */
+
+/* Fix for touch swipe on mobile devices */
+@media (max-width: 768px) {
+    /* Container fixes */
+    .testimonials-swiper-container {
+        position: relative;
+        width: 100%;
+        padding: 25px 10px;
+        overflow: visible !important;
+    }
+    
+    /* Main swiper container */
+    .testimonials-swiper {
+        overflow: visible !important;
+        position: relative;
+        padding: 20px 0 50px 0;
+    }
+    
+    /* Swiper wrapper fixes */
+    .testimonials-swiper .swiper-wrapper {
+        display: flex;
+        align-items: stretch;
+        touch-action: pan-y pinch-zoom;
+    }
+    
+    /* Swiper slide fixes */
+    .testimonials-swiper .swiper-slide {
+        height: auto;
+        display: flex;
+        align-items: stretch;
+        transition-property: transform;
+    }
+    
+    /* Testimonial card mobile optimization */
+    .testimonial-card {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        cursor: grab;
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    
+    .testimonial-card:active {
+        cursor: grabbing;
+    }
+    
+    /* Prevent text selection in testimonials */
+    .testimonial-card * {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+    
+    /* Fix for Motion animations conflicting with swipe */
+    .testimonial-card {
+        transform: none !important;
+    }
+    
+    /* Disable hover effects on mobile */
+    .testimonial-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Pagination positioning fix */
+    .testimonials-swiper .swiper-pagination {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 10;
+    }
+    
+    /* Hide navigation buttons on mobile */
+    .testimonials-swiper .swiper-button-next,
+    .testimonials-swiper .swiper-button-prev {
+        display: none !important;
+    }
+    
+    /* Fix testimonial text overflow */
+    .testimonials-text {
+        overflow: visible;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+    }
+}
+
+/* Additional fixes for smaller screens */
+@media (max-width: 480px) {
+    .testimonials-swiper-container {
+        padding: 20px 5px;
+    }
+    
+    .testimonial-card {
+        padding: 15px;
+        min-height: 200px;
+    }
+    
+    .testimonials-swiper {
+        padding-bottom: 40px;
+    }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .testimonials-swiper-container {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .testimonials-swiper .swiper-wrapper {
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+    }
+    
+    .testimonials-swiper .swiper-slide {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+}
